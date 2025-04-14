@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C++ Debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",  // 必须与 tasks.json 输出路径一致
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb.exe",  // 或完整路径如 "D:\\mingw64\\bin\\gdb.exe"
+      "preLaunchTask": "C++ Build", // 关键：调试前执行名为 "C++ Build" 的编译任务
+      "setupCommands": [
+        {
+          "description": "美化输出",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        // 跳过 STL 路径（根据你的配置）
+        {
+          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/​**​/*"
+        },
+        {
+          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/*"
+        }
+      ]
+    }
+  ]
+}
