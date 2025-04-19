@@ -10,7 +10,7 @@
           "-O0",               // 禁用优化（便于调试）
           "-Wall",             // 启用所有警告
           "-Wno-sign-compare", 
-          "-std=c++20",        // 指定 C++ 标准
+          "-std=c++17",        // 指定 C++ 标准
           "${file}",           // 当前文件路径（如 main.cpp）
           "-o",
           "${fileDirname}/${fileBasenameNoExtension}.exe"  // 输出路径
