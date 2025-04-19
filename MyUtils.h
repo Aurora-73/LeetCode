@@ -14,6 +14,8 @@
 #include <set>
 #include <climits>
 #include <cassert>
+#include <memory>
+#include <bitset>
 
 using namespace std;
 
