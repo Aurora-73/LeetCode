@@ -55,8 +55,45 @@ public:
 
         return res;
     }
-};
+}; // 官方解法
     
+class Solution2 {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        vector<int> res;
+        unordered_map<string, int> smap;
+        int word_num = words.size(), word_len = words[0].size();
+        for(auto word : words){
+            smap[word]++;
+        }
+        for(int k = 0; k < word_len; k++){
+            int i = k, j = k - word_len, count = 0;
+            unordered_map<string, int> m;
+            while(j + word_len <= int(s.size())){
+                if(count < word_num){
+                    j += word_len;
+                    if(j + word_len > int(s.size()))   break;
+                    string sub = s.substr(j, word_len);
+                    m[sub]++; 
+                    count++;
+                    while(m[sub] > smap[sub]){
+                        string subi = s.substr(i, word_len);
+                        m[subi]--;
+                        i += word_len;
+                        count--;
+                    }
+                }else if(count == word_num){
+                    res.push_back(i);
+                    m[s.substr(i, word_len)]--;
+                    i += word_len;
+                    count--;
+                }
+            }
+        }
+        return res;
+    }
+}; // 1.缺少剪枝 2、边界判断混乱
+
 class Solution1 {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
@@ -96,7 +133,7 @@ public:
         }
         return res;
     }
-};
+}; // unordered_multimap<string, bool>
 class Solution2 {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
@@ -129,7 +166,7 @@ public:
         }
         return res;
     }
-};
+}; // unordered_map<string, int>
 
 int main(){
     Solution1 sol;
