@@ -13,80 +13,83 @@ using namespace std;
 
 class Solution {
 public:
-    int trap1(vector<int>& height) {
-        int water = 0,n = height.size();
-        vector<int> left(n), right(n);
-        left[0] = height[0];
-        right[n - 1] = height[n - 1];
-        for(int i = 1; i < n; i++){
-            left[i] = max(left[i-1], height[i]);
-            right[n - 1 - i] = max(right[n - i], height[n - 1 - i]);
-        }
-        for(int i = 1; i < n - 1; i++){
-            water += max(min(left[i] - height[i], right[i] - height[i]), 0);
-        }
-        return water;
-    }
-    int trap2(vector<int>& height) {
-        int water = 0,l = 0,r = height.size() - 1,maxL = -1,maxR = -1;
-        while(l < r){
-            maxL = max(maxL, height[l]);
-            maxR = max(maxR, height[r]);
-            if(maxL < maxR){
-                water += maxL - height[l];
-                l++;
-            }else{ 
-                water += maxR - height[r];
-                r--;
-            }
-        }
-        return water;
-    }
-    int trap3(vector<int>& height) {
-        int water = 0,l = 0,r = height.size() - 1,maxL = -1,maxR = -1;
-        while(l < r){
-            int level = min(maxL,maxR);
-            if(height[l] <= level){
-                water += level - height[l];
-                l++;
-                continue;
-            }
-            if(height[r] <= level){ 
-                water += level - height[r];
-                r--;
-                continue;
-            }
-            maxL = max(maxL, height[l]);
-            maxR = max(maxR, height[r]);
-        }
-        return water;
-    }
-    int trap4(vector<int>& height) {
-        int water = 0,l = 0,r = height.size() - 1,maxL = -1,maxR = -1;
-        while(l < r){
-            maxL = max(height[l], maxL);
-            maxR = max(height[r], maxR);
-            // left 单调递增 right 单调递减 
-            if(height[l] < height[r]){
-                water += maxL - height[l];
-                l++;
-            }else{ 
-                water += maxR - height[r];
-                r--;
-            }
-        }
-        return water;
-    }
+	int trap1(vector<int> &height) {
+		int water = 0, n = height.size();
+		vector<int> left(n), right(n);
+		left[0] = height[0];
+		right[n - 1] = height[n - 1];
+		for(int i = 1; i < n; i++) {
+			left[i] = max(left[i - 1], height[i]);
+			right[n - 1 - i] = max(right[n - i], height[n - 1 - i]);
+		}
+		for(int i = 1; i < n - 1; i++) {
+			water += max(min(left[i] - height[i], right[i] - height[i]), 0);
+		}
+		return water;
+	}
+	int trap2(vector<int> &height) {
+		int water = 0, l = 0, r = height.size() - 1, maxL = -1, maxR = -1;
+		while(l < r) {
+			maxL = max(maxL, height[l]);
+			maxR = max(maxR, height[r]);
+			if(maxL < maxR) {
+				water += maxL - height[l];
+				l++;
+			} else {
+				water += maxR - height[r];
+				r--;
+			}
+		}
+		return water;
+	}
+	int trap3(vector<int> &height) {
+		int water = 0, l = 0, r = height.size() - 1, maxL = -1, maxR = -1;
+		while(l < r) {
+			int level = min(maxL, maxR);
+			if(height[l] <= level) {
+				water += level - height[l];
+				l++;
+				continue;
+			}
+			if(height[r] <= level) {
+				water += level - height[r];
+				r--;
+				continue;
+			}
+			maxL = max(maxL, height[l]);
+			maxR = max(maxR, height[r]);
+		}
+		return water;
+	}
+	int trap4(vector<int> &height) {
+		int water = 0, l = 0, r = height.size() - 1, maxL = -1, maxR = -1;
+		while(l < r) {
+			maxL = max(height[l], maxL);
+			maxR = max(height[r], maxR);
+			// left 单调递增 right 单调递减
+			if(height[l] < height[r]) {
+				water += maxL - height[l];
+				l++;
+			} else {
+				water += maxR - height[r];
+				r--;
+			}
+		}
+		return water;
+	}
 };
 
-int main(){
-    Solution sol;
-    vector<int> height1 = {0,1,0,2,1,0,1,3,2,1,2,1};
-    vector<int> height2 = {4,2,0,3,2,5};
-    vector<int> height3 = {0,1,0,2,1,0,1,3,2,1,2,1}; 
-    cout << sol.trap1(height1) << " " <<sol.trap2(height1) << " " << sol.trap3(height1) << " " << sol.trap4(height1) << " " << endl;
-    cout << sol.trap1(height2) << " " <<sol.trap2(height2) << " " << sol.trap3(height2) << " " << sol.trap4(height2) << " " << endl;
-    cout << sol.trap1(height1) << " " <<sol.trap2(height1) << " " << sol.trap3(height1) << " " << sol.trap4(height1) << " " << endl;
+int main() {
+	Solution sol;
+	vector<int> height1 = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+	vector<int> height2 = {4, 2, 0, 3, 2, 5};
+	vector<int> height3 = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+	cout << sol.trap1(height1) << " " << sol.trap2(height1) << " " << sol.trap3(height1) << " " << sol.trap4(height1)
+	     << " " << endl;
+	cout << sol.trap1(height2) << " " << sol.trap2(height2) << " " << sol.trap3(height2) << " " << sol.trap4(height2)
+	     << " " << endl;
+	cout << sol.trap1(height1) << " " << sol.trap2(height1) << " " << sol.trap3(height1) << " " << sol.trap4(height1)
+	     << " " << endl;
 }
 
 /*

@@ -11,9 +11,11 @@ struct TreeNode {
 
 class Solution {
 public:
-	int maxDepth(TreeNode *root) {
+	bool hasPathSum(TreeNode *root, int targetSum) {
 		if(!root)
-			return 0;
-		return 1 + maxDepth(root->left) + maxDepth(root->right);
+			return false;
+		if(!root->left && !root->right)
+			return targetSum == root->val;
+		return hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);
 	}
 };

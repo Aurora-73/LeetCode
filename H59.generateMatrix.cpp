@@ -9,56 +9,56 @@ using namespace std;
  */
 class Solution {
 public:
-    vector<vector<int>> generateMatrix(int n) {
-        vector<vector<int>> vec(n, vector<int>(n, -1));
-        int num = 1, i = 0, j = 0, step = n - 1, step_now = 0, reduce = 3;
-        bool right = true, down = true, move_j = true;
-        vec[0][0] = num++;
-        while(step > 0){ // or (num <= n*n)
-            if(move_j){
-                if(step_now < step){
-                    if(right){
-                        ++j;
-                        ++step_now;
-                    }else{
-                        --j;
-                        ++step_now;
-                    }
-                    vec[i][j] = num++;
-                }else{
-                    move_j = false;
-                    step_now = 0;
-                    right = !right;
-                    reduce--;
-                    if(reduce == 0){
-                        step--;
-                        reduce = 2;
-                    }
-                }
-            }else{
-                if(step_now < step){
-                    if(down){
-                        ++i;
-                        ++step_now;
-                    }else{
-                        --i;
-                        ++step_now;
-                    }
-                    vec[i][j] = num++;
-                }else{
-                    move_j = true;
-                    step_now = 0;
-                    down = !down;
-                    reduce--;
-                    if(reduce == 0){
-                        step--;
-                        reduce = 2;
-                    }
-                }
-            }
-        }
-        return vec;
-    }
+	vector<vector<int>> generateMatrix(int n) {
+		vector<vector<int>> vec(n, vector<int>(n, -1));
+		int num = 1, i = 0, j = 0, step = n - 1, step_now = 0, reduce = 3;
+		bool right = true, down = true, move_j = true;
+		vec[0][0] = num++;
+		while(step > 0) { // or (num <= n*n)
+			if(move_j) {
+				if(step_now < step) {
+					if(right) {
+						++j;
+						++step_now;
+					} else {
+						--j;
+						++step_now;
+					}
+					vec[i][j] = num++;
+				} else {
+					move_j = false;
+					step_now = 0;
+					right = !right;
+					reduce--;
+					if(reduce == 0) {
+						step--;
+						reduce = 2;
+					}
+				}
+			} else {
+				if(step_now < step) {
+					if(down) {
+						++i;
+						++step_now;
+					} else {
+						--i;
+						++step_now;
+					}
+					vec[i][j] = num++;
+				} else {
+					move_j = true;
+					step_now = 0;
+					down = !down;
+					reduce--;
+					if(reduce == 0) {
+						step--;
+						reduce = 2;
+					}
+				}
+			}
+		}
+		return vec;
+	}
 };
 /*重点：
 1、每次移动之后再赋值，则最初需要先给(0,0)赋值，
@@ -72,16 +72,16 @@ public:
 2、当前方向的需要移动步数的变化
 */
 
-int main(){
-    Solution sol;
-    int n;
-    cin >> n; 
-    auto res = sol.generateMatrix(n);
-    for(auto vec : res){
-        for(auto i : vec){
-            cout << i << " ";
-        }
-        cout << endl;
-    }
-    return 0;
+int main() {
+	Solution sol;
+	int n;
+	cin >> n;
+	auto res = sol.generateMatrix(n);
+	for(auto vec : res) {
+		for(auto i : vec) {
+			cout << i << " ";
+		}
+		cout << endl;
+	}
+	return 0;
 }

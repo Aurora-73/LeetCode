@@ -12,61 +12,60 @@ using namespace std;
 */
 class Solution1 {
 public:
-    bool isIsomorphic(string s, string t) {
-        if(s.length() != t.length())
-            return false;
-        int map1[CHAR_MAX - CHAR_MIN + 1]; // s -> t
-        int map2[CHAR_MAX - CHAR_MIN + 1]; // t -> s
-        for(int i = 0; i < CHAR_MAX - CHAR_MIN; i++){
-            map1[i] = INT_MIN;
-            map2[i] = INT_MIN;
-        }
-        for(int i = 0; i < s.length() ; i++){
-            if(map1[s[i] - CHAR_MIN] == INT_MIN){
-                map1[s[i] - CHAR_MIN] = t[i];
-            }else if(map1[s[i] - CHAR_MIN] != t[i]){
-                return false;
-            }
-            if(map2[t[i] - CHAR_MIN] == INT_MIN){
-                map2[t[i] - CHAR_MIN] = s[i];
-            }else if(map2[t[i] - CHAR_MIN] != s[i]){
-                return false;
-            }
-        }
-        return true;
-    }
+	bool isIsomorphic(string s, string t) {
+		if(s.length() != t.length())
+			return false;
+		int map1[CHAR_MAX - CHAR_MIN + 1]; // s -> t
+		int map2[CHAR_MAX - CHAR_MIN + 1]; // t -> s
+		for(int i = 0; i < CHAR_MAX - CHAR_MIN; i++) {
+			map1[i] = INT_MIN;
+			map2[i] = INT_MIN;
+		}
+		for(int i = 0; i < s.length(); i++) {
+			if(map1[s[i] - CHAR_MIN] == INT_MIN) {
+				map1[s[i] - CHAR_MIN] = t[i];
+			} else if(map1[s[i] - CHAR_MIN] != t[i]) {
+				return false;
+			}
+			if(map2[t[i] - CHAR_MIN] == INT_MIN) {
+				map2[t[i] - CHAR_MIN] = s[i];
+			} else if(map2[t[i] - CHAR_MIN] != s[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 };
 
 class Solution2 {
 public:
-    bool isIsomorphic(string s, string t) {
-        unordered_map<char, char> m1, m2;
-        if(s.length() != t.length())
-            return false;
-        for(int i = 0; i < s.length() ; i++){
-            if(m1.find(s[i]) == m1.end()){
-                m1[s[i]] = t[i];
-            }else if(m1[s[i]] != t[i]){
-                return false;
-            }            
-            if(m2.find(t[i]) == m2.end()){
-                m2[t[i]] = s[i];
-            }else if(m2[t[i]] != s[i]){
-                return false;
-            }
-        }
-        return true;
-    }
+	bool isIsomorphic(string s, string t) {
+		unordered_map<char, char> m1, m2;
+		if(s.length() != t.length())
+			return false;
+		for(int i = 0; i < s.length(); i++) {
+			if(m1.find(s[i]) == m1.end()) {
+				m1[s[i]] = t[i];
+			} else if(m1[s[i]] != t[i]) {
+				return false;
+			}
+			if(m2.find(t[i]) == m2.end()) {
+				m2[t[i]] = s[i];
+			} else if(m2[t[i]] != s[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 };
 
-int main(){
-    Solution1 sol1;
-    Solution2 sol2;
-    string s = "egg", t = "add";
-    cout << sol1.isIsomorphic(s, t);
-    cout << sol2.isIsomorphic(s, t);
-    s = "foo", t = "bar";
-    cout << sol1.isIsomorphic(s, t);
-    cout << sol2.isIsomorphic(s, t);
+int main() {
+	Solution1 sol1;
+	Solution2 sol2;
+	string s = "egg", t = "add";
+	cout << sol1.isIsomorphic(s, t);
+	cout << sol2.isIsomorphic(s, t);
+	s = "foo", t = "bar";
+	cout << sol1.isIsomorphic(s, t);
+	cout << sol2.isIsomorphic(s, t);
 }
-

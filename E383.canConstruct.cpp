@@ -12,49 +12,48 @@ using namespace std;
 
 class Solution1 {
 public:
-    bool canConstruct(string ransomNote, string magazine) {
-        unordered_map<char, int> m;
-        for(auto c : magazine){
-            if(m.count(c)){
-                m[c]++;
-            }else{
-                m[c] = 1;
-            }
-        }
-        for(auto c : ransomNote){
-            if(!m.count(c) || m[c] <= 0){
-                return false;
-            }else{
-                m[c] -= 1;
-            }
-        }
-        return true;
-    }
+	bool canConstruct(string ransomNote, string magazine) {
+		unordered_map<char, int> m;
+		for(auto c : magazine) {
+			if(m.count(c)) {
+				m[c]++;
+			} else {
+				m[c] = 1;
+			}
+		}
+		for(auto c : ransomNote) {
+			if(!m.count(c) || m[c] <= 0) {
+				return false;
+			} else {
+				m[c] -= 1;
+			}
+		}
+		return true;
+	}
 };
 
 class Solution2 {
 public:
-    bool canConstruct(string ransomNote, string magazine) {
-        size_t count[CHAR_MAX - CHAR_MIN + 1]; // 不同编译器实现的char的范围可能不一样，使用宏可以自动适配
-        for(auto c : magazine){
-            ++count[c - CHAR_MIN];
-        }
-        for(auto c : ransomNote){
-            if(count[c - CHAR_MIN] <= 0){
-                return false;
-            }else{
-                --count[c - CHAR_MIN];
-            }
-        }
-        return true;
-    }
-}; 
+	bool canConstruct(string ransomNote, string magazine) {
+		size_t count[CHAR_MAX - CHAR_MIN + 1]; // 不同编译器实现的char的范围可能不一样，使用宏可以自动适配
+		for(auto c : magazine) {
+			++count[c - CHAR_MIN];
+		}
+		for(auto c : ransomNote) {
+			if(count[c - CHAR_MIN] <= 0) {
+				return false;
+			} else {
+				--count[c - CHAR_MIN];
+			}
+		}
+		return true;
+	}
+};
 
-
-int main(){
-    Solution1 sol1;
-    Solution2 sol2;
-    string ransomNote = "aa", magazine = "ab";
-    cout << sol1.canConstruct(ransomNote, magazine);
-    cout << sol2.canConstruct(ransomNote, magazine);
+int main() {
+	Solution1 sol1;
+	Solution2 sol2;
+	string ransomNote = "aa", magazine = "ab";
+	cout << sol1.canConstruct(ransomNote, magazine);
+	cout << sol2.canConstruct(ransomNote, magazine);
 }

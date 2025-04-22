@@ -16,36 +16,35 @@ using namespace std;
 
 class Solution {
 public:
-    bool isValid(string s) {
-        stack<char> sta;
-        for(auto c : s){
-            if(c == '(' || c == '{' || c == '['){
-                sta.push(c);
-            }
-            if(c == ')'){
-                if(sta.size() > 0 && sta.top() == '(')
-                    sta.pop();
-                else
-                    return false;
-            }
-            if(c == '}'){
-                if(sta.size() > 0 && sta.top() == '{')
-                    sta.pop();
-                else
-                    return false;
-            }
-            if(c == ']'){
-                if(sta.size() > 0 && sta.top() == '[')
-                    sta.pop();
-                else
-                    return false;
-            }
-        }
-        return sta.size() == 0;
-    }
+	bool isValid(string s) {
+		stack<char> sta;
+		for(auto c : s) {
+			if(c == '(' || c == '{' || c == '[') {
+				sta.push(c);
+			}
+			if(c == ')') {
+				if(sta.size() > 0 && sta.top() == '(')
+					sta.pop();
+				else
+					return false;
+			}
+			if(c == '}') {
+				if(sta.size() > 0 && sta.top() == '{')
+					sta.pop();
+				else
+					return false;
+			}
+			if(c == ']') {
+				if(sta.size() > 0 && sta.top() == '[')
+					sta.pop();
+				else
+					return false;
+			}
+		}
+		return sta.size() == 0;
+	}
 };
 
-int main(){
-    string str;
-
+int main() {
+	string str;
 }

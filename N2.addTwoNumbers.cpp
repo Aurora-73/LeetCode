@@ -1,6 +1,6 @@
-#include<iostream>
-#include<vector>
-#include<unordered_map>
+#include <iostream>
+#include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -11,59 +11,61 @@ using namespace std;
 */
 
 struct ListNode {
-   int val;
-   ListNode *next;
-   ListNode() : val(0), next(nullptr) {}
-   ListNode(int x) : val(x), next(nullptr) {}
-   ListNode(int x, ListNode *next) : val(x), next(next) {}
+	int val;
+	ListNode *next;
+	ListNode() : val(0), next(nullptr) {}
+	ListNode(int x) : val(x), next(nullptr) {}
+	ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 class Solution1 {
-   public:
-   ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-      ListNode *res = new ListNode(0); // head node
-      ListNode *tail = res;
-      int up = 0;
-      while(l1 || l2 || up){
-         int now_sum = up;
-         now_sum += l1 ? l1->val : 0;
-         l1 = l1 ? l1 -> next : l1;
-         now_sum += l2 ? l2->val : 0;
-         l2 = l2 ? l2 -> next : l2;
-         up = now_sum / 10;
-         now_sum %= 10;
-         tail -> next = new ListNode(now_sum);
-         tail = tail -> next;
-      }
-      tail = res;
-      res = res -> next;
-      delete tail;
-      return res;
-   }
-}; 
+public:
+	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+		ListNode *res = new ListNode(0); // head node
+		ListNode *tail = res;
+		int up = 0;
+		while(l1 || l2 || up) {
+			int now_sum = up;
+			now_sum += l1 ? l1->val : 0;
+			l1 = l1 ? l1->next : l1;
+			now_sum += l2 ? l2->val : 0;
+			l2 = l2 ? l2->next : l2;
+			up = now_sum / 10;
+			now_sum %= 10;
+			tail->next = new ListNode(now_sum);
+			tail = tail->next;
+		}
+		tail = res;
+		res = res->next;
+		delete tail;
+		return res;
+	}
+};
 
 class Solution2 {
 public:
-   int up = 0;
-   ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-      if(!up && !l1 && !l2){
-         return nullptr;
-      }
-      int now = up + (l1 ? l1 -> val : 0) + (l2 ? l2 -> val : 0);
-      up = now / 10;
-      return new ListNode(now % 10, addTwoNumbers(l1 ? l1 -> next : l1, l2 ? l2 -> next : l2));
-   }
+	int up = 0;
+	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+		if(!up && !l1 && !l2) {
+			return nullptr;
+		}
+		int now = up + (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
+		up = now / 10;
+		return new ListNode(now % 10, addTwoNumbers(l1 ? l1->next : l1, l2 ? l2->next : l2));
+	}
 }; // 重复使用会导致进位残留
 
 class Solution3 {
 public:
-   ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-      return addhelper(l1, l2, 0);
-   }
+	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+		return addhelper(l1, l2, 0);
+	}
+
 private:
-   ListNode* addhelper(ListNode* l1, ListNode* l2, int carry) {
-      if (!l1 && !l2 && !carry) return nullptr;
-      int now = carry + (l1 ? l1 -> val : 0) + (l2 ? l2 -> val : 0);
-      return new ListNode(now % 10, addhelper(l1 ? l1 -> next : l1, l2 ? l2 -> next : l2, now / 10));
-   }
+	ListNode *addhelper(ListNode *l1, ListNode *l2, int carry) {
+		if(!l1 && !l2 && !carry)
+			return nullptr;
+		int now = carry + (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
+		return new ListNode(now % 10, addhelper(l1 ? l1->next : l1, l2 ? l2->next : l2, now / 10));
+	}
 };

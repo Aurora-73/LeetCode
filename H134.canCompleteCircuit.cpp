@@ -10,25 +10,25 @@ using namespace std;
 
 class Solution {
 public:
-    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-        int sum = 0, now = 0, index = 0,n = gas.size();
-        for (int i = 0;i < n;i++) {
-            sum += gas[i] - cost[i];
-            now += gas[i] - cost[i];
-            if (now < 0) {
-                now = 0;
-                index = i + 1;
-            }
-        }
-        return sum < 0 ? -1 : index;
-    }
+	int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+		int sum = 0, now = 0, index = 0, n = gas.size();
+		for(int i = 0; i < n; i++) {
+			sum += gas[i] - cost[i];
+			now += gas[i] - cost[i];
+			if(now < 0) {
+				now = 0;
+				index = i + 1;
+			}
+		}
+		return sum < 0 ? -1 : index;
+	}
 };
 
 int main() {
-    Solution sol;
-    vector<int> gas =  { 2,3,4 };
-    vector<int> cost = { 3,4,3 };
-    cout << sol.canCompleteCircuit(gas, cost);
+	Solution sol;
+	vector<int> gas = {2, 3, 4};
+	vector<int> cost = {3, 4, 3};
+	cout << sol.canCompleteCircuit(gas, cost);
 }
 /*​​1. 全局可行性判断​​
 若所有站点净油量总和（总补给 - 总消耗）为负，则无论如何无法完成环路。

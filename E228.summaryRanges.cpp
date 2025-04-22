@@ -24,53 +24,53 @@ nums 按升序排列
 */
 
 class Solution {
-    public:
-        vector<string> summaryRanges(const vector<int>& nums) {
-            vector<string> res;
-            string now;
-            for(int i = 0; i < nums.size(); ){
-                int j = i + 1;
-                now += std::to_string(nums[i]); // 对于负数和大于9的数不可以用 char(nums[i] + '0')，
-                while(j < nums.size() && (static_cast<long long>(nums[j]) - nums[j - 1]) == 1) j++; // 指向第一个不满足的
-                if(j != i + 1){ 
-                    now += "->";
-                    now += std::to_string(nums[j - 1]);
-                    // 不能用 now += "->" + char(nums[j - 1] + '0'); 原因见易错点
-                }
-                res.push_back(now);
-                now = "";
-                i = j;
-            }
-            return res;
-        }
-    };
+public:
+	vector<string> summaryRanges(const vector<int> &nums) {
+		vector<string> res;
+		string now;
+		for(int i = 0; i < nums.size();) {
+			int j = i + 1;
+			now += std::to_string(nums[i]); // 对于负数和大于9的数不可以用 char(nums[i] + '0')，
+			while(j < nums.size() && (static_cast<long long>(nums[j]) - nums[j - 1]) == 1)
+				j++; // 指向第一个不满足的
+			if(j != i + 1) {
+				now += "->";
+				now += std::to_string(nums[j - 1]);
+				// 不能用 now += "->" + char(nums[j - 1] + '0'); 原因见易错点
+			}
+			res.push_back(now);
+			now = "";
+			i = j;
+		}
+		return res;
+	}
+};
 
-
-int main(){
-    Solution sol;
-    auto res = sol.summaryRanges({0,1,2,4,6,7});
-    for(auto str : res){
-        cout <<  str << endl;
-    }
-    cout << "------------" << endl;
-    res = sol.summaryRanges({199});
-    for(auto str : res){
-        cout <<  str << endl;
-    }
-    cout << "------------" << endl;
-    res = sol.summaryRanges({-1});
-    for(auto str : res){
-        cout <<  str << endl;
-    }
-    cout << "------------" << endl;
-    res = sol.summaryRanges({-1});
-    for(auto str : res){
-        cout <<  str << endl;
-    }
-    cout << "------------" << endl;
-    res = sol.summaryRanges({-2147483648,0,2,3,4,6,8,9});
-    for(auto str : res){
-        cout <<  str << endl;
-    }
-    return 0;
+int main() {
+	Solution sol;
+	auto res = sol.summaryRanges({0, 1, 2, 4, 6, 7});
+	for(auto str : res) {
+		cout << str << endl;
+	}
+	cout << "------------" << endl;
+	res = sol.summaryRanges({199});
+	for(auto str : res) {
+		cout << str << endl;
+	}
+	cout << "------------" << endl;
+	res = sol.summaryRanges({-1});
+	for(auto str : res) {
+		cout << str << endl;
+	}
+	cout << "------------" << endl;
+	res = sol.summaryRanges({-1});
+	for(auto str : res) {
+		cout << str << endl;
+	}
+	cout << "------------" << endl;
+	res = sol.summaryRanges({-2147483648, 0, 2, 3, 4, 6, 8, 9});
+	for(auto str : res) {
+		cout << str << endl;
+	}
+	return 0;
 }

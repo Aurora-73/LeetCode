@@ -24,62 +24,62 @@ using namespace std;
 
 class Solution {
 public:
-    vector<string> fullJustify(vector<string>& words, int maxWidth) {
-        vector<string> result;
-        for(int i = 0; i < words.size(); i++){
-            result.push_back("");
-            int j , sumsize = -1;
-            for(j = i; j < words.size(); j++){
-                if(sumsize + 1 + words[j].length() > maxWidth){
-                    break;
-                }
-                sumsize += 1 + words[j].length();
-            }
-            if(j != words.size()){
-                int spacenum = maxWidth - sumsize, ave_space = 0, extra_space = 0, endspace = 0;
-                if(j - i - 1 != 0){
-                    ave_space = spacenum / (j - i - 1), extra_space = spacenum - ave_space * (j - i - 1);
-                }else{
-                    endspace = spacenum;
-                } // 如果只有一个单词，则直接补' '
-                while(i < j){
-                    result.back() += words[i];
-                    if(i < j - 1){
-                        result.back() += ' ';
-                        if(extra_space > 0){
-                            result.back() += ' ';
-                            extra_space--;
-                        }
-                        for(int k = 0; k < ave_space; k++){
-                            result.back() += ' ';
-                        }
-                    } // 非最后一个单词要在后面补' '
-                    for(int k = 0; k < endspace; k++){
-                        result.back() += ' ';
-                    } // 如果只有一个单词，则直接补' '
-                    i++;
-                }
-            }else{
-                while(i < j){
-                    result.back() += words[i];
-                    if(i < j-1){
-                        result.back() += ' ';
-                    }
-                    i++;
-                }
-                result.back().resize(maxWidth,' ');
-            } // 最后一行
-            i--;
-        }
-        return result;
-    }
+	vector<string> fullJustify(vector<string> &words, int maxWidth) {
+		vector<string> result;
+		for(int i = 0; i < words.size(); i++) {
+			result.push_back("");
+			int j, sumsize = -1;
+			for(j = i; j < words.size(); j++) {
+				if(sumsize + 1 + words[j].length() > maxWidth) {
+					break;
+				}
+				sumsize += 1 + words[j].length();
+			}
+			if(j != words.size()) {
+				int spacenum = maxWidth - sumsize, ave_space = 0, extra_space = 0, endspace = 0;
+				if(j - i - 1 != 0) {
+					ave_space = spacenum / (j - i - 1), extra_space = spacenum - ave_space * (j - i - 1);
+				} else {
+					endspace = spacenum;
+				} // 如果只有一个单词，则直接补' '
+				while(i < j) {
+					result.back() += words[i];
+					if(i < j - 1) {
+						result.back() += ' ';
+						if(extra_space > 0) {
+							result.back() += ' ';
+							extra_space--;
+						}
+						for(int k = 0; k < ave_space; k++) {
+							result.back() += ' ';
+						}
+					} // 非最后一个单词要在后面补' '
+					for(int k = 0; k < endspace; k++) {
+						result.back() += ' ';
+					} // 如果只有一个单词，则直接补' '
+					i++;
+				}
+			} else {
+				while(i < j) {
+					result.back() += words[i];
+					if(i < j - 1) {
+						result.back() += ' ';
+					}
+					i++;
+				}
+				result.back().resize(maxWidth, ' ');
+			} // 最后一行
+			i--;
+		}
+		return result;
+	}
 };
 
 int main() {
-    Solution sol;
-    vector<string> words = {"This", "is", "an", "example", "of", "text", "justification."}; 
-    int maxWidth = 16;
-    for(auto str : sol.fullJustify(words, maxWidth)){
-        cout << "|" << str << "|" << endl;
-    };
+	Solution sol;
+	vector<string> words = {"This", "is", "an", "example", "of", "text", "justification."};
+	int maxWidth = 16;
+	for(auto str : sol.fullJustify(words, maxWidth)) {
+		cout << "|" << str << "|" << endl;
+	};
 }

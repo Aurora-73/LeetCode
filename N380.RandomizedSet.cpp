@@ -13,53 +13,53 @@ int getRandom() 随机返回现有集合中的一项（测试用例保证调用此方法时集合中至少存在
 
 class RandomizedSet {
 private:
-    std::vector<int> values;               // 存储元素的动态数组
-    std::unordered_map<int, size_t> value_to_index; // 值到索引的映射
-    std::mt19937 random_engine{ std::random_device{}() }; // 随机数引擎
+	std::vector<int> values; // 存储元素的动态数组
+	std::unordered_map<int, size_t> value_to_index; // 值到索引的映射
+	std::mt19937 random_engine{std::random_device{}()}; // 随机数引擎
 
 public:
-    RandomizedSet() = default;
+	RandomizedSet() = default;
 
-    bool insert(int val) {
-        if (value_to_index.find(val) != value_to_index.end())
-            return false;
+	bool insert(int val) {
+		if(value_to_index.find(val) != value_to_index.end())
+			return false;
 
-        value_to_index[val] = values.size();
-        values.push_back(val);
-        return true;
-    }
+		value_to_index[val] = values.size();
+		values.push_back(val);
+		return true;
+	}
 
-    bool remove(int val) {
-        auto it = value_to_index.find(val);
-        if (it == value_to_index.end())
-            return false;
+	bool remove(int val) {
+		auto it = value_to_index.find(val);
+		if(it == value_to_index.end())
+			return false;
 
-        size_t index = it->second;
-        int last_val = values.back();
-        value_to_index[last_val] = index;
-        values[index] = last_val;
+		size_t index = it->second;
+		int last_val = values.back();
+		value_to_index[last_val] = index;
+		values[index] = last_val;
 
-        values.pop_back();
-        value_to_index.erase(it);
+		values.pop_back();
+		value_to_index.erase(it);
 
-        return true;
-    }
+		return true;
+	}
 
-    int getRandom() {
-        std::uniform_int_distribution<size_t> dist(0, values.size() - 1);
-        return values[dist(random_engine)];
-    }
+	int getRandom() {
+		std::uniform_int_distribution<size_t> dist(0, values.size() - 1);
+		return values[dist(random_engine)];
+	}
 };
 
 int main() {
-    RandomizedSet randomizedSet = RandomizedSet();
-    randomizedSet.insert(1); // 向集合中插入 1 。返回 true 表示 1 被成功地插入。
-    randomizedSet.remove(2); // 返回 false ，表示集合中不存在 2 。
-    randomizedSet.insert(2); // 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。
-    randomizedSet.getRandom(); // getRandom 应随机返回 1 或 2 。
-    randomizedSet.remove(1); // 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。
-    randomizedSet.insert(2); // 2 已在集合中，所以返回 false 。
-    randomizedSet.getRandom(); // 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
+	RandomizedSet randomizedSet = RandomizedSet();
+	randomizedSet.insert(1); // 向集合中插入 1 。返回 true 表示 1 被成功地插入。
+	randomizedSet.remove(2); // 返回 false ，表示集合中不存在 2 。
+	randomizedSet.insert(2); // 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。
+	randomizedSet.getRandom(); // getRandom 应随机返回 1 或 2 。
+	randomizedSet.remove(1); // 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。
+	randomizedSet.insert(2); // 2 已在集合中，所以返回 false 。
+	randomizedSet.getRandom(); // 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
 }
 
 /*

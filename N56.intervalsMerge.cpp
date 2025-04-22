@@ -13,27 +13,27 @@
 
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        sort(intervals.begin(), intervals.end(), [](const vector<int>& a,const vector<int>& b){return a[0] < b[0];});
-        int i = 0, j = 1, n = intervals.size();
-        vector<vector<int>> res{intervals[0]};
-        while(j < n){
-            if(res[i][1] >= intervals[j][0]){
-                // merge
-                res[i][1] = max(intervals[j][1], res[i][1]); // 有可能完全被包含
-            }else{
-                res.push_back(intervals[j]);
-                i++;
-            }
-            j++;
-        }
-        return res;
-    }
+	vector<vector<int>> merge(vector<vector<int>> &intervals) {
+		sort(
+		    intervals.begin(), intervals.end(), [](const vector<int> &a, const vector<int> &b) { return a[0] < b[0]; });
+		int i = 0, j = 1, n = intervals.size();
+		vector<vector<int>> res{intervals[0]};
+		while(j < n) {
+			if(res[i][1] >= intervals[j][0]) {
+				// merge
+				res[i][1] = max(intervals[j][1], res[i][1]); // 有可能完全被包含
+			} else {
+				res.push_back(intervals[j]);
+				i++;
+			}
+			j++;
+		}
+		return res;
+	}
 };
-    
-int main(){
-    Solution sol;
-    vector<vector<int>> intervals = {{1,3},{2,6},{8,10},{15,18}};
-    cout << sol.merge(intervals) << endl;
 
+int main() {
+	Solution sol;
+	vector<vector<int>> intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+	cout << sol.merge(intervals) << endl;
 }

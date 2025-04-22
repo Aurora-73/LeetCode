@@ -1,6 +1,6 @@
-#include<iostream>
-#include<vector>
-#include<unordered_map>
+#include <iostream>
+#include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -13,44 +13,45 @@ using namespace std;
 
 class Solution1 {
 private:
-int binarySearch(const vector<int> &vec, int key, int i, int j){
-    int middle; // from i to j all_close [i, j]
-    while(i <= j){
-        middle = i + (j - i) / 2;
-        if(key == vec[middle]){
-            return middle;
-        } else if (key < vec[middle]){
-            j = middle - 1;
-        } else {
-            i = middle + 1;
-        }
-    }
-    return -1; 
-}
+	int binarySearch(const vector<int> &vec, int key, int i, int j) {
+		int middle; // from i to j all_close [i, j]
+		while(i <= j) {
+			middle = i + (j - i) / 2;
+			if(key == vec[middle]) {
+				return middle;
+			} else if(key < vec[middle]) {
+				j = middle - 1;
+			} else {
+				i = middle + 1;
+			}
+		}
+		return -1;
+	}
+
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int i = 0;
-        for(int i = 0; i < numbers.size(); i++){
-            int need_index = binarySearch(numbers, target - numbers[i], i+1, numbers.size() - 1);
-            if(need_index != -1){
-                return {i , need_index};
-            }
-        }
-    }
+	vector<int> twoSum(vector<int> &numbers, int target) {
+		int i = 0;
+		for(int i = 0; i < numbers.size(); i++) {
+			int need_index = binarySearch(numbers, target - numbers[i], i + 1, numbers.size() - 1);
+			if(need_index != -1) {
+				return {i, need_index};
+			}
+		}
+	}
 };
 
 class Solution2 {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-       int i = 0, j = numbers.size() - 1;
-       while(true){
-            if(numbers[i] + numbers[j] == target){
-                return {i, j};
-            }else if(numbers[i] + numbers[j] > target){
-                j--;
-            }else{
-                i++;
-            }
-       }
-    }
+	vector<int> twoSum(vector<int> &numbers, int target) {
+		int i = 0, j = numbers.size() - 1;
+		while(true) {
+			if(numbers[i] + numbers[j] == target) {
+				return {i, j};
+			} else if(numbers[i] + numbers[j] > target) {
+				j--;
+			} else {
+				i++;
+			}
+		}
+	}
 };

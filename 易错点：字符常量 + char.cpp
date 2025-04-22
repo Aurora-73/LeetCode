@@ -3,17 +3,17 @@
 
 using namespace std;
 
-int main(){
-    string str;
-    str += "Hell" + 'o';
-    cout << str <<endl;
-    cout << "Hell" + 'o' << endl;
-    cout << typeid("Hell" + 'o').name() << endl; // PKc 表示 const char*
-    long long aaa = reinterpret_cast<long long>("Hell");
-    long long bbb = reinterpret_cast<long long>("Hell" + 'o');
-    cout << aaa << " " << bbb << endl;
-    cout << char(bbb - aaa) << endl;
-    cout << "Hell" << 'o' << endl;
+int main() {
+	string str;
+	str += "Hell" + 'o';
+	cout << str << endl;
+	cout << "Hell" + 'o' << endl;
+	cout << typeid("Hell" + 'o').name() << endl; // PKc 表示 const char*
+	long long aaa = reinterpret_cast<long long>("Hell");
+	long long bbb = reinterpret_cast<long long>("Hell" + 'o');
+	cout << aaa << " " << bbb << endl;
+	cout << char(bbb - aaa) << endl;
+	cout << "Hell" << 'o' << endl;
 }
 
 /*关键点："Hell" + 'o' 的意思是什么？

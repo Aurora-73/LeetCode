@@ -25,89 +25,93 @@ using namespace std;
 
 class Solution {
 public:
-    string reverseWords1(string s) {
-        stringstream input(s);
-        string result, temp;
-        while(input >> temp){
-            if(result.length() != 0)
-                result = temp + " " + result;
-            else
-                result = temp;
-        }
-        return result;
-    } // 时空均为 O(n)
-    string reverseWords2(string s) {
-        // 1、移除多余的空格
-        int j = 0, i = 0;
-        for(; i < s.size(); i++){
-            if(s[i] != ' ' || (j > 0 && s[j - 1] != ' '))
-                s[j++] = s[i];
-        } // 每个单词之后都会保留一个空格，无法删除最后的空格
-        if(j > 0 && s[j - 1] == ' ')    
-            j--; // 删除最后的空格
-        s.resize(j);
+	string reverseWords1(string s) {
+		stringstream input(s);
+		string result, temp;
+		while(input >> temp) {
+			if(result.length() != 0)
+				result = temp + " " + result;
+			else
+				result = temp;
+		}
+		return result;
+	} // 时空均为 O(n)
+	string reverseWords2(string s) {
+		// 1、移除多余的空格
+		int j = 0, i = 0;
+		for(; i < s.size(); i++) {
+			if(s[i] != ' ' || (j > 0 && s[j - 1] != ' '))
+				s[j++] = s[i];
+		} // 每个单词之后都会保留一个空格，无法删除最后的空格
+		if(j > 0 && s[j - 1] == ' ')
+			j--; // 删除最后的空格
+		s.resize(j);
 
-        // 2、整体反转
-        auto reverse = [&](int b, int e){
-            while(b < e) swap(s[b++], s[e--]);
-        };
-        reverse(0, s.size() - 1);
+		// 2、整体反转
+		auto reverse = [&](int b, int e) {
+			while(b < e)
+				swap(s[b++], s[e--]);
+		};
+		reverse(0, s.size() - 1);
 
-        // 3、每个单词反转
-        for(i = 0; i < s.size(); i++){
-            if(s[i] != ' '){
-                j = i;
-                while(j < s.size() && s[j] != ' ') j++;
-                reverse(i, j-1);
-                i = j - 1;
-            }
-        }
-        return s;
-    }
-    string reverseWords3(string s) {
-        // 1、移除多余的空格
-        int j = 0, i = 0;
-        bool need_space = false;
-        for(; i < s.size(); i++){
-            if(s[i] != ' '){
-                if(need_space){
-                    s[j] = ' ';
-                    j++;
-                    need_space = false;
-                }
-                s[j] = s[i];
-                j++;
-            }else if(j > 0 && s[j - 1] != ' '){
-                need_space = true;
-            }
-        }
-        s.resize(j);
+		// 3、每个单词反转
+		for(i = 0; i < s.size(); i++) {
+			if(s[i] != ' ') {
+				j = i;
+				while(j < s.size() && s[j] != ' ')
+					j++;
+				reverse(i, j - 1);
+				i = j - 1;
+			}
+		}
+		return s;
+	}
+	string reverseWords3(string s) {
+		// 1、移除多余的空格
+		int j = 0, i = 0;
+		bool need_space = false;
+		for(; i < s.size(); i++) {
+			if(s[i] != ' ') {
+				if(need_space) {
+					s[j] = ' ';
+					j++;
+					need_space = false;
+				}
+				s[j] = s[i];
+				j++;
+			} else if(j > 0 && s[j - 1] != ' ') {
+				need_space = true;
+			}
+		}
+		s.resize(j);
 
-        // 2、整体反转
-        auto reverse = [&](int b, int e){
-            while(b < e) swap(s[b++], s[e--]);
-        };
-        reverse(0, s.size() - 1);
+		// 2、整体反转
+		auto reverse = [&](int b, int e) {
+			while(b < e)
+				swap(s[b++], s[e--]);
+		};
+		reverse(0, s.size() - 1);
 
-        // 3、每个单词反转
-        for(i = 0; i < s.size(); i++){
-            if(s[i] != ' '){
-                j = i;
-                while(j < s.size() && s[j] != ' ') j++;
-                reverse(i, j-1);
-                i = j - 1;
-            }
-        }
-        return s;
-    }
+		// 3、每个单词反转
+		for(i = 0; i < s.size(); i++) {
+			if(s[i] != ' ') {
+				j = i;
+				while(j < s.size() && s[j] != ' ')
+					j++;
+				reverse(i, j - 1);
+				i = j - 1;
+			}
+		}
+		return s;
+	}
 };
 
-int main(){
-    Solution sol;
-    cout << "|" << sol.reverseWords1(" a good   example") << "|" << endl;
-    cout << "|" << sol.reverseWords2(" a good   example") << "|" << endl;
-    cout << "|" << sol.reverseWords3(" a good   example") << "|" << endl;
-    cout << "|" << sol.reverseWords1("   hello  world   ") << "|" << endl;
-    cout << "|" << sol.reverseWords2("   hello  world   ") << "|" << endl;
-    cout << "|" << sol.reverseWords3("   hello  world   ") << "|" << endl;
+int main() {
+	Solution sol;
+	cout << "|" << sol.reverseWords1(" a good   example") << "|" << endl;
+	cout << "|" << sol.reverseWords2(" a good   example") << "|" << endl;
+	cout << "|" << sol.reverseWords3(" a good   example") << "|" << endl;
+	cout << "|" << sol.reverseWords1("   hello  world   ") << "|" << endl;
+	cout << "|" << sol.reverseWords2("   hello  world   ") << "|" << endl;
+	cout << "|" << sol.reverseWords3("   hello  world   ") << "|" << endl;
 }

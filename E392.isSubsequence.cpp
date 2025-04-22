@@ -12,20 +12,20 @@ using namespace std;
 
 class Solution {
 public:
-bool isSubsequence(string s, string t) {
-        int index = 0;
-        for (int i = 0; i < t.size(); i++) {
-            if (t[i] == s[index]) {
-                index++;
-            }
-        }
-        return index == s.size();
-    }
+	bool isSubsequence(string s, string t) {
+		int index = 0;
+		for(int i = 0; i < t.size(); i++) {
+			if(t[i] == s[index]) {
+				index++;
+			}
+		}
+		return index == s.size();
+	}
 };
 // 直接从左往右即可，不需要考虑 i 的回溯，因为即使后面即使有可行的开头，第一个开头也是可用的开头
 
-int main(){
-    string s = "abc", t = "ahbgdc";
-    Solution sol;
-    cout << sol.isSubsequence(s,t);
+int main() {
+	string s = "abc", t = "ahbgdc";
+	Solution sol;
+	cout << sol.isSubsequence(s, t);
 }

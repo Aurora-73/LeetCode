@@ -25,32 +25,31 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 
 class Solution {
 public:
-    unordered_map<char, int> oneChar;
-    Solution() {
-        oneChar['I'] = 1;
-        oneChar['V'] = 5;
-        oneChar['X'] = 10;
-        oneChar['L'] = 50;
-        oneChar['C'] = 100;
-        oneChar['D'] = 500;
-        oneChar['M'] = 1000;
-
-    }
-    int romanToInt(string s) {
-        int sum = 0;
-        for (int i = s.size() - 1;i >= 0;i--) {
-            if (i < s.size() - 1 && (oneChar[s[i + 1]] == 5 * oneChar[s[i]] || oneChar[s[i + 1]] == 10 * oneChar[s[i]])) {
-                sum -= oneChar[s[i]];
-            }
-            else {
-                sum += oneChar[s[i]];
-            }
-        }
-        return sum;
-    }
+	unordered_map<char, int> oneChar;
+	Solution() {
+		oneChar['I'] = 1;
+		oneChar['V'] = 5;
+		oneChar['X'] = 10;
+		oneChar['L'] = 50;
+		oneChar['C'] = 100;
+		oneChar['D'] = 500;
+		oneChar['M'] = 1000;
+	}
+	int romanToInt(string s) {
+		int sum = 0;
+		for(int i = s.size() - 1; i >= 0; i--) {
+			if(i < s.size() - 1 &&
+			   (oneChar[s[i + 1]] == 5 * oneChar[s[i]] || oneChar[s[i + 1]] == 10 * oneChar[s[i]])) {
+				sum -= oneChar[s[i]];
+			} else {
+				sum += oneChar[s[i]];
+			}
+		}
+		return sum;
+	}
 };
 
 int main() {
-    Solution sol;
-    cout << sol.romanToInt("MCMXCIV");
+	Solution sol;
+	cout << sol.romanToInt("MCMXCIV");
 }
