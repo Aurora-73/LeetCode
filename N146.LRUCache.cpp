@@ -94,23 +94,94 @@ public:
 
 struct UDListNode {
 	int key, value;
-	unique_ptr<UDListNode> next;
 	UDListNode *prev;
-}; // unique double LikeNode
+	unique_ptr<UDListNode> next;
+	UDListNode(int k = 0, int v = 0) : key(k), value(v), prev(nullptr), next(nullptr) {}
+};
 
-class LRUCache2 {
-	LRUCache2(int capacity) {}
+class LRUCache {
+private:
+	size_t capacity;
+	unordered_map<int, UDListNode *> map;
 
-	int get(int key) {}
+	unique_ptr<UDListNode> head; // dummy head
+	UDListNode *tail; // dummy tail (裸指针，只接链)
 
-	void put(int key, int value) {}
+public:
+	LRUCache(int cap) : capacity(cap) {
+		head = make_unique<UDListNode>();
+		auto tailNode = new UDListNode();
+		tail = tailNode;
+
+		head->next.reset(tail);
+		tail->prev = head.get();
+	}
+
+	~LRUCache() = default;
+
+	void moveToFront(UDListNode *node) {
+		// 从当前位置摘除（它的 prev 和 next 必须都在）
+		UDListNode *prevNode = node->prev;
+		unique_ptr<UDListNode> moving = move(prevNode->next);
+		prevNode->next = move(moving->next);
+		if(prevNode->next) {
+			prevNode->next->prev = prevNode;
+		}
+
+		// 插入到 head 后面
+		moving->next = move(head->next);
+		if(moving->next) {
+			moving->next->prev = moving.get();
+		}
+		moving->prev = head.get();
+		head->next = move(moving);
+	}
+
+	void removeTail() {
+		UDListNode *oldTail = tail->prev;
+		UDListNode *prev = oldTail->prev;
+		map.erase(oldTail->key);
+
+		prev->next = move(oldTail->next); // move 掉 oldTail（原来指向 tail）
+		tail->prev = prev;
+	}
+
+	int get(int key) {
+		auto it = map.find(key);
+		if(it == map.end())
+			return -1;
+		moveToFront(it->second);
+		return it->second->value;
+	}
+
+	void put(int key, int value) {
+		auto it = map.find(key);
+		if(it != map.end()) {
+			it->second->value = value;
+			moveToFront(it->second);
+			return;
+		}
+
+		if(map.size() >= capacity) {
+			removeTail();
+		}
+
+		auto newNode = make_unique<UDListNode>(key, value);
+		newNode->next = move(head->next);
+		if(newNode->next) {
+			newNode->next->prev = newNode.get();
+		}
+		newNode->prev = head.get();
+		map[key] = newNode.get();
+		head->next = move(newNode);
+	}
 };
 
 int main() {
 	int cap;
 	cout << "请输入缓存容量：";
 	cin >> cap;
-	LRUCache1 cache(cap);
+	LRUCache cache(cap);
 
 	cout << "操作说明：" << endl;
 	cout << "1 key         表示 get(key)" << endl;
