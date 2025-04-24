@@ -83,6 +83,8 @@ public:
 	}
 
 	string minWindow(string s, string t) {
+		ori.clear();
+		cnt.clear();
 		for(const auto &c : t) {
 			++ori[c];
 		}
@@ -90,8 +92,9 @@ public:
 		int l = 0, r = -1;
 		int len = INT_MAX, ansL = -1;
 
-		while(r < int(s.size())) {
-			if(ori.find(s[++r]) != ori.end()) {
+		while(r + 1 < int(s.size())) {
+			++r;
+			if(ori.find(s[r]) != ori.end()) {
 				++cnt[s[r]];
 			}
 			while(check() && l <= r) {
@@ -106,7 +109,7 @@ public:
 			}
 		}
 
-		return ansL == -1 ? string() : s.substr(ansL, len);
+		return ansL == -1 ? "" : s.substr(ansL, len);
 	}
 };
 
@@ -114,16 +117,16 @@ int main() {
 	string s, t;
 	Solution sol;
 	Solution1 sol1;
-	s = "bba";
-	t = "ab";
-	cout << sol.minWindow(s, t) << endl;
-	cout << sol1.minWindow(s, t) << endl;
 	s = "ADOBECODEBANCEEEEE";
 	t = "ABC";
 	cout << sol.minWindow(s, t) << endl;
 	cout << sol1.minWindow(s, t) << endl;
 	s = "aaflslflsldkalskaaabbbbb";
 	t = "aaa";
+	cout << sol.minWindow(s, t) << endl;
+	cout << sol1.minWindow(s, t) << endl;
+	s = "bba";
+	t = "ab";
 	cout << sol.minWindow(s, t) << endl;
 	cout << sol1.minWindow(s, t) << endl;
 }
