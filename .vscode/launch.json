@@ -10,6 +10,7 @@
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
+      "console": "integratedTerminal",
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "gdb.exe",  // 或完整路径如 "D:\\mingw64\\bin\\gdb.exe"

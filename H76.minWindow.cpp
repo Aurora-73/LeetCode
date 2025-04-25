@@ -40,28 +40,31 @@ public:
 			if(map_t.count(s[j])) {
 				if(map_s[s[j]] < map_t[s[j]]) {
 					count++;
-					map_s[s[j]]++;
+					map_s[s[j]]++; // 在执行回缩的操作之前要把值++
 					if(count == t.size()) {
 						while(count >= t.size() - 1) {
 							if(map_t.count(s[i])) {
-								if(count == t.size() - 1)
+								if(count == t.size() - 1) {
 									break;
+								}
 								if(map_s[s[i]] == map_t[s[i]]) {
 									if(j - i < j_min - i_min || j_min == -1) {
 										j_min = j;
 										i_min = i;
-									}
+									} // 先回缩，回缩到恰好满足然后记录下标
 									count--;
 								}
 								map_s[s[i]]--;
 							}
 							i++;
-							if(i >= s.size())
+							if(i >= s.size()) {
 								break;
+							}
 						}
 					}
-				} else
+				} else {
 					map_s[s[j]]++;
+				}
 			}
 			j++;
 		}

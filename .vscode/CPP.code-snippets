@@ -1,0 +1,17 @@
+{
+	"My Default CPP Template": {
+	  "prefix": "mycpp",  // 你输入这个触发模板
+	  "body": [
+		"// Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+		"#include \"MyUtils.h\"",
+		"",
+		"/*  */",
+		"",
+		"int main() {",
+		"    Solution sol;",
+		"    $0",
+		"}"
+	  ],
+	  "description": "Default template for my C++ files"
+	}
+  }

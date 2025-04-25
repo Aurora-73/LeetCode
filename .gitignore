@@ -1,1 +1,7 @@
 *.exe
+cmake-build-debug/
+build/
+.vs/
+.idea/
+autogit.bat
+CMakeLists.txt
