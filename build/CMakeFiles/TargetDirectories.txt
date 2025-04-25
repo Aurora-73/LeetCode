@@ -1,3 +1,0 @@
-/mnt/e/Code/LeeCode/build/CMakeFiles/Example.dir
-/mnt/e/Code/LeeCode/build/CMakeFiles/edit_cache.dir
-/mnt/e/Code/LeeCode/build/CMakeFiles/rebuild_cache.dir
