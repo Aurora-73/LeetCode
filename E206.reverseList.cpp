@@ -43,6 +43,23 @@ public:
 }; // 无头结点
 
 int main() {
-	Solution1 sol;
-	Solution2 sol;
+	ListNode *head = new ListNode(0);
+	ListNode *tail = head;
+	tail->next = new ListNode(1);
+	tail = tail->next;
+	tail->next = new ListNode(2);
+	tail = tail->next;
+	tail->next = new ListNode(3);
+	tail = tail->next;
+	tail->next = new ListNode(4);
+	tail = tail->next;
+	tail->next = new ListNode(5);
+	tail = tail->next;
+	cout << head << endl;
+	Solution1 sol1;
+	head = sol1.reverseList(head);
+	cout << head << endl;
+	Solution2 sol2;
+	head = sol2.reverseList(head);
+	cout << head << endl;
 }
