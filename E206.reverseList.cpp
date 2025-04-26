@@ -6,9 +6,9 @@
 struct ListNode {
 	int val;
 	ListNode *next;
-	ListNode() : val(0), next(nullptr) { }
-	ListNode(int x) : val(x), next(nullptr) { }
-	ListNode(int x, ListNode *next) : val(x), next(next) { }
+	ListNode() : val(0), next(nullptr) {}
+	ListNode(int x) : val(x), next(nullptr) {}
+	ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 class Solution1 {
@@ -30,15 +30,16 @@ public:
 class Solution2 {
 public:
 	ListNode *reverseList(ListNode *head) {
-		ListNode *p = head;
-		head = nullptr;
-		while(p != nullptr) {
-			ListNode *q = p->next;
-			p->next = head;
-			head = p;
-			p = q;
+		if(!head)
+			return head;
+		ListNode *pre = nullptr, *now = head;
+		while(now) {
+			ListNode *next = now->next;
+			now->next = pre;
+			pre = now;
+			now = next;
 		}
-		return head;
+		return now;
 	}
 }; // 无头结点
 
