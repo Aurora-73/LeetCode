@@ -25,3 +25,12 @@ public:
 		return head;
 	}
 };
+
+int main() {
+	ListNode *list1 = createList({ 1, 3, 4 });
+	ListNode *list2 = createList({ 2, 5, 9 });
+	Solution sol;
+	ListNode *res = sol.mergeTwoLists(list1, list2);
+	cout << res << endl;
+	deleteList(res);
+}

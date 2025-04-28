@@ -21,3 +21,16 @@ public:
 		return false;
 	}
 };
+
+int main() {
+	ListNode *head = createList({ 1, 3, 4 }), *temp = head;
+	Solution sol;
+	cout << sol.hasCycle(head) << endl;
+	while(temp->next) {
+		temp = temp->next;
+	}
+	temp->next = head;
+	cout << sol.hasCycle(head) << endl;
+	temp->next = nullptr;
+	deleteList(head);
+}

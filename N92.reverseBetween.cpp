@@ -77,18 +77,8 @@ public:
 };
 
 int main() {
-	ListNode *head = new ListNode(0);
-	ListNode *tail = head;
-	tail->next = new ListNode(1);
-	tail = tail->next;
-	tail->next = new ListNode(2);
-	tail = tail->next;
-	tail->next = new ListNode(3);
-	tail = tail->next;
-	tail->next = new ListNode(4);
-	tail = tail->next;
-	tail->next = new ListNode(5);
-	tail = tail->next;
+	ListNode *head = createList(6);
+	cout << head << endl;
 	Solution1 sol1;
 	sol1.reverseBetween(head, 2, 4);
 	cout << head << endl;

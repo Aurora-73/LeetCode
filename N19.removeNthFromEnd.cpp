@@ -57,18 +57,7 @@ public:
 // 否则开始同步移动 fast 和 slow ，由于 slow 要指向前一个节点，因此当 fast->next 为空时就已经可以停止移动了
 
 int main() {
-	ListNode *head = new ListNode(0);
-	ListNode *tail = head;
-	tail->next = new ListNode(1);
-	tail = tail->next;
-	tail->next = new ListNode(2);
-	tail = tail->next;
-	tail->next = new ListNode(3);
-	tail = tail->next;
-	tail->next = new ListNode(4);
-	tail = tail->next;
-	tail->next = new ListNode(5);
-	tail = tail->next;
+	ListNode *head = createList(6);
 	cout << head << endl;
 	Solution1 sol1;
 	sol1.removeNthFromEnd(head, 2);
@@ -76,4 +65,5 @@ int main() {
 	Solution2 sol2;
 	sol2.removeNthFromEnd(head, 2);
 	cout << head << endl;
+	deleteList(head);
 }

@@ -36,18 +36,7 @@ public:
 }; // 无头结点
 
 int main() {
-	ListNode *head = new ListNode(0);
-	ListNode *tail = head;
-	tail->next = new ListNode(1);
-	tail = tail->next;
-	tail->next = new ListNode(2);
-	tail = tail->next;
-	tail->next = new ListNode(3);
-	tail = tail->next;
-	tail->next = new ListNode(4);
-	tail = tail->next;
-	tail->next = new ListNode(5);
-	tail = tail->next;
+	ListNode *head = createList(5);
 	cout << head << endl;
 	Solution1 sol1;
 	head = sol1.reverseList(head);
@@ -55,4 +44,5 @@ int main() {
 	Solution2 sol2;
 	head = sol2.reverseList(head);
 	cout << head << endl;
+	deleteList(head);
 }
