@@ -50,6 +50,22 @@ ListNode *createList(const std::vector<int> &values) {
 }
 
 /**
+* 输出链表
+* @param 链表头节点
+*/
+ostream &operator<<(ostream &os, ListNode *head) {
+	os << "{ ";
+	while(head) {
+		os << head->val;
+		head = head->next;
+		if(head) {
+			os << " -> ";
+		}
+	}
+	return os << " }";
+}
+
+/**
  * 释放链表内存
  * @param head 链表头节点
  */

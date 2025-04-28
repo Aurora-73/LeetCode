@@ -37,4 +37,5 @@ int main() {
 	Solution sol;
 	head = sol.deleteDuplicates(head);
 	cout << head << endl;
+	deleteList(head);
 }

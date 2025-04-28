@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <unordered_map>
+#include "MyUtils.h"
 #include "ListNode.h"
 
 using namespace std;
@@ -62,3 +60,20 @@ private:
 		return new ListNode(now % 10, addhelper(l1 ? l1->next : l1, l2 ? l2->next : l2, now / 10));
 	}
 };
+
+int main() {
+	ListNode *list1 = createList({ 1, 4, 4, 6 });
+	ListNode *list2 = createList({ 9, 5, 9, 7 });
+	Solution1 sol1;
+	ListNode *res1 = sol1.addTwoNumbers(list1, list2);
+	cout << res1 << endl;
+	deleteList(res1);
+	Solution2 sol2;
+	ListNode *res2 = sol2.addTwoNumbers(list1, list2);
+	cout << res2 << endl;
+	deleteList(res2);
+	Solution3 sol3;
+	ListNode *res3 = sol3.addTwoNumbers(list1, list2);
+	cout << res3 << endl;
+	deleteList(res3);
+}

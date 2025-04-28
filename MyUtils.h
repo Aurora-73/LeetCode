@@ -104,18 +104,4 @@ template <typename T> ostream &operator<<(ostream &os, const unordered_set<T> &u
 	return os << "}";
 }
 
-// 限制模板函数只适用于具有成员变量 `val` 和 `next` 的类型
-template <typename T>
-typename std::enable_if<std::is_class<T>::value, ostream &>::type operator<<(ostream &os, T *NodeList) {
-	os << "{ ";
-	while(NodeList) {
-		os << NodeList->val;
-		NodeList = NodeList->next;
-		if(NodeList) {
-			os << " -> ";
-		}
-	}
-	return os << " }";
-}
-
 #endif // MY_UTILS_H

@@ -1,5 +1,4 @@
 #include "MyUtils.h"
-#include <queue>
 /*146. LRU 缓存
 请你设计并实现一个满足  LRU (最近最少使用) 缓存 约束的数据结构。
 实现 LRUCache 类：
@@ -96,7 +95,7 @@ struct UDListNode {
 	int key, value;
 	UDListNode *prev;
 	unique_ptr<UDListNode> next;
-	UDListNode(int k = 0, int v = 0) : key(k), value(v), prev(nullptr), next(nullptr) {}
+	UDListNode(int k = 0, int v = 0) : key(k), value(v), prev(nullptr), next(nullptr) { }
 };
 
 class LRUCache {
