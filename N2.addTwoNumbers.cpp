@@ -1,5 +1,5 @@
 #include "MyUtils.h"
-#include "ListNode.h"
+#include "MyListNode.h"
 
 using namespace std;
 
@@ -62,8 +62,8 @@ private:
 };
 
 int main() {
-	ListNode *list1 = createList({ 1, 4, 4, 6 });
-	ListNode *list2 = createList({ 9, 5, 9, 7 });
+	ListNode *list1 = createList({1, 4, 4, 6});
+	ListNode *list2 = createList({9, 5, 9, 7});
 	Solution1 sol1;
 	ListNode *res1 = sol1.addTwoNumbers(list1, list2);
 	cout << res1 << endl;

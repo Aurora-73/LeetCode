@@ -1,13 +1,5 @@
 #include "MyUtils.h"
-
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) {}
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-	TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
+#include "MyTreeNode.h"
 
 class Solution {
 public:
@@ -19,3 +11,8 @@ public:
 		return p->val == q->val && isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
 	}
 };
+
+int main() {
+	TreeNode *root = createTree({1, -1, 1, 1, 4, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+	cout << root << endl;
+}

@@ -1,5 +1,5 @@
 #include "MyUtils.h"
-#include "ListNode.h"
+#include "MyListNode.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ public:
 };
 
 int main() {
-	ListNode *head = createList({ 1, 3, 4 }), *temp = head;
+	ListNode *head = createList({1, 3, 4}), *temp = head;
 	Solution sol;
 	cout << sol.hasCycle(head) << endl;
 	while(temp->next) {
