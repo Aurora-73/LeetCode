@@ -21,10 +21,10 @@ public:
 		int l = max(dfs(root->left), 0);
 		int r = max(dfs(root->right), 0);
 		int newLink = root->val + r + l;
-		maxPath = max(newLink, maxPath);
+		maxPath = max(newLink, maxPath); // 不要当前节点的父节点，自立为王
 		// 只能参与一个路径，当递归到某个节点的时候
 		// 它和它的父节点的链接和它和它左右节点的链接只能保留一个
-		return root->val + max(r, l);
+		return root->val + max(r, l); // 要当前节点的父节点，只能保留一个子树
 		// 留一个最大的，另一边给父节点
 	}
 	int maxPath = INT_MIN;
