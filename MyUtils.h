@@ -46,11 +46,11 @@ template <typename T, typename... Args> void _debug(const T &t, const Args &...a
 // ================= 容器输出重载 =================
 // vector
 template <typename T> ostream &operator<<(ostream &os, const vector<T> &vec) {
-	os << "[";
+	os << "{";
 	for(size_t i = 0; i < vec.size(); ++i) {
 		os << vec[i] << (i == vec.size() - 1 ? "" : ", ");
 	}
-	return os << "]";
+	return os << "}";
 }
 
 // pair
