@@ -12,7 +12,7 @@ struct Node {
 	Node *next;
 };
 
-class Solution {
+class Solution1 {
 public:
 	Node *connect(Node *root) {
 		if(!root)
@@ -39,6 +39,7 @@ public:
 			count++;
 			if(count == nowlevel) {
 				nowlevel = nextlevel;
+				nextlevel = 0; // 不要忘记重置
 				count = 0;
 				prev = nullptr;
 			}
@@ -47,6 +48,63 @@ public:
 	}
 };
 
-int main() {
-	Solution sol;
-}
+class Solution2 {
+public:
+	Node *connect(Node *root) {
+		if(!root)
+			return root;
+		queue<Node *> q;
+		q.push(root);
+		while(!q.empty()) {
+			int levelSize = q.size();
+			Node *prev = nullptr;
+			for(int i = 0; i < levelSize; ++i) {
+				Node *now = q.front();
+				q.pop();
+				if(now->left)
+					q.push(now->left);
+				if(now->right)
+					q.push(now->right);
+				if(prev)
+					prev->next = now;
+				prev = now;
+			} // 每次处理一整层的，这样可以直接用 q.size() 获取本层节点数
+		}
+		return root;
+	}
+};
+
+class Solution {
+public:
+	Node *connect(Node *root) {
+		Node *LevelBegin = root;
+		while(LevelBegin) {
+			Node *now = LevelBegin, *prev = nullptr;
+			LevelBegin = nullptr;
+			while(now) {
+				if(now->left) {
+					if(prev) {
+						prev->next = now->left;
+					}
+					prev = now->left;
+					if(!LevelBegin) {
+						LevelBegin = now->left;
+					}
+				}
+				if(now->right) {
+					if(prev) {
+						prev->next = now->right;
+					}
+					prev = now->right;
+					if(!LevelBegin) {
+						LevelBegin = now->right;
+					}
+				}
+				now = now->next;
+			}
+		}
+		return root;
+	}
+}; // 每次处理当前层的下一层，由于当前层已经在之前处理过了，因此可以直接使用next在本层之间跳转
+
+int main() {}

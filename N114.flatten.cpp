@@ -8,7 +8,7 @@
 展开后的单链表应该与二叉树 先序遍历 顺序相同。
  */
 
-class Solution {
+class Solution1 {
 public:
 	void flatten(TreeNode *root) {
 		if(!root)
@@ -32,6 +32,49 @@ private:
 	vector<TreeNode *> vec;
 };
 
+class Solution2 {
+public:
+	void flatten(TreeNode *root) {
+		while(root) {
+			TreeNode *right = root->right;
+			if(root->left) {
+				root->right = root->left;
+				root->left = nullptr;
+				if(right) {
+					TreeNode *end = root;
+					while(end->right) {
+						end = end->right;
+					}
+					end->right = right;
+				}
+			}
+			root = root->right;
+		}
+	}
+};
+/*将左子树插入到右子树的地方
+将原来的右子树接到左子树的最右边节点
+考虑新的右子树的根节点，一直重复上边的过程，直到新的右子树为 null*/
+
+class Solution3 {
+public:
+	void flatten(TreeNode *root) {
+		if(!root)
+			return;
+		flatten(root->left);
+		flatten(root->right);
+		TreeNode *right = root->right;
+		root->right = root->left;
+		root->left = nullptr;
+		while(root->right) {
+			root = root->right;
+		}
+		root->right = right;
+	}
+};
+/*递归解法*/
+
+/*关键在于先序遍历的时候右子树都是在左子树后面，因此可以把右子树直接放到左子树最后一个的右边*/
 int main() {
-	Solution sol;
+	Solution1 sol;
 }
