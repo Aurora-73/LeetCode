@@ -70,6 +70,46 @@ private:
 		return now;
 	}
 };
+
+template<typename Iterator>
+class GenericTreeBuilder {
+    using ValueType = typename std::iterator_traits<Iterator>::value_type;
+    using MapType = std::unordered_map<ValueType, Iterator>;
+
+public:
+    template<typename Container>
+    TreeNode* buildTree(Container& preorder, Container& inorder) {
+        if (preorder.empty()) return nullptr;
+
+        // 构建值到中序迭代器的映射
+        inorder_map.clear();
+        for (auto it = inorder.begin(); it != inorder.end(); ++it) {
+            inorder_map[*it] = it;
+        }
+
+        auto prebegin = preorder.begin();
+        return buildTreeIter(inorder.begin(), inorder.end(), prebegin, preorder.end());
+    }
+
+private:
+    MapType inorder_map;
+
+    TreeNode* buildTreeIter(Iterator inbegin, Iterator inend,
+                            Iterator& prebegin, Iterator preend) {
+        if (prebegin == preend || inbegin == inend) {
+            return nullptr;
+        }
+
+        auto it = inorder_map[*prebegin];  // 从哈希表中快速查找
+        TreeNode* node = new TreeNode(*prebegin);
+        ++prebegin;
+
+        node->left = buildTreeIter(inbegin, it, prebegin, preend);
+        node->right = buildTreeIter(std::next(it), inend, prebegin, preend);
+        return node;
+    }
+};
+
 // 缺少 方法二：迭代
 
 int main() {

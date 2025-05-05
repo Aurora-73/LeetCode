@@ -5,3 +5,5 @@ build/
 .idea/
 autogit.bat
 CMakeLists.txt
+.history/
+test.cpp
