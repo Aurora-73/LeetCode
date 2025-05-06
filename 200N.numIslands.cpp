@@ -27,18 +27,10 @@ private:
 			return;
 		}
 		grid[i][j] = '0';
-		int dir[3] = { -1, 0, 1 };
-		for(auto a : dir) {
-			for(auto b : dir) {
-				if(abs(a) + abs(b) == 1) { // 只能由水平方向和/或竖直方向上相邻的陆地连接形成
-					dfs(grid, i + a, j + b);
-				}
-			}
+		int dir2[4][2] = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } }; // 上下左右四个方向
+		for(int d = 0; d < 4; ++d) {
+			dfs(grid, i + dir2[d][0], j + dir2[d][1]);
 		}
-		// int dir2[4][2] = { {0, 1}, {1, 0}, {0, -1}, {-1, 0} }; // 上下左右四个方向
-		// for (int d = 0; d < 4; ++d) {
-		//     dfs(grid, i + dir2[d][0], j + dir2[d][1]);
-		// }
 	}
 }; // BFS 深度优先便利
 
@@ -74,75 +66,87 @@ public:
 
 class UnionFind {
 public:
-	vector<int> parent;
-	int count;
+	explicit UnionFind(size_t s) : parent(s, -1), count(s) { }
 
-	UnionFind(vector<vector<char>> &grid) {
-		int m = grid.size(), n = grid[0].size();
-		parent.resize(m * n);
-		count = 0;
-		for(int i = 0; i < m; ++i) {
-			for(int j = 0; j < n; ++j) {
-				if(grid[i][j] == '1') {
-					int id = i * n + j;
-					parent[id] = id;
-					count++;
-				}
-			}
-		}
+	// 查找根（带路径压缩）
+	size_t Find(size_t i) {
+		if(parent[i] < 0)
+			return i;
+		return parent[i] = Find(parent[i]);
 	}
 
-	int find(int i) {
-		if(parent[i] != i) {
-			parent[i] = find(parent[i]);
-		}
-		return parent[i];
-	}
+	// 合并两个集合，返回新根
+	size_t Union(size_t i, size_t j) {
+		size_t rooti = Find(i), rootj = Find(j);
+		if(rooti == rootj)
+			return rooti;
 
-	void unite(int x, int y) {
-		int rootx = find(x), rooty = find(y);
-		if(rootx != rooty) {
-			parent[rootx] = rooty;
+		if(-parent[rooti] > -parent[rootj]) {
+			parent[rooti] += parent[rootj];
+			parent[rootj] = rooti;
 			count--;
+			return rooti;
+		} else {
+			parent[rootj] += parent[rooti];
+			parent[rooti] = rootj;
+			count--;
+			return rootj;
 		}
 	}
 
-	int getCount() {
+	// 获取集合大小
+	int Size() {
 		return count;
 	}
+
+private:
+	std::vector<int> parent;
+	int count;
 };
 
 class Solution3 {
 public:
 	int numIslands(vector<vector<char>> &grid) {
-		if(grid.empty())
-			return 0;
-		int m = grid.size(), n = grid[0].size();
-		UnionFind uf(grid);
-
-		vector<vector<int>> dirs = { { 0, 1 }, { 1, 0 } }; // 只向右和下检查，避免重复
-		for(int i = 0; i < m; ++i) {
-			for(int j = 0; j < n; ++j) {
-				if(grid[i][j] == '1') {
-					for(auto &dir : dirs) {
-						int ni = i + dir[0], nj = j + dir[1];
-						if(ni < m && nj < n && grid[ni][nj] == '1') {
-							uf.unite(i * n + j, ni * n + nj);
+		size_t m = grid.size(), n = m ? grid[0].size() : 0;
+		UnionFind uf(m * n);
+		int dir[2][2] = { { 0, 1 }, { 1, 0 } }, waters = 0;
+		for(int i = 0; i < m; i++) {
+			for(int j = 0; j < n; j++) {
+				if(grid[i][j] == '0') {
+					waters++;
+					continue;
+				} else {
+					for(int k = 0; k < 2; k++) {
+						int ii = i + dir[k][0], jj = j + dir[k][1];
+						if(ii >= 0 && ii < m && jj >= 0 && jj < n && grid[ii][jj] == '1') {
+							uf.Union(i * n + j, ii * n + jj);
 						}
 					}
 				}
 			}
 		}
-		return uf.getCount();
+		return uf.Size() - waters;
 	}
-}; // 缺少并查集
+};
 
 int main() {
 	Solution1 sol1;
-	vector<vector<char>> grid = { { '1', '1', '0', '0', '0' },
+	vector<vector<char>> grid;
+	grid = { { '1', '1', '0', '1', '0' },
 		{ '1', '1', '0', '0', '0' },
 		{ '0', '0', '1', '0', '0' },
 		{ '0', '0', '0', '1', '1' } };
 	cout << sol1.numIslands(grid) << endl;
-	cout << sol1.numIslands(grid) << endl;
+	grid = { { '1', '1', '0', '1', '0' },
+		{ '1', '1', '0', '0', '0' },
+		{ '0', '0', '1', '0', '0' },
+		{ '0', '0', '0', '1', '1' } };
+	Solution2 sol2;
+	cout << sol2.numIslands(grid) << endl;
+	grid = { { '1', '1', '0', '1', '0' },
+		{ '1', '1', '0', '0', '0' },
+		{ '0', '0', '1', '0', '0' },
+		{ '0', '0', '0', '1', '1' } };
+	Solution3 sol3;
+	cout << sol3.numIslands(grid) << endl;
 }

@@ -200,6 +200,100 @@ public:
 
 // 缺少并查集
 
+class UnionFind {
+public:
+	// n：变量总数
+	UnionFind(int n) : parent(n, -1), weight(n, 1.0) { }
+
+	// 带路径压缩的查找，顺带把 weight[x] 更新成 x/根
+	int find(int x) {
+		if(parent[x] < 0)
+			return x;
+		int p = parent[x];
+		int root = find(p);
+		weight[x] *= weight[p]; // x/p * p/根 = x/根
+		return parent[x] = root;
+	}
+
+	// 合并方程：i/j = val
+	void unite(int i, int j, double val) {
+		int ri = find(i), rj = find(j);
+		if(ri == rj)
+			return;
+		// 合并小集合到大集合，保持 parent 里存负尺寸
+		if(-parent[ri] > -parent[rj]) {
+			// 把 rj 挂到 ri
+			parent[ri] += parent[rj];
+			parent[rj] = ri;
+			// 维护 rj/ri 的比例：
+			// 已知：i/j = val，且在合并前
+			//    weight[i] = i/ri
+			//    weight[j] = j/rj
+			// 推出 ri/rj = weight[i] / (val * weight[j])
+			weight[rj] = weight[i] / (val * weight[j]);
+		} else {
+			// 把 ri 挂到 rj
+			parent[rj] += parent[ri];
+			parent[ri] = rj;
+			// 推出 rj/ri = val * weight[j] / weight[i]
+			weight[ri] = val * weight[j] / weight[i];
+		}
+	}
+
+	// 如果在同一个集合，返回 i/j 的值；否则返回 -1
+	double calc(int i, int j) {
+		int ri = find(i), rj = find(j);
+		if(ri != rj)
+			return -1.0;
+		// i/j = (i/根) / (j/根)
+		return weight[i] / weight[j];
+	}
+
+private:
+	vector<int> parent; // 负数表示集合大小，非负表示父节点
+	vector<double> weight; // weight[x] = x/parent[x]（经路径压缩后是 x/根）
+};
+
+class Solution4 {
+public:
+	vector<double> calcEquation(vector<vector<string>> &equa, vector<double> &val, vector<vector<string>> &quer) {
+		unordered_map<string, int> maps;
+		vector<vector<int>> indexs(equa.size(), vector<int>(2));
+		for(int i = 0; i < equa.size(); ++i) {
+			for(int j = 0; j < 2; ++j) {
+				auto it = maps.find(equa[i][j]);
+				if(it == maps.end()) {
+					indexs[i][j] = maps.size();
+					maps[equa[i][j]] = indexs[i][j];
+				} else {
+					indexs[i][j] = it->second;
+				}
+			}
+		}
+		UnionFind uf(maps.size());
+		for(int i = 0; i < equa.size(); ++i) {
+			uf.unite(indexs[i][0], indexs[i][1], val[i]);
+		}
+		vector<double> res(quer.size(), -1);
+		for(int i = 0; i < quer.size(); ++i) {
+			int pairs[2], unknown = 0;
+			for(int j = 0; j < 2; ++j) {
+				auto it = maps.find(quer[i][j]);
+				if(it == maps.end()) {
+					unknown = 1;
+					break;
+				} else {
+					pairs[j] = it->second;
+				}
+			}
+			if(unknown)
+				continue;
+			res[i] = uf.calc(pairs[0], pairs[1]);
+		}
+		return res;
+	}
+};
+
 int main() {
 	Solution1 sol1;
 }
