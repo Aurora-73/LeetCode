@@ -21,6 +21,7 @@
 #include <cctype>
 #include <limits>
 #include <type_traits>
+#include <functional>
 using namespace std;
 
 // ================= 输入输出加速 =================

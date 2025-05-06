@@ -15,6 +15,7 @@
           "-o",
           "${fileDirname}/${fileBasenameNoExtension}.exe"  // 输出路径
         ],
+        "console": "integratedTerminal", // 使用集成终端
         "group": {
           "kind": "build",
           "isDefault": true

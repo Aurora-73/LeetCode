@@ -135,7 +135,7 @@ public:
 		}
 		return uf.getCount();
 	}
-}; // 并查集
+}; // 缺少并查集
 
 int main() {
 	Solution1 sol1;
