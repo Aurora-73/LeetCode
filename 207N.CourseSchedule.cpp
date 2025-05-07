@@ -68,40 +68,53 @@ public:
 
 class Solution3 {
 public:
-	bool isCycle = false;
-	vector<bool> visited, onPath;
-
-	bool canFinish(int numCourses, vector<vector<int>> &prerequisites) {
-		auto myGraph = buildGraph(prerequisites, numCourses);
-		visited.resize(numCourses, false);
-		onPath.resize(numCourses, false);
-		for(int i = 0; i < numCourses; i++) {
-			dfs(i, myGraph);
+	bool canFinish(int numCourses, const vector<vector<int>> &prerequisites) {
+		// 1. 构建邻接表
+		vector<vector<int>> graph(numCourses);
+		for(const auto &p : prerequisites) {
+			// p[1] → p[0]：要学 p[0] 之前必须先完成 p[1]
+			graph[p[1]].emplace_back(p[0]);
 		}
-		return !isCycle;
-	}
-	void dfs(int i, vector<vector<int>> &prerequisites) {
-		if(onPath[i])
-			isCycle = true;
-		if(visited[i] || isCycle)
-			return;
 
-		onPath[i] = true;
-		visited[i] = true;
+		// 2. 两个辅助数组
+		// visited[u] 表示节点 u 是否已经被 DFS 访问过
+		// onPath[u]  表示节点 u 是否在当前递归栈（即访问路径）上
+		vector<bool> visited(numCourses, false), onPath(numCourses, false);
 
-		for(auto x : prerequisites[i]) {
-			dfs(x, prerequisites);
+		// 3. 标志位：只要发现环，就置为 true
+		bool hasCycle = false;
+
+		// 4. 用 std::function 包装一个递归 lambda，方便在函数内部捕获外部变量
+		function<void(int)> dfs = [&](int u) {
+			// 4.1 如果 u 已经在当前路径上，说明形成了环
+			if(onPath[u]) {
+				hasCycle = true;
+				return;
+			}
+			// 4.2 如果已经访问过，或者全局已检测到环，就直接剪枝返回
+			if(visited[u] || hasCycle)
+				return;
+
+			// 4.3 进入节点 u：标记已访问，并加入当前路径
+			visited[u] = true;
+			onPath[u] = true;
+
+			// 4.4 递归访问所有后继节点
+			for(int v : graph[u]) {
+				dfs(v);
+			}
+
+			// 4.5 回溯时，将 u 从路径中移除
+			onPath[u] = false;
+		};
+
+		// 5. 对每个节点 i（0…numCourses-1）做一次 DFS，直到发现环为止
+		for(int i = 0; i < numCourses && !hasCycle; ++i) {
+			dfs(i);
 		}
-		onPath[i] = false;
-	}
-	vector<vector<int>> buildGraph(vector<vector<int>> &prerequisites, int numCourses) {
-		vector<vector<int>> myGraph(numCourses);
-		for(auto &edge : prerequisites) {
-			int to = edge[0];
-			int from = edge[1];
-			myGraph[from].push_back(to);
-		}
-		return myGraph;
+
+		// 6. 如果没检测到环，则可以完成所有课程
+		return !hasCycle;
 	}
 };
 
