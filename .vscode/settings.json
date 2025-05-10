@@ -72,5 +72,12 @@
         "typeinfo": "cpp",
         "valarray": "cpp"
     },
-    "github.copilot.editor.enableAutoCompletions": false
+    "github.copilot.enable": {
+        "cpp": false,
+        "h": false,
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": true
+    }
 }

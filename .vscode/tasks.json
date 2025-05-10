@@ -1,26 +1,28 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-      {
-        "label": "C++ Build",  // 任务名称（需与 launch.json 中的 preLaunchTask 一致）
-        "type": "cppbuild",
-        "command": "g++",
-        "args": [
-          "-g",                // 生成调试信息
-          "-O0",               // 禁用优化（便于调试）
-          "-Wall",             // 启用所有警告
-          "-Wno-sign-compare", 
-          "-std=c++17",        // 指定 C++ 标准
-          "${file}",           // 当前文件路径（如 main.cpp）
-          "-o",
-          "${fileDirname}/${fileBasenameNoExtension}.exe"  // 输出路径
-        ],
-        "console": "integratedTerminal", // 使用集成终端
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "problemMatcher": ["$gcc"]  // 捕获编译错误
-      }
-    ]
-  }
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "C++ Build", // 任务名称（需与 launch.json 中的 preLaunchTask 一致）
+      "type": "cppbuild",
+      "command": "g++",
+      "args": [
+        "-g", // 生成调试信息
+        "-O0", // 禁用优化（便于调试）
+        "-Wall", // 启用所有警告
+        "-Wno-sign-compare",
+        "-std=c++17", // 指定 C++ 标准
+        "${file}", // 当前文件路径（如 main.cpp）
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.exe" // 输出路径
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ], // 捕获编译错误
+      "console": "integratedTerminal" // 使用集成终端
+    }
+  ]
+}
