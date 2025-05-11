@@ -82,7 +82,7 @@ public:
 		// 1. 初始化 Trie 容器
 		wordsPtr = &words;
 		int total = words.size();
-		// 预估节点数：单词总长度之和 + 1
+		// 预估空间
 		int est = 1;
 		for(auto &w : words)
 			est += w.size();
@@ -118,12 +118,10 @@ public:
 
 private:
 	// Trie 存储
-	vector<array<int, 26>> tree;
-	vector<int> pass;
-	vector<int> wordIndex;
+	vector<array<int, 26>> tree; // 树的保存结构，用int表示下标，由于0号是根节点，不应该被指向，所以默认值0即为空
+	vector<int> pass; // 有多少个单词经过过第i个节点
+	vector<int> wordIndex; // 标记第i个树是谁的叶子结点，如果都不是则为-1
 	vector<string> *wordsPtr;
-
-	// 结果收集
 	vector<string> res;
 
 	int m, n;
