@@ -10,28 +10,28 @@ digits[i] 是范围 ['2', '9'] 的一个数字。*/
 class Solution {
 public:
 	vector<string> letterCombinations(string digits) {
+		vector<string> res;
 		if(!digits.size())
 			return {};
 		end = digits.end();
 		string combian;
-		dfs(digits.begin(), combian);
-		return std::move(res);
+		dfs(res, digits.begin(), combian);
+		return res;
 	}
 
 private:
-	void dfs(string::iterator it, string &combian) {
+	void dfs(vector<string> &res, string::iterator it, string &combian) {
 		if(it == end) {
 			res.push_back(combian);
 			return;
 		}
 		for(auto c : phoneMap[*it - '0']) {
 			combian.push_back(c);
-			dfs(it + 1, combian);
+			dfs(res, it + 1, combian);
 			combian.pop_back(); // 范围下一个之前将当前值加入，访问之后将当前值删除，这样不用复制很多份了
 		}
 	}
 	vector<string> phoneMap { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-	vector<string> res;
 	string::iterator end;
 };
 

@@ -105,15 +105,16 @@ public:
 		// 3. 在 board 上 DFS 搜索
 		m = board.size();
 		n = m ? board[0].size() : 0;
+		vector<string> res;
 		res.clear();
 		res.reserve(total);
 
 		for(int i = 0; i < m && res.size() < total; ++i) {
 			for(int j = 0; j < n && res.size() < total; ++j) {
-				dfs(board, 0, i, j);
+				dfs(res, board, 0, i, j);
 			}
 		}
-		return std::move(res);
+		return res;
 	}
 
 private:
@@ -122,8 +123,6 @@ private:
 	vector<int> pass; // 有多少个单词经过过第i个节点
 	vector<int> wordIndex; // 标记第i个树是谁的叶子结点，如果都不是则为-1
 	vector<string> *wordsPtr;
-	vector<string> res;
-
 	int m, n;
 	// 四个方向
 	static constexpr int dirs[4][2] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
@@ -150,7 +149,7 @@ private:
 
 	// 从 board[x][y]、Trie 节点 u 开始 DFS
 	// 返回本次调用找到的单词数（用于剪枝更新 pass）
-	int dfs(vector<vector<char>> &B, int u, int x, int y) {
+	int dfs(vector<string> &res, vector<vector<char>> &B, int u, int x, int y) {
 		// 越界、已访问、Trie 无此分支、或前缀已无剩余单词 → 剪枝
 		if(x < 0 || x >= m || y < 0 || y >= n)
 			return 0;
@@ -176,7 +175,7 @@ private:
 		B[x][y] = '#';
 		// 四方向递归
 		for(auto &d : dirs) {
-			found += dfs(B, u, x + d[0], y + d[1]);
+			found += dfs(res, B, u, x + d[0], y + d[1]);
 		}
 		// 回溯还原
 		B[x][y] = ch;
