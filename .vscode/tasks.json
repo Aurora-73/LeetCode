@@ -9,7 +9,7 @@
         "-g", // 生成调试信息
         "-O0", // 禁用优化（便于调试）
         "-Wall", // 启用所有警告
-        "-Wno-sign-compare",
+        // "-Wno-sign-compare",
         "-std=c++17", // 指定 C++ 标准
         "${file}", // 当前文件路径（如 main.cpp）
         "-o",
@@ -22,7 +22,7 @@
       "problemMatcher": [
         "$gcc"
       ], // 捕获编译错误
-      "console": "integratedTerminal" // 使用集成终端
+      "console": "integratedTerminal"
     }
   ]
 }
