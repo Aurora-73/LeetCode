@@ -16,14 +16,14 @@ public:
 		return buildTreeIter(inorder.begin(), inorder.end(), prebegin, preorder.end());
 	}
 	TreeNode *buildTreeIter(std::vector<int>::iterator inbegin,
-	                        std::vector<int>::iterator inend,
-	                        std::vector<int>::iterator &prebegin,
-	                        std::vector<int>::iterator preend) {
+	    std::vector<int>::iterator inend,
+	    std::vector<int>::iterator &prebegin,
+	    std::vector<int>::iterator preend) {
 		if(prebegin == preend || inbegin == inend) {
 			return nullptr;
 		}
 		auto it = find(inbegin, inend, *prebegin); // 不能使用 lowwer_bound 因为数组不一定有序
-		if(it == inend || *it != *prebegin) {
+		if(it == inend) {
 			return nullptr;
 		}
 		TreeNode *now = new TreeNode(*prebegin);
@@ -54,9 +54,9 @@ private:
 	unordered_map<int, vector<int>::iterator> inorder_map;
 
 	TreeNode *buildTreeIter(std::vector<int>::iterator inbegin,
-	                        std::vector<int>::iterator inend,
-	                        std::vector<int>::iterator &prebegin,
-	                        std::vector<int>::iterator preend) {
+	    std::vector<int>::iterator inend,
+	    std::vector<int>::iterator &prebegin,
+	    std::vector<int>::iterator preend) {
 		if(prebegin == preend || inbegin == inend) {
 			return nullptr;
 		}
@@ -71,43 +71,41 @@ private:
 	}
 };
 
-template<typename Iterator>
-class GenericTreeBuilder {
-    using ValueType = typename std::iterator_traits<Iterator>::value_type;
-    using MapType = std::unordered_map<ValueType, Iterator>;
+template <typename Iterator> class GenericTreeBuilder {
+	using ValueType = typename std::iterator_traits<Iterator>::value_type;
+	using MapType = std::unordered_map<ValueType, Iterator>;
 
 public:
-    template<typename Container>
-    TreeNode* buildTree(Container& preorder, Container& inorder) {
-        if (preorder.empty()) return nullptr;
+	template <typename Container> TreeNode *buildTree(Container &preorder, Container &inorder) {
+		if(preorder.empty())
+			return nullptr;
 
-        // 构建值到中序迭代器的映射
-        inorder_map.clear();
-        for (auto it = inorder.begin(); it != inorder.end(); ++it) {
-            inorder_map[*it] = it;
-        }
+		// 构建值到中序迭代器的映射
+		inorder_map.clear();
+		for(auto it = inorder.begin(); it != inorder.end(); ++it) {
+			inorder_map[*it] = it;
+		}
 
-        auto prebegin = preorder.begin();
-        return buildTreeIter(inorder.begin(), inorder.end(), prebegin, preorder.end());
-    }
+		auto prebegin = preorder.begin();
+		return buildTreeIter(inorder.begin(), inorder.end(), prebegin, preorder.end());
+	}
 
 private:
-    MapType inorder_map;
+	MapType inorder_map;
 
-    TreeNode* buildTreeIter(Iterator inbegin, Iterator inend,
-                            Iterator& prebegin, Iterator preend) {
-        if (prebegin == preend || inbegin == inend) {
-            return nullptr;
-        }
+	TreeNode *buildTreeIter(Iterator inbegin, Iterator inend, Iterator &prebegin, Iterator preend) {
+		if(prebegin == preend || inbegin == inend) {
+			return nullptr;
+		}
 
-        auto it = inorder_map[*prebegin];  // 从哈希表中快速查找
-        TreeNode* node = new TreeNode(*prebegin);
-        ++prebegin;
+		auto it = inorder_map[*prebegin]; // 从哈希表中快速查找
+		TreeNode *node = new TreeNode(*prebegin);
+		++prebegin;
 
-        node->left = buildTreeIter(inbegin, it, prebegin, preend);
-        node->right = buildTreeIter(std::next(it), inend, prebegin, preend);
-        return node;
-    }
+		node->left = buildTreeIter(inbegin, it, prebegin, preend);
+		node->right = buildTreeIter(std::next(it), inend, prebegin, preend);
+		return node;
+	}
 };
 
 // 缺少 方法二：迭代
