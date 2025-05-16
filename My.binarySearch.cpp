@@ -58,6 +58,7 @@ int find_first(const vector<int> &vec, Cond cond) {
 			left = mid + 1; // vec[mid] 不满足，答案在 mid+1…right
 		} else {
 			right = mid; // vec[mid] 满足，答案在 left…mid
+			// mid 满足，不舍弃（虽然在左闭右开的形式中舍弃了，但是返回时left = right其实没有舍弃，只是以后不在检查这个元素了）
 		}
 	}
 	return left;

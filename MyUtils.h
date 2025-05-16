@@ -110,7 +110,7 @@ ostream &operator<<(ostream &os, const unordered_set<T> &us) {
 }
 
 template <typename RandomIt, typename Cond>
-RandomIt find_first(RandomIt first, RandomIt last, Cond cond) {
+RandomIt my_find_first(RandomIt first, RandomIt last, Cond cond) {
 	// 要求 RandomIt 支持 last - first
 	using diff_t = typename std::iterator_traits<RandomIt>::difference_type;
 	diff_t len = last - first; // 区间 [first, last) 长度
@@ -118,7 +118,7 @@ RandomIt find_first(RandomIt first, RandomIt last, Cond cond) {
 	while(len > 0) {
 		diff_t half = len / 2;
 		RandomIt mid = first + half; // 计算中点
-		if(!cond(*mid)) {
+		if(!cond(mid)) {
 			// [first..mid] 都不满足
 			first = mid + 1;
 			len = len - half - 1;

@@ -20,7 +20,7 @@
 -231 <= nums[i] <= 231 - 1
 对于所有有效的 i 都有 nums[i] != nums[i + 1]*/
 
-class Solution {
+class Solution1 {
 public:
 	int findPeakElement(vector<int> &nums) {
 		int max_val = INT_MIN, index = -1, n = nums.size();
@@ -34,7 +34,7 @@ public:
 	}
 }; // 直接找最大值也是对的，但是 O(n)
 
-class Solution1 {
+class Solution2 {
 public:
 	int findPeakElement(vector<int> &nums) {
 		int n = nums.size(), left = -1, right = n; // 左开又开
@@ -61,37 +61,67 @@ public:
 	}
 }; // 使用不在int范围内的更小的值表示负无穷
 
-class Solution2 {
+class Solution3 {
 public:
 	int findPeakElement(vector<int> &nums) {
 		int n = nums.size();
-		if(n == 1 || nums[1] < nums[0]) {
+		if(n < 2 || nums[1] < nums[0]) {
 			return 0;
 		}
 		if(nums[n - 2] < nums[n - 1]) {
 			return n - 1;
-		} // 先处理边界，这样就不需要考虑负无穷的事了
-		int left = 1, right = n - 2;
-		while(left <= right) {
+		}
+		int left = 1, right = n - 1; // 左闭右开
+		while(left < right) {
 			int mid = left + (right - left) / 2;
 			if(nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) {
 				return mid;
-			}
-			if(nums[mid] > nums[mid - 1]) {
-				// 上坡，峰值在右边
+			} else if(nums[mid] < nums[mid + 1]) {
+				// 上升， left移动
 				left = mid + 1;
 			} else {
-				// 下坡，峰值在左边
-				right = mid - 1;
+				right = mid; // 左闭右开
+				// mid小于两边则两边各有一个峰值
 			}
 		}
-		// 最终 left > right，left 即为一个合法峰值的位置
-		return left;
+		return -1; // 不可能发生这种情况
 	}
 };
 
+class Solution4 { // 左闭右开
+public:
+	int findPeakElement(vector<int> &nums) {
+		int left = 0, right = nums.size() - 1; // 虽然是左闭右开但是 right = nums.size() - 1
+		while(left < right) {
+			int mid = left + (right - left) / 2;
+			// 与右边比较，决定搜索方向
+			if(nums[mid] > nums[mid + 1]) {
+				// 峰值在左边（包含mid）
+				right = mid;
+			} else {
+				// 峰值在右边
+				left = mid + 1;
+			}
+		}
+		return left; // 或 return right 都可以，最终 left == right
+	}
+}; // 寻找第一个满足 nums[mid] > nums[mid + 1]的元素，也就是说之前的元素均递增，之后递减，由于两侧边界都是负无穷，因此总体上满足find_first的二分要求
+
+class Solution5 {
+public:
+	int findPeakElement(vector<int> &nums) {
+		auto cond = [&](vector<int>::iterator &mid) { return *mid > *(mid + 1); };
+		return my_find_first(nums.begin(), nums.end() - 1, cond) - nums.begin();
+	}
+};
+/*我们来分析：
+给定数组满足 nums[-1] = nums[n] = -∞；
+如果当前 nums[mid] > nums[mid + 1]，说明我们在一个“下降趋势”的右边，峰值可能就在 mid 或它左边；
+如果 nums[mid] < nums[mid + 1]，说明我们在“上升趋势”，峰值一定在右边（根据题设一定存在峰值）；
+于是你会发现：这正是典型的“左边都不满足，右边都满足”的结构 —— 也就是你模板 find_first 的使用场景。*/
+
 int main() {
-	Solution sol;
+	Solution5 sol;
 	vector<int> nums = { -2147483648, -2147483647 };
 	cout << sol.findPeakElement(nums);
 }

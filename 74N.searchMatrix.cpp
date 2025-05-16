@@ -9,7 +9,7 @@
 
 // 二维非常复杂，赋值的时候还要 ±1 要考虑是否进位或借位
 // 左闭右开 二维
-class Solution22 {
+class Solution2 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
 		if(matrix.empty() || matrix[0].empty()) return false;
@@ -35,20 +35,20 @@ public:
 };
 
 // 左闭右开 一维
-class Solution21 {
+class Solution1 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
 		int rows = matrix.size(), cols = matrix[0].size();
 		int left = 0, right = rows * cols, mid, mid_val;
 		while(left < right) {
 			mid = left + (right - left) / 2;
-			mid_val = matrix[mid / cols][mid % cols];
+			mid_val = matrix[mid / cols][mid % cols]; // 注意是 cols 不是 rows
 			if(target == mid_val) {
 				return true;
-			} else if(target < mid_val) {
-				right = mid;
+			} else if(mid_val < target) {
+				left = mid + 1; // 当前元素不满足 + 1
 			} else {
-				left = mid + 1; // 注意这里仍要加1
+				right = mid; // 右开不用 + 1
 			}
 		}
 		return false;
