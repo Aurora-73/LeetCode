@@ -1,43 +1,82 @@
-#include <iostream>
-#include <vector>
+#include "MyUtils.h"
 
 using namespace std;
+// 统一 : 区间风格：左闭右开 [l, r)
 
-int binarySearch1(const vector<int> &vec, int key) {
-	int i = 0, j = vec.size() - 1, middle; // 左闭右闭
-	while(i <= j) {
-		middle = i + (j - i) / 2;
+int binarySearch(const vector<int> &vec, int key) {
+	int left = 0, right = vec.size(), middle; // 左闭右开, right 为 size
+	while(left < right) { // 左闭右开 left == right 为空区间
+		middle = left + (right - left) / 2;
 		if(key == vec[middle]) {
 			return middle;
 		} else if(key < vec[middle]) {
-			j = middle - 1;
+			right = middle; // 左闭右开
 		} else {
-			i = middle + 1;
+			left = middle + 1; // 注意这里仍要加1
 		}
 	}
 	return -1;
 }
 
-int binarySearch2(const vector<int> &vec, int key) {
-	int i = 0, j = vec.size(), middle; // 左闭右开, j 为 size
-	while(i < j) { // 左闭右开 i == j 为空区间
-		middle = i + (j - i) / 2;
-		if(key == vec[middle]) {
-			return middle;
-		} else if(key < vec[middle]) {
-			j = middle; // 左闭右开
+int lower_bound(const vector<int> &vec, int key) {
+	int left = 0, right = vec.size();
+	while(left < right) {
+		int mid = left + (right - left) / 2;
+		if(vec[mid] < key) {
+			left = mid + 1;
 		} else {
-			i = middle + 1; // 注意这里仍要加1
+			right = mid;
 		}
 	}
-	return -1;
-}
+	return left;
+} // 返回第一个大于等于key的元素的下标 左闭右开
+
+int upper_bound(const vector<int> &vec, int key) {
+	int left = 0, right = vec.size();
+	while(left < right) {
+		int mid = left + (right - left) / 2;
+		if(vec[mid] <= key) {
+			left = mid + 1;
+		} else {
+			right = mid;
+		}
+	}
+	return left;
+} // 返回第一个大于key的元素的下标 左闭右开
+
+/* lower_bound 是第一个大于等于 key 的元素，upper_bound 是第一个大于 key 的元素。
+   这样只会用到 end()，不会用到 begin() - 1。
+   而如果搜索最后一个小于 key 的元素 或者 最后一个小于等于 key 的元素可能会用到 begin() - 1 */
+
+template <typename Cond>
+int find_first(const vector<int> &vec, Cond cond) {
+	int left = 0, right = vec.size(); // [left, right)
+	while(left < right) {
+		int mid = left + (right - left) / 2;
+		// 左边都是 false，右边都是 true
+		if(!cond(vec[mid])) {
+			left = mid + 1; // vec[mid] 不满足，答案在 mid+1…right
+		} else {
+			right = mid; // vec[mid] 满足，答案在 left…mid
+		}
+	}
+	return left;
+} // 返回第一个使得 cond条件为真的元素的下标, 分界线左边不满足，右边均满足，左闭右开
+// 标准格式，lower_bound是conde = [&](int val){return val >= key;}
+// upper_bound是conde = [&](int val){return val > key;}
+// binary_search是conde = [&](int val){return val >= key;} 且 left < n && vec[left] == key
 
 int main() {
 	vector<int> vec = { 0, 2, 4, 6, 8, 10 };
-	int key;
-	while(cin >> key) {
-		cout << "left close right close " << binarySearch1(vec, key) << endl;
-		cout << "left close right open  " << binarySearch2(vec, key) << endl;
-	}
+	int key = 5;
+	cout << "left close right close " << binarySearch(vec, key) << endl;
+	cout << "lower_bound STL " << lower_bound(vec.begin(), vec.end(), key) - vec.begin() << endl;
+	cout << "lower_bound " << lower_bound(vec, key) << endl;
+	auto cond = [&](int val) { return val >= key; };
+	cout << "find_first " << find_first(vec, cond) << endl;
+	key = 4;
+	cout << "left close right close " << binarySearch(vec, key) << endl;
+	cout << "lower_bound STL " << lower_bound(vec.begin(), vec.end(), key) - vec.begin() << endl;
+	cout << "lower_bound " << lower_bound(vec, key) << endl;
+	cout << "find_first " << find_first(vec, cond) << endl; // key是以引用方式捕获，修改外部key会自动同步到内部
 }

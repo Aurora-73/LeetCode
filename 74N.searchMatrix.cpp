@@ -7,62 +7,12 @@
 每行的第一个整数大于前一行的最后一个整数。
 给你一个整数 target ，如果 target 在矩阵中，返回 true ；否则，返回 false 。*/
 
-// 二维非常复杂，赋值的时候还要+1要考虑是否进位
-// 左闭右闭 二维
-class Solution12 {
-public:
-	bool searchMatrix(vector<vector<int>> &matrix, int target) {
-		if(matrix.empty() || matrix[0].empty())
-			return false;
-		int rows = matrix.size(), cols = matrix[0].size(); // 不一定是方形
-		int left_i = 0, left_j = 0, right_i = rows - 1, right_j = cols - 1; // 左闭右闭
-		while(left_i * cols + left_j <= right_i * cols + right_j) {
-			int middle = ((right_i - left_i) * cols + right_j - left_j) / 2 + left_i * cols + left_j;
-			int mid_i = middle / cols, mid_j = middle % cols;
-			int &mid_val = matrix[mid_i][mid_j];
-			if(target == mid_val) {
-				return true;
-			} else if(target < mid_val) {
-				middle -= 1; // 直接给 right_j ± 1 可能导致进位或者 -1 的情况，必须重新计算
-				right_i = middle / cols;
-				right_j = middle % cols;
-			} else {
-				middle += 1;
-				left_i = middle / cols;
-				left_j = middle % cols;
-			}
-		}
-		return false;
-	}
-};
-
-// 左闭右闭 一维
-class Solution11 {
-public:
-	bool searchMatrix(vector<vector<int>> &matrix, int target) {
-		int rows = matrix.size(), cols = matrix[0].size();
-		int left = 0, right = rows * cols - 1, mid, mid_val;
-		while(left <= right) {
-			mid = left + (right - left) / 2;
-			mid_val = matrix[mid / cols][mid % cols];
-			if(target == mid_val) {
-				return true;
-			} else if(target < mid_val) {
-				right = mid - 1;
-			} else {
-				left = mid + 1;
-			}
-		}
-		return false;
-	}
-};
-
-// 左闭右闭 二维
+// 二维非常复杂，赋值的时候还要 ±1 要考虑是否进位或借位
+// 左闭右开 二维
 class Solution22 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
-		if(matrix.empty() || matrix[0].empty())
-			return false;
+		if(matrix.empty() || matrix[0].empty()) return false;
 		int rows = matrix.size(), cols = matrix[0].size(); // 不一定是方形
 		int left_i = 0, left_j = 0, right_i = rows - 1, right_j = cols; // 左闭右开
 		while(left_i * cols + left_j < right_i * cols + right_j) {
@@ -108,8 +58,7 @@ public:
 class Solution {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
-		if(matrix.empty() || matrix[0].empty())
-			return false;
+		if(matrix.empty() || matrix[0].empty()) return false;
 		int rows = matrix.size(), up = 0, down = rows; // 左闭右开
 		while(up < down) {
 			int mid = up + (down - up) / 2, mid_val = matrix[mid].back();
@@ -137,7 +86,7 @@ public:
 		}
 		return false;
 	}
-}; // O(logn+logm)
+}; // O(logn+logm) 先查找在哪行，再查找在哪列
 
 int main() {
 	Solution sol;
