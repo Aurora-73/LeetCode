@@ -10,17 +10,14 @@ void PreOrder(TreeNode *root) {
 		TreeNode *now = s.top();
 		s.pop();
 		// 先右后左，保证左子树先处理
-		if(now->right)
-			s.push(now->right);
-		if(now->left)
-			s.push(now->left);
+		if(now->right) s.push(now->right);
+		if(now->left) s.push(now->left);
 		cout << now->val << " ";
 	}
 }
 
 void InOrder(TreeNode *root) {
-	if(!root)
-		return;
+	if(!root) return;
 	stack<TreeNode *> s;
 	TreeNode *now = root;
 	while(now || !s.empty()) {
@@ -36,11 +33,10 @@ void InOrder(TreeNode *root) {
 }
 
 void PostOrder(TreeNode *root) {
-	if(!root)
-		return;
+	if(!root) return;
 
 	stack<pair<TreeNode *, bool>> s;
-	s.push({root, false});
+	s.push({ root, false });
 
 	while(!s.empty()) {
 		auto node = s.top().first;
@@ -52,18 +48,15 @@ void PostOrder(TreeNode *root) {
 			cout << node->val << " ";
 		} else {
 			// 第一次遇到，标记为已访问，再把右左子树入栈
-			s.push({node, true}); // 自己标记为“访问过”
-			if(node->right)
-				s.push({node->right, false});
-			if(node->left)
-				s.push({node->left, false});
+			s.push({ node, true }); // 自己标记为“访问过”
+			if(node->right) s.push({ node->right, false });
+			if(node->left) s.push({ node->left, false });
 		}
 	}
 }
 
-void PostOrder(TreeNode *root) {
-	if(!root)
-		return;
+void PostOrder2(TreeNode *root) {
+	if(!root) return;
 
 	stack<TreeNode *> s;
 	TreeNode *curr = root;
@@ -91,7 +84,7 @@ void PostOrder(TreeNode *root) {
 }
 
 int main() {
-	auto tree = createTree({1, 2, 3, 4, 5, 6, 7});
+	auto tree = createTree({ 1, 2, 3, 4, 5, 6, 7 });
 	PreOrder(tree);
 	cout << endl;
 	InOrder(tree);
