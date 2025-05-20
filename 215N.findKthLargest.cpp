@@ -80,11 +80,9 @@ public:
 		// 外层用 i<=j 保证所有元素都被检查
 		while(i <= j) {
 			// 找到第一个 >= pivot 的 i
-			while(i <= j && nums[i] < pivot)
-				++i;
+			while(i <= j && nums[i] < pivot) ++i;
 			// 找到第一个 <= pivot 的 j
-			while(i <= j && nums[j] > pivot)
-				--j;
+			while(i <= j && nums[j] > pivot) --j;
 			if(i < j) {
 				swap(nums[i], nums[j]);
 				++i; // 交换后推进，避免死循环
