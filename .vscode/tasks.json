@@ -1,28 +1,45 @@
+// .vscode/tasks.json
 {
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "C++ Build", // 任务名称（需与 launch.json 中的 preLaunchTask 一致）
-      "type": "cppbuild",
+      "label": "C++ Clean",
+      "type": "shell",
+      "command": "if exist \"${fileDirname}\\${fileBasenameNoExtension}.exe\" del \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "C++ Build",
+      "type": "shell",
       "command": "g++",
       "args": [
-        "-g", // 生成调试信息
-        "-O0", // 禁用优化（便于调试）
-        "-Wall", // 启用所有警告
-        // "-Wno-sign-compare",
-        "-std=c++17", // 指定 C++ 标准
-        "${file}", // 当前文件路径（如 main.cpp）
+        "-g",
+        "-O0",
+        "-Wall",
+        // "-Werror",
+        "-std=c++17",
+        "${file}",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}.exe" // 输出路径
+        "${fileDirname}/${fileBasenameNoExtension}.exe"
+      ],
+      "dependsOn": "C++ Clean",
+      "problemMatcher": [
+        "$gcc"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
-      },
-      "problemMatcher": [
-        "$gcc"
-      ], // 捕获编译错误
-      "console": "integratedTerminal"
+      }
     }
   ]
 }
