@@ -21,7 +21,8 @@
     {
       "label": "C++ Build",
       "type": "shell",
-      "command": "g++",
+      // 这里改成你安装目录下的 g++.exe
+      "command": "D:\\mingw64\\bin\\g++.exe",
       "args": [
         "-g",
         "-O0",
@@ -29,8 +30,9 @@
         // "-Werror",
         "-std=c++17",
         "${file}",
+        // 输出也用反斜杠
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}.exe"
+        "${fileDirname}\\\\${fileBasenameNoExtension}.exe"
       ],
       "dependsOn": "C++ Clean",
       "problemMatcher": [
@@ -39,6 +41,9 @@
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}" // 可选：保证工作目录是项目根
       }
     }
   ]

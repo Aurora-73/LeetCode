@@ -1,4 +1,3 @@
-// .vscode/launch.json
 {
   "version": "0.2.0",
   "configurations": [
@@ -6,26 +5,26 @@
       "name": "C++ Debug",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
-      "externalConsole": false, // 使用集成终端
+      "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb.exe",
-      "preLaunchTask": "C++ Build", // 先执行上面定义的 Build
+      "miDebuggerPath": "D:/mingw64/bin/gdb.exe",
+      "preLaunchTask": "C++ Build",
       "setupCommands": [
         {
-          "description": "美化输出",
+          "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         },
         {
-          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/**"
+          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/**"
         },
         {
-          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/*"
+          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/*"
         }
       ]
     }

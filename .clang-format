@@ -1,0 +1,80 @@
+# 基于 WebKit
+BasedOnStyle: WebKit
+
+# —— 缩进与空格 ——  
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
+
+# —— 模板 ——  
+BreakTemplateDeclarations: Yes
+
+# —— 短语一行策略 ——  
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortNamespacesOnASingleLine: true
+AllowShortLambdasOnASingleLine: Inline
+
+# —— 构造函数初始化列表 ——  
+BreakConstructorInitializers: AfterColon
+
+# —— 括号样式 ——  
+BreakBeforeBraces: Attach
+BraceWrapping:
+  AfterClass:        false
+  AfterControlStatement: false
+  AfterFunction:     false
+  AfterNamespace:    false
+  AfterStruct:       false
+  BeforeElse:        false
+  IndentBraces:      false
+
+# —— 访问控制 ——  
+IndentAccessModifiers: false
+AccessModifierOffset: -4
+
+# —— 函数与参数 ——  
+SpaceBeforeParens: Never
+BinPackArguments: false
+BinPackParameters: false
+
+# —— 指针和引用 ——  
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+# —— 对齐与格式化 ——  
+# AlignConsecutiveAssignments: true
+# AlignConsecutiveDeclarations: true
+AlignTrailingComments: true
+ColumnLimit: 100
+PenaltyExcessCharacter: 1000
+PenaltyBreakAssignment: 5
+PenaltyBreakBeforeFirstCallParameter: 19
+
+# —— 注释与其他 ——  
+ReflowComments: false
+SortIncludes: true
+
+# —— 头文件分组 ——  
+IncludeCategories:
+  - Regex:           '^<.*\.h>'
+    Priority:        1
+  - Regex:           '^"(third_party|external)/'
+    Priority:        2
+  - Regex:           '^"(.*)"'
+    Priority:        3
+  - Regex:           '.*'
+    Priority:        4
+
+# —— 运算符断行 ——  
+BreakBeforeBinaryOperators: All
+
+# —— 命名空间 ——  
+NamespaceIndentation: Inner
+
+# —— 模板尖括号空格 ——  
+NeedWhitespaceBeforeTemplateClose: true
