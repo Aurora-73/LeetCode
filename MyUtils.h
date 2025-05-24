@@ -2,38 +2,32 @@
 #define MY_UTILS_H
 
 // 常用标准库
-#include <iostream>
-#include <vector>
-#include <string>
-#include <queue>
-#include <stack>
 #include <algorithm>
-#include <unordered_map>
-#include <map>
-#include <unordered_set>
-#include <set>
-#include <climits>
-#include <cassert>
-#include <memory>
 #include <bitset>
-#include <stdexcept>
-#include <cmath>
+#include <cassert>
 #include <cctype>
-#include <limits>
-#include <type_traits>
+#include <climits>
+#include <cmath>
 #include <functional>
+#include <iostream>
+#include <limits>
+#include <map>
+#include <memory>
+#include <queue>
 #include <random>
+#include <set>
+#include <stack>
+#include <stdexcept>
+#include <string>
+#include <type_traits>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 using namespace std;
 
-// ================= 输入输出加速 =================
-void fast_io() {
-	ios::sync_with_stdio(false);
-	cin.tie(nullptr);
-}
-
 // ================= 调试输出系统 =================
-#define DEBUG(...)                                                                                                     \
-	cerr << #__VA_ARGS__ << " = ";                                                                                     \
+#define DEBUG(...)                                                                                 \
+	cerr << #__VA_ARGS__ << " = ";                                                                 \
 	_debug(__VA_ARGS__);
 
 template <typename T>
@@ -109,31 +103,5 @@ ostream &operator<<(ostream &os, const unordered_set<T> &us) {
 	}
 	return os << "}";
 }
-
-template <typename RandomIt, typename Cond>
-RandomIt my_find_first(RandomIt first, RandomIt last, Cond cond) {
-	// 要求 RandomIt 支持 last - first
-	using diff_t = typename std::iterator_traits<RandomIt>::difference_type;
-	diff_t len = last - first; // 区间 [first, last) 长度
-
-	while(len > 0) {
-		diff_t half = len / 2;
-		RandomIt mid = first + half; // 计算中点
-		if(!cond(mid)) {
-			// [first..mid] 都不满足
-			first = mid + 1;
-			len = len - half - 1;
-		} else {
-			// mid 及其右侧可能满足
-			len = half;
-		}
-	}
-	// 退出时 first==last 或 *first 是第一个满足 cond 的位置
-	return first;
-} // 返回第一个使得 cond条件为真的元素的的迭代器, 分界线左边不满足，右边均满足，左闭右开
-// 标准格式，lower_bound是conde = [&](RandomIt::value_type val){return val >= key;}
-// upper_bound是conde = [&](RandomIt::value_type val){return val > key;}
-// binary_search是conde = [&](RandomIt::value_type val){return val >= key;} 且 first != end && *first == key
-// 更好的写法应该是 std::iterator_traits<RandomIt>::value_type，因为 RandomIt 可能是原生指针
 
 #endif // MY_UTILS_H
