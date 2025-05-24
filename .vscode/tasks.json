@@ -1,28 +1,50 @@
+// .vscode/tasks.json
 {
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "C++ Build", // 任务名称（需与 launch.json 中的 preLaunchTask 一致）
-      "type": "cppbuild",
-      "command": "g++",
+      "label": "C++ Clean",
+      "type": "shell",
+      "command": "if exist \"${fileDirname}\\${fileBasenameNoExtension}.exe\" del \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
+      "options": {
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "C++ Build",
+      "type": "shell",
+      // 这里改成你安装目录下的 g++.exe
+      "command": "D:\\mingw64\\bin\\g++.exe",
       "args": [
-        "-g", // 生成调试信息
-        "-O0", // 禁用优化（便于调试）
-        "-Wall", // 启用所有警告
-        // "-Wno-sign-compare",
-        "-std=c++17", // 指定 C++ 标准
-        "${file}", // 当前文件路径（如 main.cpp）
+        "-g",
+        "-O0",
+        "-Wall",
+        // "-Werror",
+        "-std=c++20",
+        "${file}",
+        // 输出也用反斜杠
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}.exe" // 输出路径
+        "${fileDirname}\\\\${fileBasenameNoExtension}.exe"
+      ],
+      "dependsOn": "C++ Clean",
+      "problemMatcher": [
+        "$gcc"
       ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": [
-        "$gcc"
-      ], // 捕获编译错误
-      "console": "integratedTerminal"
+      "options": {
+        "cwd": "${workspaceFolder}" // 可选：保证工作目录是项目根
+      }
     }
   ]
 }

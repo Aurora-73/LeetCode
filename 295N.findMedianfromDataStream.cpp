@@ -12,15 +12,58 @@ double findMedian() 返回到目前为止所有元素的中位数。与实际答
 
 class MedianFinder {
 public:
-	MedianFinder() { }
+	MedianFinder() {}
 
-	void addNum(int num) { }
+	void addNum_old(int num) {
+		if(large.size() == small.size()) {
+			if(small.size() && num < small.top()) {
+				small.push(num);
+				large.push(small.top());
+				small.pop();
+			} else {
+				large.push(num);
+			}
+		} else {
+			if(large.size() && num > large.top()) {
+				large.push(num);
+				small.push(large.top());
+				large.pop();
+			} else {
+				small.push(num);
+			}
+		}
+	} // 优先让large更大
 
-	double findMedian() { }
+	void addNum(int num) {
+		// 先把 num 推入 large（右半边），再把堆顶“最小的”放到 small
+		large.push(num);
+		small.push(large.top());
+		large.pop();
+
+		// 保证 large.size() >= small.size()
+		if(small.size() > large.size()) {
+			large.push(small.top());
+			small.pop();
+		}
+	}
+
+	double findMedian() {
+		if(large.size() > small.size()) {
+			return large.top();
+		}
+		return (static_cast<double>(large.top()) + small.top()) / 2;
+	}
+
+private:
+	priority_queue<int, vector<int>, greater<int>> large; // 小根堆
+	priority_queue<int> small; // 大根堆
 };
 
 int main() {
 	MedianFinder *obj = new MedianFinder();
-	obj->addNum(1);
-	double param_2 = obj->findMedian();
+	vector<int> nums = {0, -1, 2, -3, 4, -5, 6, -7};
+	for(auto &x : nums) {
+		obj->addNum(x);
+		cout << obj->findMedian() << " ";
+	}
 }

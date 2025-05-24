@@ -5,28 +5,26 @@
       "name": "C++ Debug",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",  // 必须与 tasks.json 输出路径一致
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
-      "console": "integratedTerminal",
       "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb.exe",  // 或完整路径如 "D:\\mingw64\\bin\\gdb.exe"
-      "preLaunchTask": "C++ Build", // 关键：调试前执行名为 "C++ Build" 的编译任务
+      "miDebuggerPath": "D:/mingw64/bin/gdb.exe",
+      "preLaunchTask": "C++ Build",
       "setupCommands": [
         {
-          "description": "美化输出",
+          "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         },
-        // 跳过 STL 路径（根据你的配置）
         {
-          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/​**​/*"
+          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/**"
         },
         {
-          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/*"
+          "text": "skip -gfi D:/mingw64/lib/gcc/x86_64-w64-mingw32/15.1.0/include/c++/bits/*"
         }
       ]
     }
