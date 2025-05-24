@@ -47,7 +47,7 @@ private:
 
 struct myHash {
 	size_t operator()(const pair<int, int> &pa) const {
-		return std::hash<int>()(pa.first) ^ (std::hash<int>()(pa.second) << 1);
+		return ((size_t)pa.first << 32) ^ (size_t)pa.second;
 	}
 };
 

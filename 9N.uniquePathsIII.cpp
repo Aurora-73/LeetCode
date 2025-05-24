@@ -55,7 +55,7 @@ private:
 
 struct pair_hash {
 	size_t operator()(const pair<int, int> &p) const noexcept {
-		// 简单地把两个 int 拼成一个 size_t
+		// 简单地把两个 int 拼成一个 size_t ( int 32位，size_t 64位，直接拼接即可 )
 		return ((size_t)p.first << 32) ^ (size_t)p.second;
 	}
 };
@@ -136,5 +136,5 @@ private:
 //     用 vis 的第 pos 位表示该格子是否已访问。
 
 int main() {
-	Solution sol;
+	Solution2 sol;
 }

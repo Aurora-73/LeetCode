@@ -9,7 +9,8 @@
 // 哈希函数，用于unordered_map中pair<int, int>作为key
 struct pair_hash {
 	size_t operator()(const pair<int, int> &p) const {
-		return hash<int>()(p.first) ^ (hash<int>()(p.second) << 1);
+		// 简单地把两个 int 拼成一个 size_t ( int 32位，size_t 64位，直接拼接即可 )( int 32位，size_t 64位，直接拼接即可 )
+		return ((size_t)p.first << 32) ^ (size_t)p.second;
 	}
 };
 
