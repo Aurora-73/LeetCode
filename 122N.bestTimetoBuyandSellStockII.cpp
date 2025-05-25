@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-// Created: 2025-05-25
-#include "MyUtils.h"
-
-/*122. 买卖股票的最佳时机 II
-给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
-在每一天，你可以决定是否购买和/或出售股票。
-你在任何时候 最多 只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
-返回 你能获得的 最大 利润 。*/
-=======
 // Created: 2025-05-24
 #include "MyUtils.h"
 
@@ -96,7 +86,6 @@ public:
 		return profit_no_stock;
 	}
 };
->>>>>>> 752717b0a78f9fc52b4553381cce842cc3cf20fe
 
 class Solution {
 public:
@@ -107,17 +96,10 @@ public:
 		}
 		return sum;
 	}
-<<<<<<< HEAD
-};
-
-int main() {
-	Solution sol;
-=======
 }; // 直接加和全部的增量，不要减少的
 
 int main() {
 	Solution sol;
 	vector<int> a { 1, 2, 3, 4, 5, 1, 2, 4 };
 	cout << sol.maxProfit(a);
->>>>>>> 752717b0a78f9fc52b4553381cce842cc3cf20fe
 }
