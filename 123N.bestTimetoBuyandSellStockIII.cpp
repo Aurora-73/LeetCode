@@ -75,8 +75,8 @@ private:
 	vector<array<int, 4>> memo;
 	int dfs(vector<int> &prices, int day, int state) {
 		if(day >= (int)prices.size() || state == 4) return 0;
-		int keep, move;
 		if(memo[day][state] == INT_MAX) {
+			int keep, move;
 			if(state == 0) { // state = 0：未进行过任何操作
 				keep = dfs(prices, day + 1, state);
 				move = dfs(prices, day + 1, state + 1) - prices[day];
@@ -101,6 +101,7 @@ public:
 	int maxProfit(vector<int> &prices) {
 		int n = prices.size();
 		vector<array<int, 4>> dp(prices.size() + 1);
+		dp.back().fill(0);
 		for(int i = n - 1; i >= 0; --i) {
 			dp[i][0] = max(dp[i + 1][0], dp[i + 1][1] - prices[i]);
 			dp[i][1] = max(dp[i + 1][1], dp[i + 1][2] + prices[i]);

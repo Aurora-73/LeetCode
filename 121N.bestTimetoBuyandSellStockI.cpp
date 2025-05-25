@@ -15,16 +15,15 @@ public:
 private:
 	int dfs(vector<int> &prices, int day, bool has_stock) {
 		if(day >= (int)prices.size()) return 0;
-
-		if(!has_stock) {                            // 当前未持股：可以选择今天买入，或跳过
-			int skip = dfs(prices, day + 1, false); // 跳过，不操作
-			int buy = dfs(prices, day + 1, true) - prices[day]; // 买入，花掉 prices[day]
-			return max(skip, buy);
-		} else {                    // 当前已持股（已经买入）：只能选择今天卖出，或继续持有
-			int sell = prices[day]; // 卖出获得 prices[day]，交易结束
-			int hold = dfs(prices, day + 1, true);
-			return max(sell, hold);
+		int keep, move;
+		if(!has_stock) { // 当前未持股：可以选择今天买入，或跳过
+			keep = dfs(prices, day + 1, false);
+			move = dfs(prices, day + 1, true) - prices[day];
+		} else { // 当前已持股（已经买入）：只能选择今天卖出，或继续持有
+			keep = dfs(prices, day + 1, true);
+			move = prices[day];
 		}
+		return max(keep, move);
 	}
 }; // 从第 day 天开始，在当前是否持股为 has_stock 的状态下，所能获得的“最大利润”。如果已经持有，不考虑持有的成本
 
@@ -41,37 +40,35 @@ private:
 	vector<array<int, 2>> memo;
 	int dfs(vector<int> &prices, int day, bool has_stock) {
 		if(day >= n) return 0;
-		if(!has_stock) {
-			if(memo[day][has_stock] == INT_MAX) {
-				int skip = dfs(prices, day + 1, false);
-				int buy = dfs(prices, day + 1, true) - prices[day];
-				memo[day][has_stock] = max(skip, buy);
+		if(memo[day][has_stock] == INT_MAX) {
+			int keep, move;
+			if(!has_stock) {
+				keep = dfs(prices, day + 1, false);
+				move = dfs(prices, day + 1, true) - prices[day];
+			} else {
+				keep = dfs(prices, day + 1, true);
+				move = prices[day];
 			}
-		} else {
-			if(memo[day][has_stock] == INT_MAX) {
-				int sell = prices[day];
-				int hold = dfs(prices, day + 1, true);
-				memo[day][has_stock] = max(sell, hold);
-			}
+			memo[day][has_stock] = max(keep, move);
 		}
 		return memo[day][has_stock];
 	}
-};
+}; // 记忆化存储
 
 class Solution3 {
 public:
 	int maxProfit(vector<int> &prices) {
 		int n = prices.size();
-
 		vector<array<int, 2>> dp(n + 1);
+		dp.back().fill(0);
+
 		for(int i = n - 1; i >= 0; --i) {
 			dp[i][0] = max(dp[i + 1][0], dp[i + 1][1] - prices[i]);
 			dp[i][1] = max(prices[i], dp[i + 1][1]);
 		}
-
 		return dp[0][0];
 	}
-};
+}; // 动态规划
 
 class Solution4 {
 public:

@@ -70,7 +70,11 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "ranges": "cpp",
+        "flat_map": "cpp",
+        "generator": "cpp",
+        "text_encoding": "cpp"
     },
     "github.copilot.enable": {
         "cpp": false,

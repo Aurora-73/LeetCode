@@ -15,15 +15,15 @@ public:
 private:
 	int dfs(vector<int> &prices, int day, bool state) {
 		if(day >= (int)prices.size()) return 0;
-		if(state == 0) { // state = 0：当前不持股，要么今天买入，要么跳过
-			int skip = dfs(prices, day + 1, 0);
-			int buy = dfs(prices, day + 1, 1) - prices[day];
-			return max(skip, buy);
-		} else { // state = 1：当前持股，要么今天卖出，要么继续持有
-			int hold = dfs(prices, day + 1, 1);
-			int sell = dfs(prices, day + 1, 0) + prices[day];
-			return max(hold, sell);
+		int keep, move;
+		if(state == 0) { // state = 0：当前不持股，要么保持不持股，要么买入
+			keep = dfs(prices, day + 1, 0);
+			move = dfs(prices, day + 1, 1) - prices[day];
+		} else { // state = 1：当前持股，要么保持持股，要么卖出
+			keep = dfs(prices, day + 1, 1);
+			move = dfs(prices, day + 1, 0) + prices[day];
 		}
+		return max(keep, move);
 	}
 };
 
@@ -38,21 +38,18 @@ private:
 	vector<array<int, 2>> memo;
 	int dfs(vector<int> &prices, int day, bool state) {
 		if(day >= (int)prices.size()) return 0;
-		if(!state) {
-			if(memo[day][0] == INT_MAX) {
-				int skip = dfs(prices, day + 1, 0);
-				int buy = dfs(prices, day + 1, 1) - prices[day];
-				memo[day][0] = max(skip, buy);
+		if(memo[day][state] == INT_MAX) {
+			int keep, move;
+			if(!state) {
+				keep = dfs(prices, day + 1, 0);
+				move = dfs(prices, day + 1, 1) - prices[day];
+			} else {
+				keep = dfs(prices, day + 1, 1);
+				move = dfs(prices, day + 1, 0) + prices[day];
 			}
-			return memo[day][0];
-		} else {
-			if(memo[day][1] == INT_MAX) {
-				int hold = dfs(prices, day + 1, 1);
-				int sell = dfs(prices, day + 1, 0) + prices[day];
-				memo[day][1] = max(hold, sell);
-			}
-			return memo[day][1];
+			memo[day][state] = max(keep, move);
 		}
+		return memo[day][state];
 	}
 };
 
@@ -60,7 +57,8 @@ class Solution3 {
 public:
 	int maxProfit(vector<int> &prices) {
 		int n = prices.size();
-		vector<array<int, 2>> dp(n + 1, { 0, 0 });
+		vector<array<int, 2>> dp(n + 1);
+		dp.back().fill(0);
 		for(int i = n - 1; i >= 0; --i) {
 			dp[i][0] = max(dp[i + 1][0], dp[i + 1][1] - prices[i]);
 			dp[i][1] = max(dp[i + 1][1], dp[i + 1][0] + prices[i]);
