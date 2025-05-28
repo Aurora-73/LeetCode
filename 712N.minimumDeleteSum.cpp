@@ -61,7 +61,7 @@ public:
 	}
 };
 
-class Solution {
+class Solution3 {
 public:
 	int minimumDeleteSum(const string &s1, const string &s2) {
 		int n1 = s1.size(), n2 = s2.size();
@@ -83,6 +83,41 @@ public:
 		return curr[0];
 	}
 };
+
+class Solution {
+public:
+	int minimumDeleteSum(const string &s1, const string &s2) {
+		if(s1.size() > s2.size()) {
+			return helper(s2, s1);
+		} else {
+			return helper(s1, s2);
+		}
+	}
+
+private:
+	int helper(const string &s, const string &t) {
+		int n = s.size(), m = t.size();
+		vector<int> curr(m + 1), prev(m + 1);
+
+		// 初始化curr数组
+		for(int j = m - 1; j >= 0; --j) {
+			curr[j] = curr[j + 1] + t[j];
+		}
+
+		for(int i = n - 1; i >= 0; --i) {
+			swap(prev, curr);
+			curr[m] = prev[m] + s[i];
+			for(int j = m - 1; j >= 0; --j) {
+				if(s[i] == t[j]) {
+					curr[j] = prev[j + 1];
+				} else {
+					curr[j] = min(prev[j] + s[i], curr[j + 1] + t[j]);
+				}
+			}
+		}
+		return curr[0];
+	}
+}; // 短数组优化
 
 int main() {
 	Solution sol;
