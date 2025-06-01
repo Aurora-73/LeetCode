@@ -6,4 +6,4 @@ build/
 autogit.bat
 CMakeLists.txt
 .history/
-test.cpp
+test*

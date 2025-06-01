@@ -68,8 +68,8 @@ int find_first(const vector<int> &vec, Cond cond) {
 // upper_bound是conde = [&](int val){return val > key;}
 // binary_search是conde = [&](int val){return val >= key;} 且 left < n && vec[left] == key
 
-template <typename RandomIt, typename Cond>
-RandomIt my_find_first(RandomIt first, RandomIt last, Cond cond) {
+template <typename RandomIt, typename Conditon>
+RandomIt my_find_first(RandomIt first, RandomIt last, Conditon cond) {
 	// 要求 RandomIt 支持 last - first
 	using diff_t = typename std::iterator_traits<RandomIt>::difference_type;
 	diff_t len = last - first; // 区间 [first, last) 长度
@@ -109,6 +109,6 @@ int main() {
 	cout << "left close right close " << binarySearch(vec, key) << endl;
 	cout << "lower_bound STL " << lower_bound(vec.begin(), vec.end(), key) - vec.begin() << endl;
 	cout << "lower_bound " << lower_bound(vec, key) << endl;
-	cout << "find_first " << find_first(vec, cond)
-	     << endl; // key是以引用方式捕获，修改外部key会自动同步到内部
+	cout << "find_first " << find_first(vec, cond) << endl;
+	// key是以引用方式捕获，修改外部key会自动同步到内部
 }

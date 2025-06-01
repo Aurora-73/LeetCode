@@ -53,7 +53,7 @@ public:
 	}
 }; // dp O(n ^ 2)
 
-class Solution3 {
+class Solution {
 public:
 	int lengthOfLIS(vector<int> &nums) {
 		vector<int> minTails;
