@@ -24,6 +24,7 @@ public:
 		return dp[n - 1];
 	}
 };
+// dp[i] 表示前 i 个数对能构成的最长数对链
 
 class Solution2 {
 public:
@@ -42,6 +43,7 @@ public:
 		return arr.size();
 	}
 };
+// 最趴数链 （分层DAG）
 
 class Solution {
 public:
@@ -58,7 +60,7 @@ public:
 		}
 		return res;
 	}
-};
+}; // 排序 + 贪心
 
 int main() {
 	Solution sol;

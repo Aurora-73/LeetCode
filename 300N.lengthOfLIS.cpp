@@ -59,6 +59,7 @@ public:
 		vector<int> minTails;
 		for(auto &x : nums) {
 			auto it = lower_bound(minTails.begin(), minTails.end(), x);
+			// lower_bound是严格递增，upper_bound是非严格递增
 			if(it == minTails.end()) {
 				minTails.push_back(x);
 			} else {
@@ -67,7 +68,7 @@ public:
 		}
 		return minTails.size();
 	}
-}; // 贪心 + 二分查找   https://writings.sh/post/longest-increasing-subsequence-revisited
+}; // 贪心 + 二分查找 （分层DAG）   https://writings.sh/post/longest-increasing-subsequence-revisited
 
 int main() {
 	Solution sol;
