@@ -67,50 +67,40 @@ public:
 	    vector<vector<int>> &containedBoxes,
 	    vector<int> &initialBoxes) {
 		int ans = 0;
-		// 把开着的盒子当作有钥匙
-		auto &has_key = status;
-		vector<uint8_t> has_box(status.size(), 0);
+		auto &has_key = status; // 把开着的盒子当作有钥匙
+		vector<uint8_t> has_box(status.size());
 		for(int x : initialBoxes) {
-			has_box[x] = 1;
+			has_box[x] = true;
 		}
-		// 对每个初始盒子，如果已经有钥匙且盒子存在，就开始 DFS
+
+		std::function<void(int)> dfs = [&](int x) {
+			ans += candies[x];
+			has_box[x] = false;
+
+			for(int y : keys[x]) {
+				has_key[y] = true;
+				if(has_box[y]) {
+					dfs(y); // 调用自己需要用仿函数包装
+				}
+			}
+
+			for(int y : containedBoxes[x]) {
+				has_box[y] = true;
+				if(has_key[y]) {
+					dfs(y);
+				}
+			}
+		};
+
 		for(int x : initialBoxes) {
 			if(has_key[x] && has_box[x]) {
-				dfs(x, ans, has_key, has_box, candies, keys, containedBoxes);
+				dfs(x);
 			}
 		}
+
 		return ans;
 	}
-
-private:
-	void dfs(int x,
-	    int &ans,
-	    vector<int> &has_key,
-	    vector<uint8_t> &has_box,
-	    vector<int> &candies,
-	    vector<vector<int>> &keys,
-	    vector<vector<int>> &containedBoxes) {
-		ans += candies[x];
-		// 避免在后续找到钥匙时重复访问已经打开过的盒子
-		has_box[x] = 0;
-
-		// 遍历当前盒子里的钥匙，打开新盒子
-		for(int y : keys[x]) {
-			has_key[y] = 1;
-			if(has_box[y]) {
-				dfs(y, ans, has_key, has_box, candies, keys, containedBoxes);
-			}
-		}
-
-		// 遍历当前盒子里包含的新盒子，获取新盒子
-		for(int y : containedBoxes[x]) {
-			has_box[y] = 1;
-			if(has_key[y]) {
-				dfs(y, ans, has_key, has_box, candies, keys, containedBoxes);
-			}
-		}
-	}
-}; // 深度优先遍历
+};
 
 int main() {
 	Solution sol;
