@@ -99,8 +99,8 @@
         "variant": "cpp"
     },
     "github.copilot.enable": {
-        "cpp": true,
-        "h": true,
+        "cpp": false,
+        "h": false,
         "*": true,
         "plaintext": true,
         "markdown": true,
