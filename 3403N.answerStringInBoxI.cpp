@@ -88,11 +88,11 @@ public:
 		long double max_val = -1.0;
 
 		// —— 第一段：当 i >= numFriends-1 时，把整个后缀当作候选
-		constexpr double mov = 26.0;
-		constexpr double rate = ((26 + mov) * 1000000.0);
+		constexpr double offset = 26.0;
+		constexpr double rate = ((26 + offset) * 1000000.0);
 		for(int i = n - 1; i > numFriends - 2; --i) {
-			dp[i] = (dp[i + 1] * 1000000.0 + (word[i] - 'a' + mov) * rate) / rate;
-			// + mov 防止太小，提高精度
+			dp[i] = (dp[i + 1] * 1000000.0 + (word[i] - 'a' + offset) * rate) / rate;
+			// + offset 防止太小，提高精度
 			if(dp[i] >= max_val) {
 				max_val = dp[i];
 				maxIndexs = i;
@@ -105,8 +105,9 @@ public:
 			int j = n - numFriends - 1 + i;
 			// 正确的 “ 尾巴 ” 值：把 dp[j] 右移 (j - i) 位，也就是 dp[j] / 30 ^ (j - i)
 			long double tail
-			    = (j < 0 ? 0.0 : ((word[j] - 'a' + mov) * 1000000.0 / pow(26.0 + mov, j - i + 1)));
-			dp[i] = (dp[i + 1] * 1000000.0 + (word[i] - 'a' + mov) * rate - tail) / rate;
+			    = (j < 0 ? 0.0
+			             : ((word[j] - 'a' + offset) * 1000000.0 / pow(26.0 + offset, j - i + 1)));
+			dp[i] = (dp[i + 1] * 1000000.0 + (word[i] - 'a' + offset) * rate - tail) / rate;
 			if(dp[i] >= max_val) {
 				max_val = dp[i];
 				maxIndexs = i;
