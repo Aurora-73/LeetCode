@@ -1,5 +1,5 @@
 // Created: 2025-05-08
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*909. 蛇梯棋
 给你一个大小为 n x n 的整数矩阵 board ，方格按从 1 到 n2 编号，编号遵循 转行交替方式 ，从左下角开始 （即，从 board[n - 1][0] 开始）的每一行改变方向。
@@ -18,8 +18,8 @@ class Solution1 {
 public:
 	int snakesAndLadders(vector<vector<int>> &board) {
 		int now = 1, n = board.size(), step = -1;
-		vector<bool> visited(
-		    n * n + 1, false); // 只需要考虑第一次遇到格子的步数，因为这个一定是最短的，从而进行剪枝，否则超时
+		vector<bool> visited(n * n + 1,
+		    false); // 只需要考虑第一次遇到格子的步数，因为这个一定是最短的，从而进行剪枝，否则超时
 		visited[now] = true;
 		queue<int> pos;
 		pos.push(now);
@@ -49,7 +49,8 @@ public:
 						next = now2board(next); // 必须进行跳跃，不能不跳跃
 					}
 					if(!visited[next]) {
-						visited[next] = true; // 剪枝要在入栈的时候进行，访问的时候进行可能已经多次入栈
+						visited[next]
+						    = true; // 剪枝要在入栈的时候进行，访问的时候进行可能已经多次入栈
 						pos.push(next);
 					}
 				}
@@ -69,7 +70,7 @@ public:
 		for(int i = 0; i < n; ++i) {
 			for(int j = 0; j < n; ++j) {
 				if(board[i][j] != -1) {
-					int r = n - 1 - i; // 编号的行号
+					int r = n - 1 - i;                    // 编号的行号
 					int k = (r % 2 == 0) ? j : n - 1 - j; // 根据行号奇偶性转换列
 					int s = r * n + k + 1;
 					jump[s] = board[i][j];
@@ -90,12 +91,10 @@ public:
 				int curr = q.front();
 				q.pop();
 				// 如果到达终点，直接返回步数
-				if(curr == n * n)
-					return steps;
+				if(curr == n * n) return steps;
 				for(int dice = 1; dice <= 6; ++dice) {
 					int next = curr + dice;
-					if(next > n * n)
-						continue;
+					if(next > n * n) continue;
 					if(jump.count(next)) {
 						next = jump[next]; // 如果有蛇或梯子，跳到对应位置
 					}

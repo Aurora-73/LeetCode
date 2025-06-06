@@ -1,6 +1,6 @@
 // Created: 2025-05-06
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 
 /*399. 除法求值
 给你一个变量对数组 equations 和一个实数值数组 values 作为已知条件，其中 equations[i] = [Ai, Bi] 和 values[i] 共同表示等式 Ai / Bi = values[i] 。
@@ -12,7 +12,8 @@
 
 class Solution1 {
 public:
-	vector<double> calcEquation(vector<vector<string>> &equa, vector<double> &val, vector<vector<string>> &quer) {
+	vector<double> calcEquation(
+	    vector<vector<string>> &equa, vector<double> &val, vector<vector<string>> &quer) {
 		unordered_map<string, size_t> exp2index;
 		double grap[40][40];
 		for(size_t i = 0; i < 40; ++i) {
@@ -71,7 +72,8 @@ public:
 	}
 
 private:
-	void dfs(double grap[40][40], size_t n, size_t src, size_t cur, vector<bool> &visited, double val) {
+	void dfs(
+	    double grap[40][40], size_t n, size_t src, size_t cur, vector<bool> &visited, double val) {
 		visited[cur] = true;
 		if(grap[src][cur] == -1.0) {
 			grap[src][cur] = val;
@@ -87,8 +89,9 @@ private:
 
 class Solution2 {
 public:
-	vector<double> calcEquation(
-	    const vector<vector<string>> &equations, const vector<double> &values, const vector<vector<string>> &queries) {
+	vector<double> calcEquation(const vector<vector<string>> &equations,
+	    const vector<double> &values,
+	    const vector<vector<string>> &queries) {
 
 		unordered_map<string, shared_ptr<string>> str_pool;
 		unordered_map<shared_ptr<string>, unordered_map<shared_ptr<string>, double>> graph;
@@ -99,10 +102,8 @@ public:
 			const string &b = equations[i][1];
 			double val = values[i];
 
-			if(!str_pool.count(a))
-				str_pool[a] = make_shared<string>(a);
-			if(!str_pool.count(b))
-				str_pool[b] = make_shared<string>(b);
+			if(!str_pool.count(a)) str_pool[a] = make_shared<string>(a);
+			if(!str_pool.count(b)) str_pool[b] = make_shared<string>(b);
 
 			shared_ptr<string> pa = str_pool[a];
 			shared_ptr<string> pb = str_pool[b];
@@ -139,7 +140,8 @@ public:
 	}
 
 private:
-	void dfs(const unordered_map<shared_ptr<string>, unordered_map<shared_ptr<string>, double>> &graph,
+	void dfs(
+	    const unordered_map<shared_ptr<string>, unordered_map<shared_ptr<string>, double>> &graph,
 	    const shared_ptr<string> &cur,
 	    const shared_ptr<string> &target,
 	    double acc,
@@ -152,14 +154,12 @@ private:
 			return;
 		}
 
-		if(!graph.count(cur))
-			return;
+		if(!graph.count(cur)) return;
 
 		for(const auto &[neighbor, weight] : graph.at(cur)) {
 			if(!visited.count(neighbor)) {
 				dfs(graph, neighbor, target, acc * weight, visited, result);
-				if(result != -1.0)
-					return;
+				if(result != -1.0) return;
 			}
 		}
 	}
@@ -167,8 +167,9 @@ private:
 
 class Solution3 {
 public:
-	vector<double> calcEquation(
-	    vector<vector<string>> &equations, vector<double> &values, vector<vector<string>> &queries) {
+	vector<double> calcEquation(vector<vector<string>> &equations,
+	    vector<double> &values,
+	    vector<vector<string>> &queries) {
 		map<string, map<string, double>> m;
 		for(int i = 0; i < equations.size(); i++) {
 			m[equations[i][0]][equations[i][1]] = values[i];
@@ -181,17 +182,17 @@ public:
 		}
 		return res;
 	}
-	double calc(map<string, map<string, double>> &m, unordered_set<string> &visited, const string &q1, string &q2) {
-		if(visited.count(q1))
-			return -1;
+	double calc(map<string, map<string, double>> &m,
+	    unordered_set<string> &visited,
+	    const string &q1,
+	    string &q2) {
+		if(visited.count(q1)) return -1;
 		if(m.count(q1)) {
 			visited.insert(q1);
-			if(m[q1].count(q2))
-				return m[q1][q2];
+			if(m[q1].count(q2)) return m[q1][q2];
 			for(auto &p : m[q1]) {
 				double t = calc(m, visited, p.first, q2);
-				if(t > 0)
-					return t * p.second;
+				if(t > 0) return t * p.second;
 			}
 		}
 		return -1;
@@ -207,8 +208,7 @@ public:
 
 	// 带路径压缩的查找，顺带把 weight[x] 更新成 x/根
 	int find(int x) {
-		if(parent[x] < 0)
-			return x;
+		if(parent[x] < 0) return x;
 		int p = parent[x];
 		int root = find(p);
 		weight[x] *= weight[p]; // x/p * p/根 = x/根
@@ -218,8 +218,7 @@ public:
 	// 合并方程：i/j = val
 	void unite(int i, int j, double val) {
 		int ri = find(i), rj = find(j);
-		if(ri == rj)
-			return;
+		if(ri == rj) return;
 		// 合并小集合到大集合，保持 parent 里存负尺寸
 		if(-parent[ri] > -parent[rj]) {
 			// 把 rj 挂到 ri
@@ -243,20 +242,20 @@ public:
 	// 如果在同一个集合，返回 i/j 的值；否则返回 -1
 	double calc(int i, int j) {
 		int ri = find(i), rj = find(j);
-		if(ri != rj)
-			return -1.0;
+		if(ri != rj) return -1.0;
 		// i/j = (i/根) / (j/根)
 		return weight[i] / weight[j];
 	}
 
 private:
-	vector<int> parent; // 负数表示集合大小，非负表示父节点
+	vector<int> parent;    // 负数表示集合大小，非负表示父节点
 	vector<double> weight; // weight[x] = x/parent[x]（经路径压缩后是 x/根）
 };
 
 class Solution4 {
 public:
-	vector<double> calcEquation(vector<vector<string>> &equa, vector<double> &val, vector<vector<string>> &quer) {
+	vector<double> calcEquation(
+	    vector<vector<string>> &equa, vector<double> &val, vector<vector<string>> &quer) {
 		unordered_map<string, int> maps;
 		vector<vector<int>> indexs(equa.size(), vector<int>(2));
 		for(int i = 0; i < equa.size(); ++i) {
@@ -286,8 +285,7 @@ public:
 					pairs[j] = it->second;
 				}
 			}
-			if(unknown)
-				continue;
+			if(unknown) continue;
 			res[i] = uf.calc(pairs[0], pairs[1]);
 		}
 		return res;

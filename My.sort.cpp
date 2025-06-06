@@ -1,5 +1,5 @@
 // Created: 2025-05-17
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 using namespace std;
 
 /*常见的排序算法*/
@@ -81,11 +81,9 @@ private:
 		std::swap(vec[left], vec[left + rand() % (right - left + 1)]);
 		int pivot = vec[left];
 		while(left < right) {
-			while(left < right && vec[right] >= pivot)
-				--right;
+			while(left < right && vec[right] >= pivot) --right;
 			vec[left] = vec[right];
-			while(left < right && vec[left] <= pivot)
-				++left;
+			while(left < right && vec[left] <= pivot) ++left;
 			vec[right] = vec[left];
 		}
 		vec[left] = pivot;
@@ -99,7 +97,7 @@ public:
 	void operator()(RandomAccessIterator begin, RandomAccessIterator end) {
 		if(end - begin <= 1) return;
 		auto pivotPos = partition(begin, end);
-		(*this)(begin, pivotPos); // 左闭右开
+		(*this)(begin, pivotPos);   // 左闭右开
 		(*this)(pivotPos + 1, end); // 左闭右开
 	}
 
@@ -110,11 +108,9 @@ private:
 		auto pivot = std::move(*left);
 		--right;
 		while(left < right) {
-			while(left < right && *right >= pivot)
-				--right;
+			while(left < right && *right >= pivot) --right;
 			*left = std::move(*right);
-			while(left < right && *left <= pivot)
-				++left;
+			while(left < right && *left <= pivot) ++left;
 			*right = std::move(*left);
 		}
 		*left = std::move(pivot);
@@ -141,18 +137,16 @@ void quickSort(RandomIt first, RandomIt last) {
 
 	while(left < right) {
 
-		while(left < right && *right >= pivot)
-			--right;
+		while(left < right && *right >= pivot) --right;
 		*left = std::move(*right);
 
-		while(left < right && *left <= pivot)
-			++left;
+		while(left < right && *left <= pivot) ++left;
 		*right = std::move(*left);
 	}
 
 	*left = std::move(pivot);
 
-	quickSort(first, left); // 左闭右开
+	quickSort(first, left);           // 左闭右开
 	quickSort(std::next(left), last); // 左闭右开
 }
 

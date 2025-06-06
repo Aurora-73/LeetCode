@@ -1,5 +1,5 @@
 // Created: 2025-05-07
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。
 给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
@@ -24,8 +24,7 @@ public:
 					break;
 				}
 			}
-			if(now == -1)
-				return {};
+			if(now == -1) return {};
 			res.push_back(now);
 			degree[now]--;
 			for(auto after : afters[now]) {
@@ -48,8 +47,7 @@ public:
 
 		queue<int> q; // 使用队列保存可以访问的节点，不需要遍历inDegree了
 		for(int i = 0; i < numCourses; ++i)
-			if(inDegree[i] == 0)
-				q.push(i);
+			if(inDegree[i] == 0) q.push(i);
 
 		int count = 0;
 		while(!q.empty()) {
@@ -58,8 +56,7 @@ public:
 			q.pop();
 			++count;
 			for(int next : graph[course]) {
-				if(--inDegree[next] == 0)
-					q.push(next);
+				if(--inDegree[next] == 0) q.push(next);
 			}
 		}
 		return count == numCourses ? res : vector<int>();
@@ -69,6 +66,6 @@ public:
 int main() {
 	Solution1 sol1;
 	int numCourses = 2;
-	vector<vector<int>> prerequisites = {{1, 0}};
+	vector<vector<int>> prerequisites = { { 1, 0 } };
 	sol1.findOrder(numCourses, prerequisites);
 }

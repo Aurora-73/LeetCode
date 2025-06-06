@@ -6,6 +6,7 @@
 #include <bitset>
 #include <cassert>
 #include <cctype>
+#include <chrono>
 #include <climits>
 #include <cmath>
 #include <functional>

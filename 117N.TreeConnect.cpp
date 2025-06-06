@@ -1,5 +1,5 @@
 // Created: 2025-04-30
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*117. 填充每个节点的下一个右侧节点指针 II
 给定一个二叉树：
@@ -15,8 +15,7 @@ struct Node {
 class Solution1 {
 public:
 	Node *connect(Node *root) {
-		if(!root)
-			return root;
+		if(!root) return root;
 		queue<Node *> q;
 		Node *prev = nullptr;
 		q.push(root);
@@ -51,8 +50,7 @@ public:
 class Solution2 {
 public:
 	Node *connect(Node *root) {
-		if(!root)
-			return root;
+		if(!root) return root;
 		queue<Node *> q;
 		q.push(root);
 		while(!q.empty()) {
@@ -61,12 +59,9 @@ public:
 			for(int i = 0; i < levelSize; ++i) {
 				Node *now = q.front();
 				q.pop();
-				if(now->left)
-					q.push(now->left);
-				if(now->right)
-					q.push(now->right);
-				if(prev)
-					prev->next = now;
+				if(now->left) q.push(now->left);
+				if(now->right) q.push(now->right);
+				if(prev) prev->next = now;
 				prev = now;
 			} // 每次处理一整层的，这样可以直接用 q.size() 获取本层节点数
 		}
@@ -107,4 +102,4 @@ public:
 	}
 }; // 每次处理当前层的下一层，由于当前层已经在之前处理过了，因此可以直接使用next在本层之间跳转
 
-int main() {}
+int main() { }

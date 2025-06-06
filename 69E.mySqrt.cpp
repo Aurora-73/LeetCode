@@ -1,5 +1,5 @@
 // Created: 2025-05-18
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*69. x 的平方根 
 给你一个非负整数 x ，计算并返回 x 的 算术平方根 。
@@ -10,14 +10,14 @@ class Solution {
 public:
 	int mySqrt(int x) {
 		// 特判：x = 0 或 1 时直接返回 x
-		if(x < 2)
-			return x;
+		if(x < 2) return x;
 		// 在区间 [1, x+1) 搜索，第一个使 mid*mid > x 的位置
 		int left = 1, right = x; // 不要x + 1, 防止 int 溢出，但是x <= 1要特别处理
 		while(left < right) {
 			// 左闭右开，mid 向下取整
 			int mid = left + (right - left) / 2;
-			long long sq = 1LL * mid * mid; // 必须是 long long 因为最大约为 (right / 2) * (right / 2) 可能溢出
+			long long sq = 1LL * mid
+			    * mid; // 必须是 long long 因为最大约为 (right / 2) * (right / 2) 可能溢出
 			if(sq <= x) {
 				// mid^2 <= x 属于“好的”区间，搜索右半区（排除 mid）
 				left = mid + 1;

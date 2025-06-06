@@ -1,5 +1,5 @@
 // Created: 2025-05-24
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*97. 交错字符串
 给定三个字符串 s1、s2、s3，请你帮忙验证 s3 是否是由 s1 和 s2 交错 组成的。

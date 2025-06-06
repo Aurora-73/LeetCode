@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*452. 用最少数量的箭引爆气球
 有一些球形气球贴在一堵用 XY 平面表示的墙面上。墙面上的气球记录在整数数组 points
@@ -12,9 +12,10 @@ xstart，xend， 且满足  xstart ≤ x ≤ xend，则该气球会被 引爆
 class Solution {
 public:
 	int findMinArrowShots(vector<vector<int>> &points) {
-		if(points.size() == 0)
-			return 0;
-		sort(points.begin(), points.end(), [](vector<int> &a, vector<int> &b) { return a[0] < b[0]; });
+		if(points.size() == 0) return 0;
+		sort(points.begin(), points.end(), [](vector<int> &a, vector<int> &b) {
+			return a[0] < b[0];
+		});
 		int count = 1, i = 1, right = points[0][1]; //left = points[0][0],
 		while(i < points.size()) {
 			if(points[i][0] > right) {

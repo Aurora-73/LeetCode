@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 class Solution {
 public:
@@ -14,8 +14,8 @@ public:
 			return abs(board[x][y]) == 1;
 		};
 		auto get_near = [&](int x, int y) {
-			return alive(x - 1, y - 1) + alive(x - 1, y) + alive(x - 1, y + 1) + alive(x, y - 1) + alive(x, y + 1) +
-			       alive(x + 1, y - 1) + alive(x + 1, y) + alive(x + 1, y + 1);
+			return alive(x - 1, y - 1) + alive(x - 1, y) + alive(x - 1, y + 1) + alive(x, y - 1)
+			    + alive(x, y + 1) + alive(x + 1, y - 1) + alive(x + 1, y) + alive(x + 1, y + 1);
 		};
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < m; j++) {
@@ -32,10 +32,8 @@ public:
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < m; j++) {
 				int &now = board[i][j];
-				if(now == -1)
-					now = 0;
-				if(now == 2)
-					now = 1;
+				if(now == -1) now = 0;
+				if(now == 2) now = 1;
 			}
 		}
 	}
@@ -47,17 +45,15 @@ class Solution {
 public:
 	void gameOfLife(vector<vector<int>> &board) {
 		int n = board.size(), m = board[0].size();
-		vector<int> dir = {-1, 0, 1};
+		vector<int> dir = { -1, 0, 1 };
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < m; j++) {
 				int cnt = 0, &now = board[i][j];
 				for(int di : dir) {
 					for(int dj : dir) {
-						if(di == 0 && dj == 0)
-							continue;
+						if(di == 0 && dj == 0) continue;
 						int a = i + di, b = j + dj;
-						if(a > -1 && a < n && b > -1 && b < m && (board[a][b] & 1))
-							cnt++;
+						if(a > -1 && a < n && b > -1 && b < m && (board[a][b] & 1)) cnt++;
 					}
 				}
 				if((now && cnt == 2) || cnt == 3) {
@@ -77,7 +73,7 @@ public:
 
 int main() {
 	Solution sol;
-	vector<vector<int>> board = {{0, 1, 0}, {0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
+	vector<vector<int>> board = { { 0, 1, 0 }, { 0, 0, 1 }, { 1, 1, 1 }, { 0, 0, 0 } };
 	sol.gameOfLife(board);
 	cout << board;
 }

@@ -1,5 +1,5 @@
 // Created: 2025-05-08
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*433. 最小基因变化
 基因序列可以表示为一条由 8 个字符组成的字符串，其中每个字符都是 'A'、'C'、'G' 和 'T' 之一。

@@ -1,5 +1,5 @@
 // Created: 2025-05-10
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*211. 添加与搜索单词 - 数据结构设计
 请你设计一个数据结构，支持 添加新单词 和 查找字符串是否与任何先前添加的字符串匹配 。
@@ -19,13 +19,14 @@ class WordDictionary {
 	unique_ptr<TreeNode> root;
 
 public:
-	WordDictionary() : root(make_unique<TreeNode>()) {}
+	WordDictionary() : root(make_unique<TreeNode>()) { }
 
 	void addWord(const string &word) {
 		TreeNode *now = root.get();
 		for(auto c : word) {
 			int index = c - 'a';
-			if(!now->children[index]) { // 智能指针的判空行为都和原始指针一致，都是在检查底层的裸指针是否为 nullptr。
+			if(!now->children
+			        [index]) { // 智能指针的判空行为都和原始指针一致，都是在检查底层的裸指针是否为 nullptr。
 				now->children[index] = make_unique<TreeNode>();
 			}
 			now = now->children[index].get();
@@ -36,7 +37,7 @@ public:
 		return BFSSearch(word, 0, root.get());
 	}
 	bool BFSSearch(const string &word, int n, TreeNode *now) { // word 用引用
-		if(n == word.size()) { // 不是和 word.size()-1 比较
+		if(n == word.size()) {                                 // 不是和 word.size()-1 比较
 			return now->isEnd;
 		}
 		if(word[n] == '.') {
@@ -53,7 +54,7 @@ public:
 	}
 };
 
-int main() {}
+int main() { }
 
 /*
 `make_unique<TreeNode>()` 是 C++14 提供的一个工厂函数，它的作用是：

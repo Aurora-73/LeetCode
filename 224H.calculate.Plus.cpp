@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 using namespace std;
 
@@ -10,33 +10,25 @@ public:
 
 private:
 	int precedence(char op) {
-		if(op == '+' || op == '-')
-			return 1;
-		if(op == '*' || op == '/')
-			return 2;
+		if(op == '+' || op == '-') return 1;
+		if(op == '*' || op == '/') return 2;
 		return 0;
 	}
 
 	double apply(double a, double b, char op) {
 		switch(op) {
-		case '+':
-			return a + b;
-		case '-':
-			return a - b;
-		case '*':
-			return a * b;
+		case '+': return a + b;
+		case '-': return a - b;
+		case '*': return a * b;
 		case '/':
-			if(fabs(b) < numeric_limits<double>::epsilon())
-				throw runtime_error("除零错误");
+			if(fabs(b) < numeric_limits<double>::epsilon()) throw runtime_error("除零错误");
 			return a / b;
-		default:
-			throw runtime_error(string("未知运算符: ") + op);
+		default: throw runtime_error(string("未知运算符: ") + op);
 		}
 	}
 
 	void compute(stack<double> &nums, stack<char> &ops) {
-		if(nums.size() < 2 || ops.empty())
-			throw runtime_error("表达式不合法：操作数数量不匹配");
+		if(nums.size() < 2 || ops.empty()) throw runtime_error("表达式不合法：操作数数量不匹配");
 		double b = nums.top();
 		nums.pop();
 		double a = nums.top();
@@ -63,8 +55,7 @@ private:
 				bool has_dot = false;
 				while(i < n && (isdigit(expr[i]) || expr[i] == '.')) {
 					if(expr[i] == '.') {
-						if(has_dot)
-							throw runtime_error("非法数字格式");
+						if(has_dot) throw runtime_error("非法数字格式");
 						has_dot = true;
 					} else if(!has_dot) {
 						num = num * 10 + (expr[i] - '0');
@@ -78,10 +69,8 @@ private:
 			} else if(expr[i] == '(') {
 				ops.push(expr[i++]);
 			} else if(expr[i] == ')') {
-				while(!ops.empty() && ops.top() != '(')
-					compute(nums, ops);
-				if(ops.empty())
-					throw runtime_error("括号不匹配");
+				while(!ops.empty() && ops.top() != '(') compute(nums, ops);
+				if(ops.empty()) throw runtime_error("括号不匹配");
 				ops.pop(); // 弹出 '('
 				++i;
 			} else { // 运算符
@@ -91,10 +80,8 @@ private:
 			}
 		}
 
-		while(!ops.empty())
-			compute(nums, ops);
-		if(nums.size() != 1)
-			throw runtime_error("表达式不合法：多余的操作数");
+		while(!ops.empty()) compute(nums, ops);
+		if(nums.size() != 1) throw runtime_error("表达式不合法：多余的操作数");
 		return nums.top();
 	}
 
@@ -103,10 +90,8 @@ private:
 		for(int i = 0; i < s.size(); ++i) {
 			if(s[i] == '+' || s[i] == '-') {
 				int j = i - 1;
-				while(j >= 0 && isspace(s[j]))
-					--j;
-				if(j < 0 || s[j] == '(')
-					res += '0';
+				while(j >= 0 && isspace(s[j])) --j;
+				if(j < 0 || s[j] == '(') res += '0';
 			}
 			res += s[i];
 		}

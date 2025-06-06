@@ -1,5 +1,5 @@
 // Created: 2025-06-02
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 #include <cstring>
 #include <random>
 /*1218. 最长定差子序列

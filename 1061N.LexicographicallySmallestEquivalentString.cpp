@@ -1,5 +1,5 @@
 // Created: 2025-06-05
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*1061. 按字典序排列最小的等效字符串
 给出长度相同的两个字符串s1 和 s2 ，还有一个字符串 baseStr 。

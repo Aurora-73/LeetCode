@@ -1,5 +1,5 @@
 // Created: 2025-05-17
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*4. 寻找两个正序数组的中位数
 给定两个大小分别为 m 和 n 的正序（从小到大）数组nums1 和nums2。
@@ -77,27 +77,29 @@ public:
 		int halfLen = (shortLen + longLen + 1) / 2;
 
 		int left = 0, right = shortLen; // 左闭右开
-		while(true) { // 虽然左闭右开，但是不一定是在nums1中找到元素，所以不能退出
+		while(true) {                   // 虽然左闭右开，但是不一定是在nums1中找到元素，所以不能退出
 			// 在 nums1 上二分划分点
 			int partitionShort = left + (right - left) / 2;
 			int partitionLong = halfLen - partitionShort;
 
 			// nums1 左/右两侧的临界值
 			int shortPartitionLeft = (partitionShort == 0 ? INT_MIN : nums1[partitionShort - 1]);
-			int shortPartitionRight = (partitionShort == shortLen ? INT_MAX : nums1[partitionShort]);
+			int shortPartitionRight
+			    = (partitionShort == shortLen ? INT_MAX : nums1[partitionShort]);
 			// nums2 左/右两侧的临界值
 			int longPartitionLeft = (partitionLong == 0 ? INT_MIN : nums2[partitionLong - 1]);
 			int longPartitionRight = (partitionLong == longLen ? INT_MAX : nums2[partitionLong]);
 
 			// 找到满足「左侧最大 ≤ 右侧最小」的划分
-			if(shortPartitionLeft <= longPartitionRight && longPartitionLeft <= shortPartitionRight) {
+			if(shortPartitionLeft <= longPartitionRight
+			    && longPartitionLeft <= shortPartitionRight) {
 				// 总长度为奇数时，中位数是左半部分最大值
 				if((shortLen + longLen) % 2 == 1) {
 					return static_cast<double>(max(shortPartitionLeft, longPartitionLeft));
 				}
 				// 总长度为偶数时，中位数是左右两侧贴近中点的两个数的平均
-				return (static_cast<double>(
-				           max(shortPartitionLeft, longPartitionLeft) + min(shortPartitionRight, longPartitionRight)))
+				return (static_cast<double>(max(shortPartitionLeft, longPartitionLeft)
+				           + min(shortPartitionRight, longPartitionRight)))
 				    / 2.0;
 			}
 			// 如果 nums1 左侧最大比 nums2 右侧最小还大，说明 partitionShort 太靠右

@@ -1,5 +1,5 @@
 // Created: 2025-05-12
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*79. 单词搜索
 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。
@@ -54,15 +54,13 @@ class Solution2 {
 public:
 	bool exist(vector<vector<char>> &board, const string &word) {
 		int rows = board.size();
-		if(rows == 0)
-			return false;
+		if(rows == 0) return false;
 		int cols = board[0].size();
 
 		// 对每一个起点尝试一次 DFS
 		for(int i = 0; i < rows; ++i) {
 			for(int j = 0; j < cols; ++j) {
-				if(board[i][j] == word[0] && dfs(board, word, i, j, 0))
-					return true;
+				if(board[i][j] == word[0] && dfs(board, word, i, j, 0)) return true;
 			}
 		}
 		return false;
@@ -76,8 +74,7 @@ private:
 	// 从(board[i][j])开始，尝试匹配 word[idx...end]
 	bool dfs(vector<vector<char>> &board, const string &word, int i, int j, int idx) {
 		// 全部字符都匹配完，返回 true
-		if(idx == word.size() - 1)
-			return true;
+		if(idx == word.size() - 1) return true;
 
 		// 暂记并标记为已访问
 		char saved = board[i][j];
@@ -90,7 +87,8 @@ private:
 		// 四个方向搜索
 		for(int d = 0; d < 4; ++d) {
 			int ni = i + dx[d], nj = j + dy[d];
-			if(ni >= 0 && ni < board.size() && nj >= 0 && nj < board[0].size() && board[ni][nj] == word[next]) {
+			if(ni >= 0 && ni < board.size() && nj >= 0 && nj < board[0].size()
+			    && board[ni][nj] == word[next]) {
 				if(dfs(board, word, ni, nj, next)) {
 					found = true;
 					break;
@@ -109,10 +107,8 @@ public:
 	vector<vector<vector<bool>>> dp;
 	vector<vector<bool>> myhash;
 	bool pass(int row, int col, int len) {
-		if(!dp[row][col][len] || myhash[row][col])
-			return 0;
-		if(len == 1)
-			return 1;
+		if(!dp[row][col][len] || myhash[row][col]) return 0;
+		if(len == 1) return 1;
 		myhash[row][col] = 1;
 		if(pass(row - 1, col, len - 1) || pass(row, col - 1, len - 1) || pass(row + 1, col, len - 1)
 		    || pass(row, col + 1, len - 1))
@@ -133,7 +129,8 @@ public:
 			for(int i = 1; i <= m; i++) {
 				for(int j = 1; j <= n; j++) {
 					dp[i][j][k] = (board[i - 1][j - 1] == word[k - 1]
-					    && (dp[i - 1][j][k - 1] || dp[i][j - 1][k - 1] || dp[i + 1][j][k - 1] || dp[i][j + 1][k - 1]));
+					    && (dp[i - 1][j][k - 1] || dp[i][j - 1][k - 1] || dp[i + 1][j][k - 1]
+					        || dp[i][j + 1][k - 1]));
 				}
 			}
 		}
@@ -149,8 +146,7 @@ public:
 		}
 		int anslen = alterrow.size();
 		for(int i = 0; i < anslen; i++) {
-			if(pass(alterrow[i], altercol[i], len))
-				return 1;
+			if(pass(alterrow[i], altercol[i], len)) return 1;
 		}
 		return 0;
 	}

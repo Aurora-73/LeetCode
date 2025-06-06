@@ -1,5 +1,5 @@
 // Created: 2025-05-06
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 #define MaxSize 10
 /*对节点进行遍历和对边进行遍历*/
 
@@ -61,8 +61,7 @@ int dfs_vex(const vector<char> &V, const vector<vector<int>> &G) {
 
 int bfs_arc(vector<vector<int>> &E) {
 	size_t R = E.size(), C = R ? E[0].size() : 0;
-	if(R == 0 || C == 0)
-		return 0;
+	if(R == 0 || C == 0) return 0;
 	vector<vector<bool>> vis(R, vector<bool>(C, false));
 	constexpr int dirs[4][2] = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 	int count = 0;

@@ -1,5 +1,5 @@
 // Created: 2025-04-25
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*  224. 基本计算器
 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
@@ -31,18 +31,13 @@ public:
 		stack<char> operators;
 		stack<int> numbers;
 		for(auto c : s) {
-			if(c == ' ')
-				continue;
+			if(c == ' ') continue;
 			if(isOperator(c)) {
 				switch(c) {
-				case '+':
-					break;
-				case '-':
-					break;
-				case '(':
-					break;
-				case ')':
-					break;
+				case '+': break;
+				case '-': break;
+				case '(': break;
+				case ')': break;
 				}
 			} else {
 				numbers.push(c);

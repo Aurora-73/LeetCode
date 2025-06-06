@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*73. 矩阵置零
 给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。*/
@@ -37,12 +37,10 @@ public:
 			}
 		}
 		if(x0) {
-			for(int j = 0; j < m; j++)
-				matrix[0][j] = 0;
+			for(int j = 0; j < m; j++) matrix[0][j] = 0;
 		}
 		if(y0) {
-			for(int i = 0; i < n; i++)
-				matrix[i][0] = 0;
+			for(int i = 0; i < n; i++) matrix[i][0] = 0;
 		}
 	}
 };
@@ -53,4 +51,4 @@ public:
 每遇到一个0就将其对应的行或列的开头设为0，作为标记，最后清空这些行列即可
 但是这样第一行和第一列是否清零就需要两个单独的bool来保存*/
 
-int main() {}
+int main() { }

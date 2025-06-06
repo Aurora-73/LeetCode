@@ -1,5 +1,5 @@
 // Created: 2025-05-10
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*208. 实现 Trie (前缀树)
 Trie（发音类似 "try"）或者说 前缀树 是一种树形数据结构，用于高效地存储和检索字符串数据集中的键。
@@ -22,7 +22,7 @@ private:
 	unique_ptr<TreeNode> root;
 
 public:
-	Trie() : root(make_unique<TreeNode>()) {}
+	Trie() : root(make_unique<TreeNode>()) { }
 
 	// 插入单词
 	void insert(const string &word) {
@@ -42,8 +42,7 @@ public:
 		TreeNode *now = root.get();
 		for(char c : word) {
 			int idx = c - 'a';
-			if(!now->children[idx])
-				return false;
+			if(!now->children[idx]) return false;
 			now = now->children[idx].get();
 		}
 		return now->isEnd;
@@ -54,8 +53,7 @@ public:
 		TreeNode *now = root.get();
 		for(char c : prefix) {
 			int idx = c - 'a';
-			if(!now->children[idx])
-				return false;
+			if(!now->children[idx]) return false;
 			now = now->children[idx].get();
 		}
 		return true;
@@ -65,8 +63,8 @@ public:
 int main() {
 	Trie trie;
 	trie.insert("apple");
-	trie.search("apple"); // 返回 True
-	trie.search("app"); // 返回 False
+	trie.search("apple");   // 返回 True
+	trie.search("app");     // 返回 False
 	trie.startsWith("app"); // 返回 True
 	trie.insert("app");
 	trie.search("app"); // 返回 True

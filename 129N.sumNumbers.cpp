@@ -1,6 +1,6 @@
 // Created: 2025-04-30
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /* 129. 求根节点到叶节点数字之和
 给你一个二叉树的根节点 root ，树中每个节点都存放有一个 0 到 9 之间的数字。
@@ -17,8 +17,7 @@ public:
 		return sum;
 	}
 	void LeafSum(TreeNode *root, int pre) {
-		if(!root)
-			return;
+		if(!root) return;
 		pre *= 10;
 		pre += root->val;
 		if(!root->left && !root->right) {

@@ -1,11 +1,10 @@
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 class Solution {
 public:
 	TreeNode *invertTree(TreeNode *root) {
-		if(root == nullptr)
-			return nullptr;
+		if(root == nullptr) return nullptr;
 		swap(root->left, root->right);
 		invertTree(root->left);
 		invertTree(root->right);
@@ -16,8 +15,7 @@ public:
 class Solution {
 public:
 	TreeNode *invertTree(TreeNode *root) {
-		if(root == nullptr)
-			return nullptr;
+		if(root == nullptr) return nullptr;
 		invertTree(root->left);
 		swap(root->left, root->right);
 		invertTree(root->left);
@@ -28,8 +26,7 @@ public:
 class Solution {
 public:
 	TreeNode *invertTree(TreeNode *root) {
-		if(root == nullptr)
-			return nullptr;
+		if(root == nullptr) return nullptr;
 		invertTree(root->left);
 		invertTree(root->right);
 		swap(root->left, root->right);

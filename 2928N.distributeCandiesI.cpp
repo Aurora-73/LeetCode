@@ -1,5 +1,5 @@
 // Created: 2025-06-01
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*2928. 给小朋友们分糖果 I
 给你两个正整数 n 和 limit 。

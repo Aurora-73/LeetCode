@@ -1,13 +1,12 @@
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 
 using namespace std;
 
 class Solution {
 public:
 	bool hasCycle(ListNode *head) {
-		if(!head)
-			return false;
+		if(!head) return false;
 		ListNode *fast = head->next, *slow = head;
 		while(fast && fast->next) {
 			fast = fast->next->next;
@@ -21,7 +20,7 @@ public:
 };
 
 int main() {
-	ListNode *head = createList({1, 3, 4}), *temp = head;
+	ListNode *head = createList({ 1, 3, 4 }), *temp = head;
 	Solution sol;
 	cout << sol.hasCycle(head) << endl;
 	while(temp->next) {

@@ -1,5 +1,5 @@
 // Created: 2025-05-05
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*200. 岛屿数量
 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
@@ -51,7 +51,8 @@ public:
 						int dir[4][2] = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
 						for(int d = 0; d < 4; ++d) {
 							int x = a + dir[d][0], y = b + dir[d][1]; // 不重复声明太长了
-							if(x >= 0 && y >= 0 && x < grid.size() && y < grid[0].size() && grid[x][y] == '1') {
+							if(x >= 0 && y >= 0 && x < grid.size() && y < grid[0].size()
+							    && grid[x][y] == '1') {
 								grid[x][y] = '0'; // 入队前标记，入队之后标记会导致重复访问
 								q.emplace(x, y);
 							}
@@ -70,16 +71,14 @@ public:
 
 	// 查找根（带路径压缩）
 	size_t Find(size_t i) {
-		if(parent[i] < 0)
-			return i;
+		if(parent[i] < 0) return i;
 		return parent[i] = Find(parent[i]);
 	}
 
 	// 合并两个集合，返回新根
 	size_t Union(size_t i, size_t j) {
 		size_t rooti = Find(i), rootj = Find(j);
-		if(rooti == rootj)
-			return rooti;
+		if(rooti == rootj) return rooti;
 
 		if(-parent[rooti] > -parent[rootj]) {
 			parent[rooti] += parent[rootj];

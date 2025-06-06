@@ -1,5 +1,5 @@
 // Created: 2025-05-13
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*按照国际象棋的规则，皇后可以攻击与之处在同一行或同一列或同一斜线上的棋子。
 n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
@@ -11,7 +11,7 @@ class Solution1 {
 public:
 	vector<vector<string>> solveNQueens(int n) {
 		this->n = n;
-		allOne = (1 << n) - 1; // 低 n 位全部置 1，用于限位
+		allOne = (1 << n) - 1;           // 低 n 位全部置 1，用于限位
 		board.assign(n, string(n, '.')); // 初始化棋盘
 		res.clear();
 		dfs(0, 0, 0, 0);
@@ -19,9 +19,9 @@ public:
 	}
 
 private:
-	int n; // 棋盘大小
-	int allOne; // (1<<n)-1，掩码
-	vector<string> board; // 当前回溯的棋盘
+	int n;                      // 棋盘大小
+	int allOne;                 // (1<<n)-1，掩码
+	vector<string> board;       // 当前回溯的棋盘
 	vector<vector<string>> res; // 存放所有解
 
 	// row：当前行号
@@ -76,7 +76,8 @@ private:
 		}
 		for(size_t j = 0; j < n; j++) {
 			size_t l = i + j, r = n - 1 + i - j;
-			if(!line[j] && !right[r] && !left[l]) { // 不能用是否为 Q 代替line，因为line是一整列，如果代替需要逐个比较
+			if(!line[j] && !right[r]
+			    && !left[l]) { // 不能用是否为 Q 代替line，因为line是一整列，如果代替需要逐个比较
 				temp[i][j] = 'Q';
 				line.set(j), left.set(l), right.set(r);
 				dfs(res, i + 1);

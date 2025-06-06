@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 #include <chrono>
 using namespace std::chrono;
 
@@ -203,8 +203,7 @@ public:
 
 		for(int i = 0; i < 9; ++i) {
 			for(int j = 0; j < 9; ++j) {
-				if(board[i][j] == '.')
-					continue;
+				if(board[i][j] == '.') continue;
 				int x = board[i][j] - '0';
 				if(rows[i] >> x & 1 || cols[j] >> x & 1 || block[(i / 3) * 3 + j / 3] >> x & 1) {
 					return false;
@@ -229,8 +228,7 @@ public:
 
 		for(int i = 0; i < 9; ++i) {
 			for(int j = 0; j < 9; ++j) {
-				if(board[i][j] == '.')
-					continue;
+				if(board[i][j] == '.') continue;
 				int x = board[i][j] - '0';
 				if(rows[i][x] || cols[j][x] || block[(i / 3) * 3 + j / 3][x]) {
 					return false;
@@ -245,70 +243,70 @@ public:
 };
 
 int main() {
-	vector<vector<char>> board = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-	                              {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-	                              {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-	                              {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-	                              {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-	                              {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-	                              {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-	                              {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-	                              {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+	vector<vector<char>> board = { { '5', '3', '.', '.', '7', '.', '.', '.', '.' },
+		{ '6', '.', '.', '1', '9', '5', '.', '.', '.' },
+		{ '.', '9', '8', '.', '.', '.', '.', '6', '.' },
+		{ '8', '.', '.', '.', '6', '.', '.', '.', '3' },
+		{ '4', '.', '.', '8', '.', '3', '.', '.', '1' },
+		{ '7', '.', '.', '.', '2', '.', '.', '.', '6' },
+		{ '.', '6', '.', '.', '.', '.', '2', '8', '.' },
+		{ '.', '.', '.', '4', '1', '9', '.', '.', '5' },
+		{ '.', '.', '.', '.', '8', '.', '.', '7', '9' } };
 
 	const int iterations = 100000;
 
 	{
 		Solution sol;
 		auto start = high_resolution_clock::now();
-		for(int i = 0; i < iterations; ++i)
-			sol.isValidSudoku(board);
+		for(int i = 0; i < iterations; ++i) sol.isValidSudoku(board);
 		auto end = high_resolution_clock::now();
-		cout << "Solution (vector<bool>): " << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
+		cout << "Solution (vector<bool>): " << duration_cast<milliseconds>(end - start).count()
+		     << " ms" << endl;
 	}
 
 	{
 		Solution0 sol;
 		auto start = high_resolution_clock::now();
-		for(int i = 0; i < iterations; ++i)
-			sol.isValidSudoku(board);
+		for(int i = 0; i < iterations; ++i) sol.isValidSudoku(board);
 		auto end = high_resolution_clock::now();
-		cout << "Solution0 (array<bool, 10>): " << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
+		cout << "Solution0 (array<bool, 10>): " << duration_cast<milliseconds>(end - start).count()
+		     << " ms" << endl;
 	}
 
 	{
 		Solution1 sol;
 		auto start = high_resolution_clock::now();
-		for(int i = 0; i < iterations; ++i)
-			sol.isValidSudoku(board);
+		for(int i = 0; i < iterations; ++i) sol.isValidSudoku(board);
 		auto end = high_resolution_clock::now();
-		cout << "Solution1 (unique_ptr<bool[]>): " << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
+		cout << "Solution1 (unique_ptr<bool[]>): "
+		     << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
 	}
 
 	{
 		Solution2 sol;
 		auto start = high_resolution_clock::now();
-		for(int i = 0; i < iterations; ++i)
-			sol.isValidSudoku(board);
+		for(int i = 0; i < iterations; ++i) sol.isValidSudoku(board);
 		auto end = high_resolution_clock::now();
-		cout << "Solution2 (bitset): " << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
+		cout << "Solution2 (bitset): " << duration_cast<milliseconds>(end - start).count() << " ms"
+		     << endl;
 	}
 
 	{
 		Solution3 sol;
 		auto start = high_resolution_clock::now();
-		for(int i = 0; i < iterations; ++i)
-			sol.isValidSudoku(board);
+		for(int i = 0; i < iterations; ++i) sol.isValidSudoku(board);
 		auto end = high_resolution_clock::now();
-		cout << "Solution3 (bitwise int): " << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
+		cout << "Solution3 (bitwise int): " << duration_cast<milliseconds>(end - start).count()
+		     << " ms" << endl;
 	}
 
 	{
 		Solution4 sol;
 		auto start = high_resolution_clock::now();
-		for(int i = 0; i < iterations; ++i)
-			sol.isValidSudoku(board);
+		for(int i = 0; i < iterations; ++i) sol.isValidSudoku(board);
 		auto end = high_resolution_clock::now();
-		cout << "Solution4 (bitwise int): " << duration_cast<milliseconds>(end - start).count() << " ms" << endl;
+		cout << "Solution4 (bitwise int): " << duration_cast<milliseconds>(end - start).count()
+		     << " ms" << endl;
 	}
 
 	return 0;

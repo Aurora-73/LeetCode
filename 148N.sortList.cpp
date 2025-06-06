@@ -1,6 +1,6 @@
 // Created: 2025-05-13
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 
 /*148. 排序链表
 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。*/
@@ -73,13 +73,11 @@ public:
 class Solution3 {
 public:
 	ListNode *sortList(ListNode *head) {
-		if(!head || !head->next)
-			return head;
+		if(!head || !head->next) return head;
 
 		// 1) 计算总长度
 		int length = 0;
-		for(auto p = head; p; p = p->next)
-			++length;
+		for(auto p = head; p; p = p->next) ++length;
 
 		// 2) 哨兵节点
 		ListNode dummy(0);
@@ -107,8 +105,7 @@ private:
 		for(int i = 1; head && i < n; ++i) {
 			head = head->next;
 		}
-		if(!head)
-			return nullptr;
+		if(!head) return nullptr;
 		ListNode *second = head->next;
 		head->next = nullptr;
 		return second;

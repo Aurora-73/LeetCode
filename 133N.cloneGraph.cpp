@@ -1,5 +1,5 @@
 // Created: 2025-05-05
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*133. 克隆图
 给你无向 连通 图中一个节点的引用，请你返回该图的 深拷贝（克隆）。
@@ -57,8 +57,7 @@ private:
 class Solution2 {
 public:
 	Node *cloneGraph(Node *node) {
-		if(!node)
-			return nullptr;
+		if(!node) return nullptr;
 		unordered_map<Node *, Node *> mp;
 		queue<Node *> q;
 		// 克隆起始节点，并入队

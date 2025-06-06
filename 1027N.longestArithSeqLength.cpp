@@ -1,5 +1,5 @@
 // Created: 2025-06-02
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 #include <cstring>
 
 /*1027. 最长等差数列

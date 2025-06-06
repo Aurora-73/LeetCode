@@ -1,5 +1,5 @@
 // Created: 2025-05-05
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*130. 被围绕的区域
 给你一个 m x n 的矩阵 board ，由若干字符 'X' 和 'O' 组成，捕获 所有 被围绕的区域：
@@ -65,8 +65,7 @@ public:
 		}
 	}
 	void bfs(vector<vector<char>> &board, int i, int j) {
-		if(board[i][j] != 'O')
-			return; // 上面不检查下面就要检查
+		if(board[i][j] != 'O') return; // 上面不检查下面就要检查
 		queue<pair<int, int>> q;
 		q.emplace(i, j);
 		board[i][j] = 'N';
@@ -77,7 +76,8 @@ public:
 			q.pop();
 			for(auto &dir : dirs) {
 				int a = i + dir[0], b = j + dir[1];
-				if(a < 0 || b < 0 || a >= board.size() || b >= board[0].size() || board[a][b] != 'O') {
+				if(a < 0 || b < 0 || a >= board.size() || b >= board[0].size()
+				    || board[a][b] != 'O') {
 					continue;
 				}
 				q.emplace(a, b);
@@ -93,16 +93,14 @@ public:
 
 	// 路径压缩查找
 	size_t Find(size_t i) {
-		if(parent[i] < 0)
-			return i;
+		if(parent[i] < 0) return i;
 		return parent[i] = Find(parent[i]);
 	}
 
 	// 按大小合并两个集合，返回新根
 	size_t Union(size_t i, size_t j) {
 		size_t ri = Find(i), rj = Find(j);
-		if(ri == rj)
-			return ri;
+		if(ri == rj) return ri;
 
 		// 负数的绝对值越大，集合越大
 		if(-parent[ri] > -parent[rj]) {
@@ -134,8 +132,7 @@ class Solution3 {
 public:
 	void solve(vector<vector<char>> &board) {
 		size_t m = board.size();
-		if(m == 0)
-			return;
+		if(m == 0) return;
 		size_t n = board[0].size();
 		// 多分配一个 dummy 节点，用于收集边界上的 'O'
 		size_t total = m * n;
@@ -148,8 +145,7 @@ public:
 		// 1) 合并所有 'O' —— 边界的并到 dummy，内部的与相邻 'O' 并
 		for(size_t i = 0; i < m; ++i) {
 			for(size_t j = 0; j < n; ++j) {
-				if(board[i][j] != 'O')
-					continue;
+				if(board[i][j] != 'O') continue;
 				size_t id = i * n + j;
 				// 边界上的 'O' 先并到 dummy
 				if(i == 0 || i == m - 1 || j == 0 || j == n - 1) {
@@ -189,8 +185,7 @@ public:
 	// 按集合大小合并，返回新根
 	size_t Union(size_t i, size_t j) {
 		size_t ri = Find(i), rj = Find(j);
-		if(ri == rj)
-			return ri;
+		if(ri == rj) return ri;
 		if(-parent[ri] > -parent[rj]) {
 			parent[ri] += parent[rj];
 			parent[rj] = ri;
@@ -210,8 +205,7 @@ class Solution {
 public:
 	void solve(vector<vector<char>> &board) {
 		size_t m = board.size();
-		if(m == 0)
-			return;
+		if(m == 0) return;
 		size_t n = board[0].size();
 		size_t total = m * n;
 
@@ -221,8 +215,7 @@ public:
 		// 1) 并查集合并：对每个 'O'，和四邻域的 'O' 做 Union
 		for(size_t i = 0; i < m; ++i) {
 			for(size_t j = 0; j < n; ++j) {
-				if(board[i][j] != 'O')
-					continue;
+				if(board[i][j] != 'O') continue;
 				size_t id = i * n + j;
 				for(auto &d : dirs) {
 					size_t ni = i + d[0], nj = j + d[1];
@@ -237,17 +230,13 @@ public:
 		vector<bool> safe(total, false);
 		// 遍历上下边界
 		for(size_t j = 0; j < n; ++j) {
-			if(board[0][j] == 'O')
-				safe[uf.Find(j)] = true;
-			if(board[m - 1][j] == 'O')
-				safe[uf.Find((m - 1) * n + j)] = true;
+			if(board[0][j] == 'O') safe[uf.Find(j)] = true;
+			if(board[m - 1][j] == 'O') safe[uf.Find((m - 1) * n + j)] = true;
 		}
 		// 遍历左右边界
 		for(size_t i = 0; i < m; ++i) {
-			if(board[i][0] == 'O')
-				safe[uf.Find(i * n)] = true;
-			if(board[i][n - 1] == 'O')
-				safe[uf.Find(i * n + n - 1)] = true;
+			if(board[i][0] == 'O') safe[uf.Find(i * n)] = true;
+			if(board[i][n - 1] == 'O') safe[uf.Find(i * n + n - 1)] = true;
 		}
 
 		// 3) 翻转所有不 safe 的 'O' → 'X'
@@ -264,14 +253,23 @@ public:
 int main() {
 	Solution1 sol1;
 	vector<vector<char>> board;
-	board = { { 'X', 'X', 'X', 'X' }, { 'X', 'O', 'O', 'X' }, { 'X', 'X', 'O', 'X' }, { 'X', 'O', 'X', 'X' } };
+	board = { { 'X', 'X', 'X', 'X' },
+		{ 'X', 'O', 'O', 'X' },
+		{ 'X', 'X', 'O', 'X' },
+		{ 'X', 'O', 'X', 'X' } };
 	sol1.solve(board);
 	cout << board << endl;
-	board = { { 'X', 'X', 'X', 'X' }, { 'X', 'O', 'O', 'X' }, { 'X', 'X', 'O', 'X' }, { 'X', 'O', 'X', 'X' } };
+	board = { { 'X', 'X', 'X', 'X' },
+		{ 'X', 'O', 'O', 'X' },
+		{ 'X', 'X', 'O', 'X' },
+		{ 'X', 'O', 'X', 'X' } };
 	Solution2 sol2;
 	sol2.solve(board);
 	cout << board << endl;
-	board = { { 'X', 'X', 'X', 'X' }, { 'X', 'O', 'O', 'X' }, { 'X', 'X', 'O', 'X' }, { 'X', 'O', 'X', 'X' } };
+	board = { { 'X', 'X', 'X', 'X' },
+		{ 'X', 'O', 'O', 'X' },
+		{ 'X', 'X', 'O', 'X' },
+		{ 'X', 'O', 'X', 'X' } };
 	Solution3 sol3;
 	sol3.solve(board);
 	cout << board << endl;

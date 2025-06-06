@@ -1,5 +1,5 @@
 // Created: 2025-05-11
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*212. 单词搜索 II
 给定一个 m x n 二维字符网格 board 和一个单词（字符串）列表 words， 返回所有二维网格上的单词 。
@@ -21,8 +21,7 @@ public:
 		words_ptr = &words;
 		for(int i = 0; i < m; ++i) {
 			for(int j = 0; j < n; ++j) {
-				if(!root.children[board[i][j] - 'a'])
-					continue;
+				if(!root.children[board[i][j] - 'a']) continue;
 				// vector<vector<char>> now = board;
 				// 在这里拷贝board只能防止不同起点的路线之间相互影响，
 				// 需要回溯还原防止同一个原点出发的不同分支之间相互影响
@@ -59,8 +58,7 @@ private:
 			return;
 		}
 		root = root->children[board[i][j] - 'a'].get();
-		if(!root)
-			return;
+		if(!root) return;
 		if(root->IsEnd != -1) {
 			res.push_back((*words_ptr)[root->IsEnd]);
 			root->IsEnd = -1; // 防止重复访问
@@ -84,8 +82,7 @@ public:
 		int total = words.size();
 		// 预估空间
 		int est = 1;
-		for(auto &w : words)
-			est += w.size();
+		for(auto &w : words) est += w.size();
 		tree.clear();
 		pass.clear();
 		wordIndex.clear();
@@ -93,8 +90,8 @@ public:
 		pass.reserve(est);
 		wordIndex.reserve(est);
 		// root 节点编号 0
-		tree.emplace_back(); // tree[0], 全部默认 0
-		pass.emplace_back(0); // pass[0] = 0
+		tree.emplace_back();        // tree[0], 全部默认 0
+		pass.emplace_back(0);       // pass[0] = 0
 		wordIndex.emplace_back(-1); // wordIndex[0] = -1
 
 		// 2. 插入所有单词
@@ -119,8 +116,9 @@ public:
 
 private:
 	// Trie 存储
-	vector<array<int, 26>> tree; // 树的保存结构，用int表示下标，由于0号是根节点，不应该被指向，所以默认值0即为空
-	vector<int> pass; // 有多少个单词经过过第i个节点
+	vector<array<int, 26>>
+	    tree; // 树的保存结构，用int表示下标，由于0号是根节点，不应该被指向，所以默认值0即为空
+	vector<int> pass;      // 有多少个单词经过过第i个节点
 	vector<int> wordIndex; // 标记第i个树是谁的叶子结点，如果都不是则为-1
 	vector<string> *wordsPtr;
 	int m, n;
@@ -151,14 +149,11 @@ private:
 	// 返回本次调用找到的单词数（用于剪枝更新 pass）
 	int dfs(vector<string> &res, vector<vector<char>> &B, int u, int x, int y) {
 		// 越界、已访问、Trie 无此分支、或前缀已无剩余单词 → 剪枝
-		if(x < 0 || x >= m || y < 0 || y >= n)
-			return 0;
+		if(x < 0 || x >= m || y < 0 || y >= n) return 0;
 		char ch = B[x][y];
-		if(ch == '#')
-			return 0;
+		if(ch == '#') return 0;
 		int v = tree[u][ch - 'a'];
-		if(v == 0 || pass[v] == 0)
-			return 0;
+		if(v == 0 || pass[v] == 0) return 0;
 
 		int found = 0;
 		// advance 到 v

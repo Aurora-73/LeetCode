@@ -1,5 +1,5 @@
 // Created: 2025-05-11
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*17. 电话号码的字母组合
 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
@@ -11,8 +11,7 @@ class Solution {
 public:
 	vector<string> letterCombinations(string digits) {
 		vector<string> res;
-		if(!digits.size())
-			return {};
+		if(!digits.size()) return {};
 		end = digits.end();
 		string combian;
 		dfs(res, digits.begin(), combian);
@@ -28,7 +27,8 @@ private:
 		for(auto c : phoneMap[*it - '0']) {
 			combian.push_back(c);
 			dfs(res, it + 1, combian);
-			combian.pop_back(); // 范围下一个之前将当前值加入，访问之后将当前值删除，这样不用复制很多份了
+			combian
+			    .pop_back(); // 范围下一个之前将当前值加入，访问之后将当前值删除，这样不用复制很多份了
 		}
 	}
 	vector<string> phoneMap { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };

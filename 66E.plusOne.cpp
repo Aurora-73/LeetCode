@@ -1,5 +1,5 @@
 // Created: 2025-05-18
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*  */
 
@@ -61,6 +61,6 @@ public:
 
 int main() {
 	Solution sol;
-	vector<int> digits{9, 8, 9, 9};
+	vector<int> digits { 9, 8, 9, 9 };
 	cout << sol.plusOne(digits);
 }

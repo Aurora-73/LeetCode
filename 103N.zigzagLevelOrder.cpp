@@ -1,6 +1,6 @@
 // Created: 2025-04-30
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*103. 二叉树的锯齿形层序遍历
 给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。
@@ -8,8 +8,7 @@
 class Solution1 {
 public:
 	vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
-		if(!root)
-			return {}; // 很重要
+		if(!root) return {}; // 很重要
 		deque<TreeNode *> q;
 		vector<vector<int>> res;
 		q.push_back(root);
@@ -78,7 +77,7 @@ public:
 					nodeQueue.push(node->right);
 				}
 			}
-			ans.emplace_back(vector<int>{levelList.begin(), levelList.end()});
+			ans.emplace_back(vector<int> { levelList.begin(), levelList.end() });
 			isOrderLeft = !isOrderLeft;
 		}
 
@@ -87,7 +86,7 @@ public:
 };
 
 int main() {
-	auto tree = createTree({1, 2, 3, 4, 5, -1, 7});
+	auto tree = createTree({ 1, 2, 3, 4, 5, -1, 7 });
 	Solution1 sol1;
 	cout << sol1.zigzagLevelOrder(tree) << endl;
 	Solution2 sol2;

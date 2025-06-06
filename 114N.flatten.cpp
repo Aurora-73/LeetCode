@@ -1,6 +1,6 @@
 // Created: 2025-04-30
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*114. 二叉树展开为链表
 给你二叉树的根结点 root ，请你将它展开为一个单链表：
@@ -11,8 +11,7 @@
 class Solution1 {
 public:
 	void flatten(TreeNode *root) {
-		if(!root)
-			return;
+		if(!root) return;
 		vec.clear();
 		preOrder(root);
 		for(int i = 1; i < vec.size(); i++) {
@@ -21,8 +20,7 @@ public:
 		}
 	}
 	void preOrder(TreeNode *root) {
-		if(!root)
-			return;
+		if(!root) return;
 		vec.push_back(root);
 		preOrder(root->left);
 		preOrder(root->right);
@@ -59,8 +57,7 @@ public:
 class Solution3 {
 public:
 	void flatten(TreeNode *root) {
-		if(!root)
-			return;
+		if(!root) return;
 		flatten(root->left);
 		flatten(root->right);
 		TreeNode *right = root->right;

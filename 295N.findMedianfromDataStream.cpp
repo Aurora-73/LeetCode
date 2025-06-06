@@ -1,5 +1,5 @@
 // Created: 2025-05-20
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*295. 数据流的中位数
 中位数是有序整数列表中的中间值。如果列表的大小是偶数，则没有中间值，中位数是两个中间值的平均值。
@@ -12,7 +12,7 @@ double findMedian() 返回到目前为止所有元素的中位数。与实际答
 
 class MedianFinder {
 public:
-	MedianFinder() {}
+	MedianFinder() { }
 
 	void addNum_old(int num) {
 		if(large.size() == small.size()) {
@@ -56,12 +56,12 @@ public:
 
 private:
 	priority_queue<int, vector<int>, greater<int>> large; // 小根堆
-	priority_queue<int> small; // 大根堆
+	priority_queue<int> small;                            // 大根堆
 };
 
 int main() {
 	MedianFinder *obj = new MedianFinder();
-	vector<int> nums = {0, -1, 2, -3, 4, -5, 6, -7};
+	vector<int> nums = { 0, -1, 2, -3, 4, -5, 6, -7 };
 	for(auto &x : nums) {
 		obj->addNum(x);
 		cout << obj->findMedian() << " ";

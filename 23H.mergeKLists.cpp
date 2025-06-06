@@ -1,6 +1,6 @@
 // Created: 2025-05-13
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 
 /*23. 合并 K 个升序链表
 给你一个链表数组，每个链表都已经按升序排列。
@@ -18,8 +18,7 @@
 class Solution {
 public:
 	ListNode *mergeKLists(vector<ListNode *> &lists) {
-		if(!lists.size())
-			return nullptr;
+		if(!lists.size()) return nullptr;
 		for(size_t subLen = 1; subLen < lists.size(); subLen *= 2) {
 			for(size_t i = 0; i + subLen < lists.size(); i += 2 * subLen) {
 				lists[i] = merge(lists[i], lists[i + subLen]);
@@ -57,6 +56,8 @@ public:
 
 int main() {
 	Solution sol;
-	vector<ListNode *> lists { createList({ 1, 4, 5 }), createList({ 1, 3, 4 }), createList({ 2, 6 }) };
+	vector<ListNode *> lists {
+		createList({ 1, 4, 5 }), createList({ 1, 3, 4 }), createList({ 2, 6 })
+	};
 	cout << sol.mergeKLists(lists);
 }

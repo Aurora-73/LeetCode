@@ -1,5 +1,5 @@
 // Created: 2025-05-07
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*207. 课程表
 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
@@ -25,8 +25,7 @@ public:
 					break;
 				}
 			}
-			if(now == -1)
-				return false;
+			if(now == -1) return false;
 			degree[now]--;
 			for(auto after : afters[now]) {
 				--degree[after];
@@ -49,8 +48,7 @@ public:
 
 		queue<int> q;
 		for(int i = 0; i < numCourses; ++i)
-			if(inDegree[i] == 0)
-				q.push(i);
+			if(inDegree[i] == 0) q.push(i);
 
 		int count = 0;
 		while(!q.empty()) {
@@ -58,8 +56,7 @@ public:
 			q.pop();
 			++count;
 			for(int next : graph[course]) {
-				if(--inDegree[next] == 0)
-					q.push(next);
+				if(--inDegree[next] == 0) q.push(next);
 			}
 		}
 		return count == numCourses;
@@ -92,8 +89,7 @@ public:
 				return;
 			}
 			// 4.2 如果已经访问过，或者全局已检测到环，就直接剪枝返回
-			if(visited[u] || hasCycle)
-				return;
+			if(visited[u] || hasCycle) return;
 
 			// 4.3 进入节点 u：标记已访问，并加入当前路径
 			visited[u] = true;
@@ -121,6 +117,6 @@ public:
 int main() {
 	Solution1 sol1;
 	int numCourses = 2;
-	vector<vector<int>> prerequisites = {{1, 0}};
+	vector<vector<int>> prerequisites = { { 1, 0 } };
 	sol1.canFinish(numCourses, prerequisites);
 }

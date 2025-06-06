@@ -1,16 +1,12 @@
-#include <iostream>
-#include <vector>
-#include <unordered_set>
-#include <string>
+#include "MyUtils.hpp"
 
 using namespace std;
 
 class Solution {
 public:
 	int lengthOfLongestSubstring(string s) {
-		if(s.size() == 0)
-			return 0;
-		unordered_set<char> sett{s[0]};
+		if(s.size() == 0) return 0;
+		unordered_set<char> sett { s[0] };
 		int i = 0, j = 0, len = 1;
 		while(j < s.size()) {
 			j++;

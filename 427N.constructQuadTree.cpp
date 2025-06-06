@@ -1,5 +1,5 @@
 // Created: 2025-05-13
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*  */
 
@@ -31,7 +31,12 @@ public:
 		bottomRight = NULL;
 	}
 
-	Node(bool _val, bool _isLeaf, Node *_topLeft, Node *_topRight, Node *_bottomLeft, Node *_bottomRight) {
+	Node(bool _val,
+	    bool _isLeaf,
+	    Node *_topLeft,
+	    Node *_topRight,
+	    Node *_bottomLeft,
+	    Node *_bottomRight) {
 		val = _val;
 		isLeaf = _isLeaf;
 		topLeft = _topLeft;
@@ -52,12 +57,13 @@ public:
 			return new Node(grid[xl][yl], true);
 		}
 		size_t mid_x = (xl + xh) / 2, mid_y = (yl + yh) / 2;
-		Node *_topLeft = divide(grid, xl, mid_x, yl, mid_y); // _topLeft
-		Node *_topRight = divide(grid, xl, mid_x, mid_y, yh); // _topRight
-		Node *_bottomLeft = divide(grid, mid_x, xh, yl, mid_y); // _bottomLeft
+		Node *_topLeft = divide(grid, xl, mid_x, yl, mid_y);     // _topLeft
+		Node *_topRight = divide(grid, xl, mid_x, mid_y, yh);    // _topRight
+		Node *_bottomLeft = divide(grid, mid_x, xh, yl, mid_y);  // _bottomLeft
 		Node *_bottomRight = divide(grid, mid_x, xh, mid_y, yh); // _bottomRight
 		// 注意横向的是y，纵向的是x，或者说不要用xy了
-		if(!_topLeft->isLeaf || !_topRight->isLeaf || !_bottomLeft->isLeaf || !_bottomRight->isLeaf) {
+		if(!_topLeft->isLeaf || !_topRight->isLeaf || !_bottomLeft->isLeaf
+		    || !_bottomRight->isLeaf) {
 			return new Node(1, false, _topLeft, _topRight, _bottomLeft, _bottomRight);
 		}
 		if((_topLeft->val != _topRight->val) || (_bottomLeft->val != _bottomRight->val)

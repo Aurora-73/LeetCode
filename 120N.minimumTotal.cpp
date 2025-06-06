@@ -1,5 +1,5 @@
 // Created: 2025-05-23
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*120. 三角形最小路径和
 给定一个三角形 triangle ，找出自顶向下的最小路径和。

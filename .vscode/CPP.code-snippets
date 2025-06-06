@@ -3,7 +3,7 @@
 	  "prefix": "mycpp",  // 你输入这个触发模板
 	  "body": [
 		"// Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
-		"#include \"MyUtils.h\"",
+		"#include \"MyUtils.hpp\"",
 		"",
 		"/*  */",
 		"",
@@ -18,7 +18,7 @@
 		"prefix": "mylist",  // 你输入这个触发模板
 		"body": [
 		  "// Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
-		  "#include \"MyUtils.h\"",
+		  "#include \"MyUtils.hpp\"",
 		  "#include \"MyListNode.h\"",
 		  "",
 		  "/*  */",
@@ -34,7 +34,7 @@
 	"prefix": "mytree",  // 你输入这个触发模板
 	"body": [
 	  "// Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
-	  "#include \"MyUtils.h\"",
+	  "#include \"MyUtils.hpp\"",
 	  "#include \"MyTreeNode.h\"",
 	  "",
 	  "/*  */",

@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 class Solution {
 public:
@@ -15,8 +15,7 @@ public:
 				res.push_back(matrix[i][right]);
 			}
 			right--;
-			if(top > bottom || left > right)
-				break; // 防止单行/列时出现重复
+			if(top > bottom || left > right) break; // 防止单行/列时出现重复
 			for(int i = right; i >= left; i--) {
 				res.push_back(matrix[bottom][i]);
 			}
@@ -78,10 +77,10 @@ public:
 int main() {
 	Solution sol;
 	Solution1 sol1;
-	vector<vector<int>> matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+	vector<vector<int>> matrix = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 	cout << sol.spiralOrder(matrix) << endl;
 	cout << sol1.spiralOrder(matrix) << endl;
-	matrix = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+	matrix = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 } };
 	cout << sol.spiralOrder(matrix) << endl;
 	cout << sol1.spiralOrder(matrix) << endl;
 }

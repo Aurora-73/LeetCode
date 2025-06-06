@@ -1,5 +1,5 @@
 // Created: 2025-06-03
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*1298. 你能从盒子里获得的最大糖果数
 给你 n 个盒子，每个盒子的格式为 [status, candies, keys, containedBoxes]，其中：

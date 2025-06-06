@@ -1,5 +1,5 @@
 // Created: 2025-05-15
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*  */
 
@@ -25,8 +25,7 @@ class PeekingIterator : public Iterator {
 public:
 	PeekingIterator(const vector<int> &nums) : Iterator(nums) {
 		hasNext_val = Iterator::hasNext();
-		if(hasNext_val)
-			next_val = Iterator::next();
+		if(hasNext_val) next_val = Iterator::next();
 		// Initialize any member here.
 		// **DO NOT** save a copy of nums and manipulate it directly.
 		// You should only use the Iterator interface methods.
@@ -42,8 +41,7 @@ public:
 	int next() {
 		int temp = next_val;
 		hasNext_val = Iterator::hasNext();
-		if(hasNext_val)
-			next_val = Iterator::next();
+		if(hasNext_val) next_val = Iterator::next();
 		return temp;
 	}
 
@@ -56,4 +54,4 @@ private:
 	bool hasNext_val;
 };
 
-int main() {}
+int main() { }

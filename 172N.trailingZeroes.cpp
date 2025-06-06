@@ -1,5 +1,5 @@
 // Created: 2025-05-19
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*172. 阶乘后的零
 给定一个整数 n ，返回 n! 结果中尾随零的数量。

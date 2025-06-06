@@ -1,5 +1,5 @@
 // Created: 2025-06-04
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /* 3403. 从盒子中找出字典序最大的字符串 I
 给你一个字符串 word 和一个整数 numFriends。

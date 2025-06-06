@@ -1,6 +1,6 @@
 // Created: 2025-05-09
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*108. 将有序数组转换为二叉搜索树
 
@@ -12,8 +12,7 @@ public:
 		return iteratorToBST(nums.begin(), nums.end());
 	}
 	TreeNode *iteratorToBST(vector<int>::iterator begin, vector<int>::iterator end) {
-		if(begin >= end)
-			return nullptr;
+		if(begin >= end) return nullptr;
 		auto middle = begin + (end - begin) / 2;
 		TreeNode *root = new TreeNode(*middle);
 		root->left = iteratorToBST(begin, middle);
@@ -25,8 +24,7 @@ public:
 class Solution2 {
 public:
 	TreeNode *sortedArrayToBST(const vector<int> &nums) {
-		if(nums.empty())
-			return nullptr;
+		if(nums.empty()) return nullptr;
 		int lo = 0, hi = nums.size() - 1;
 		int mid = lo + (hi - lo) / 2;
 		TreeNode *root = new TreeNode(nums[mid]);
@@ -41,8 +39,7 @@ public:
 		while(!st.empty()) {
 			auto [l, h, link] = st.top();
 			st.pop();
-			if(l > h)
-				continue;
+			if(l > h) continue;
 			int m = l + (h - l) / 2;
 			*link = new TreeNode(nums[m]);
 			// 子任务：右、左

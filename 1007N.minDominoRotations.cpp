@@ -1,6 +1,6 @@
 // Created: 2025-05-03
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*1007. 行相等的最少多米诺旋转
 在一排多米诺骨牌中，tops[i] 和 bottoms[i] 分别代表第 i 个多米诺骨牌的上半部分和下半部分。
@@ -12,7 +12,8 @@
 class Solution1 {
 public:
 	int minDominoRotations(vector<int> &tops, vector<int> &bottoms) {
-		array<int, 6> all{0}, up{0}, down{0}; // 必须同时记录上半和下半，因为两边反转的成本可能不一样
+		array<int, 6> all { 0 }, up { 0 },
+		    down { 0 }; // 必须同时记录上半和下半，因为两边反转的成本可能不一样
 		for(int i = 0; i < tops.size(); i++) {
 			up[tops[i] - 1]++;
 			all[tops[i] - 1]++;
@@ -28,9 +29,9 @@ public:
 				break;
 			}
 		}
-		if(can == -1)
-			return -1;
-		int minval = min(min(up[can], int(tops.size() - up[can])), min(down[can], int(tops.size() - down[can])));
+		if(can == -1) return -1;
+		int minval = min(
+		    min(up[can], int(tops.size() - up[can])), min(down[can], int(tops.size() - down[can])));
 		return minval;
 	}
 };
@@ -71,8 +72,7 @@ public:
 		int rotations_a = 0, rotations_b = 0;
 		for(int i = 0; i < n; i++) {
 			// rotations coudn't be done
-			if(A[i] != x && B[i] != x)
-				return -1;
+			if(A[i] != x && B[i] != x) return -1;
 			// A[i] != x and B[i] == x
 			else if(A[i] != x)
 				rotations_a++;
@@ -89,8 +89,7 @@ public:
 		int n = A.size();
 		int rotations = check(A[0], B, A, n);
 		// If one could make all elements in A or B equal to A[0]
-		if(rotations != -1 || A[0] == B[0])
-			return rotations;
+		if(rotations != -1 || A[0] == B[0]) return rotations;
 		// If one could make all elements in A or B equal to B[0]
 		else
 			return check(B[0], B, A, n);
@@ -100,9 +99,9 @@ public:
 int main() {
 	Solution1 sol1;
 	vector<int> tops, bottoms;
-	tops = {2, 1, 2, 4, 2, 2};
-	bottoms = {5, 2, 6, 2, 3, 2};
-	tops = {1, 2, 1, 1, 1, 2, 2, 2};
-	bottoms = {2, 1, 2, 2, 2, 2, 2, 2};
+	tops = { 2, 1, 2, 4, 2, 2 };
+	bottoms = { 5, 2, 6, 2, 3, 2 };
+	tops = { 1, 2, 1, 1, 1, 2, 2, 2 };
+	bottoms = { 2, 1, 2, 2, 2, 2, 2, 2 };
 	cout << sol1.minDominoRotations(tops, bottoms);
 }

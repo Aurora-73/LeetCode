@@ -1,13 +1,12 @@
 // Created: 2025-04-30
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*  */
 class Solution {
 public:
 	vector<vector<int>> levelOrder(TreeNode *root) {
-		if(!root)
-			return {}; // 很重要
+		if(!root) return {}; // 很重要
 		queue<TreeNode *> q;
 		vector<vector<int>> res;
 		q.push(root);
@@ -31,7 +30,7 @@ public:
 };
 
 int main() {
-	auto tree = createTree({1, 2, 3, 4, 5, -1, 7});
+	auto tree = createTree({ 1, 2, 3, 4, 5, -1, 7 });
 	Solution sol;
 	cout << sol.levelOrder(tree) << endl;
 }

@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 class Solution {
 public:
@@ -7,17 +7,13 @@ public:
 		stack<string> s;
 		int i = 0;
 		while(i < n) {
-			while(i < n && path[i] == '/')
-				i++;
-			if(i >= n)
-				break;
+			while(i < n && path[i] == '/') i++;
+			if(i >= n) break;
 			int j = i;
-			while(j < n && path[j] != '/')
-				j++;
+			while(j < n && path[j] != '/') j++;
 			string now = path.substr(i, j - i);
 			if(now == "..") {
-				if(!s.empty())
-					s.pop();
+				if(!s.empty()) s.pop();
 			} else if(now != ".") {
 				s.push(now);
 			}

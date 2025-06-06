@@ -1,7 +1,4 @@
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <iostream>
+#include "MyUtils.hpp"
 using namespace std;
 
 /*
@@ -18,8 +15,7 @@ string convert(string s, int numRows);
 class Solution {
 public:
 	string convert(string s, int n) {
-		if(n == 1)
-			return s;
+		if(n == 1) return s;
 		string r;
 		r.resize(s.length(), '@');
 		int now = 0;
@@ -31,19 +27,16 @@ public:
 			int j = i;
 			if(i != 0 && i != n - 1) {
 				while(1) {
-					if(j >= s.length())
-						break;
+					if(j >= s.length()) break;
 					r[now++] = s[j];
 					j += 2 * (n - 1 - i);
-					if(j >= s.length())
-						break;
+					if(j >= s.length()) break;
 					r[now++] = s[j];
 					j += 2 * i;
 				}
 			} else {
 				while(1) {
-					if(j >= s.length())
-						break;
+					if(j >= s.length()) break;
 					r[now++] = s[j];
 					j += 2 * (n - 1);
 				}

@@ -1,7 +1,5 @@
-#include "MyUtils.h"
 #include "MyListNode.h"
-
-using namespace std;
+#include "MyUtils.hpp"
 
 /*
 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
@@ -54,16 +52,15 @@ public:
 
 private:
 	ListNode *addhelper(ListNode *l1, ListNode *l2, int carry) {
-		if(!l1 && !l2 && !carry)
-			return nullptr;
+		if(!l1 && !l2 && !carry) return nullptr;
 		int now = carry + (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
 		return new ListNode(now % 10, addhelper(l1 ? l1->next : l1, l2 ? l2->next : l2, now / 10));
 	}
 };
 
 int main() {
-	ListNode *list1 = createList({1, 4, 4, 6});
-	ListNode *list2 = createList({9, 5, 9, 7});
+	ListNode *list1 = createList({ 1, 4, 4, 6 });
+	ListNode *list2 = createList({ 9, 5, 9, 7 });
 	Solution1 sol1;
 	ListNode *res1 = sol1.addTwoNumbers(list1, list2);
 	cout << res1 << endl;

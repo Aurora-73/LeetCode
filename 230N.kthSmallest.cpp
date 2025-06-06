@@ -1,6 +1,6 @@
 // Created: 2025-05-04
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*230. 二叉搜索树中第 K 小的元素
 给定一个二叉搜索树的根节点 root ，和一个整数 k ，请你设计一个算法查找其中第 k 小的元素（从 1 开始计数）。*/
@@ -8,15 +8,13 @@
 class Solution1 {
 public:
 	int kthSmallest(TreeNode *root, int &k) {
-		if(!root)
-			return -1;
+		if(!root) return -1;
 		int l = kthSmallest(root->left, k);
 		if(l != -1) {
 			return l;
 		}
 		k--;
-		if(k == 0)
-			return root->val;
+		if(k == 0) return root->val;
 		int r = kthSmallest(root->right, k);
 		if(r != -1) {
 			return r;
@@ -28,10 +26,8 @@ public:
 class Solution2 {
 public:
 	int kthSmallest(TreeNode *root, int &k) {
-		if(kkk == -1)
-			kkk = k;
-		if(!root)
-			return -1;
+		if(kkk == -1) kkk = k;
+		if(!root) return -1;
 		int l = kthSmallest(root->left, kkk);
 		if(l != -1) {
 			return l;
@@ -61,13 +57,10 @@ public:
 
 private:
 	int dfs(TreeNode *root, int &k) {
-		if(!root)
-			return -1;
+		if(!root) return -1;
 		int l = dfs(root->left, k);
-		if(l != -1)
-			return l;
-		if(--k == 0)
-			return root->val;
+		if(l != -1) return l;
+		if(--k == 0) return root->val;
 		return dfs(root->right, k);
 	}
 }; // 还是直接调用比较好

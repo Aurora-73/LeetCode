@@ -1,6 +1,6 @@
 // Created: 2025-04-30
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*105. 从前序与中序遍历序列构造二叉树
 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
@@ -10,8 +10,7 @@
 class Solution1 {
 public:
 	TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
-		if(!preorder.size())
-			return nullptr;
+		if(!preorder.size()) return nullptr;
 		std::vector<int>::iterator prebegin = preorder.begin();
 		return buildTreeIter(inorder.begin(), inorder.end(), prebegin, preorder.end());
 	}
@@ -37,8 +36,7 @@ public:
 class Solution2 {
 public:
 	TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
-		if(preorder.empty())
-			return nullptr;
+		if(preorder.empty()) return nullptr;
 		inorder_map.clear();
 
 		// 建立哈希表加速查找
@@ -71,14 +69,15 @@ private:
 	}
 };
 
-template <typename Iterator> class GenericTreeBuilder {
+template <typename Iterator>
+class GenericTreeBuilder {
 	using ValueType = typename std::iterator_traits<Iterator>::value_type;
 	using MapType = std::unordered_map<ValueType, Iterator>;
 
 public:
-	template <typename Container> TreeNode *buildTree(Container &preorder, Container &inorder) {
-		if(preorder.empty())
-			return nullptr;
+	template <typename Container>
+	TreeNode *buildTree(Container &preorder, Container &inorder) {
+		if(preorder.empty()) return nullptr;
 
 		// 构建值到中序迭代器的映射
 		inorder_map.clear();

@@ -1,6 +1,6 @@
 // Created: 2025-04-28
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 /*  25. K 个一组翻转链表
 给你链表的头节点 head ，每 k 个节点一组进行翻转，请你返回修改后的链表。
 k 是一个正整数，它的值小于或等于链表的长度。如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
@@ -15,8 +15,7 @@ public:
 			for(int i = 0; i < k && right; i++) {
 				right = right->next;
 			}
-			if(!right)
-				break;
+			if(!right) break;
 			next = right->next;
 			right->next = nullptr;
 			right = left->next;
@@ -42,15 +41,13 @@ public:
 class Solution {
 public:
 	ListNode *reverseKGroup(ListNode *head, int k) {
-		if(k == 1 || !head)
-			return head;
+		if(k == 1 || !head) return head;
 		ListNode *left = head, *right = head, *next, *prev = nullptr;
 		while(right) {
 			for(int i = 1; i < k && right; i++) {
 				right = right->next;
 			}
-			if(!right)
-				break;
+			if(!right) break;
 			next = right->next;
 			if(prev) {
 				prev->next = right;

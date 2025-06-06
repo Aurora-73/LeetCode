@@ -1,5 +1,5 @@
 // Created: 2025-05-15
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*34. 在排序数组中查找元素的第一个和最后一个位置
 给你一个按照非递减顺序排列的整数数组 nums，和一个目标值 target。请你找出给定目标值在数组中的开始位置和结束位置。
@@ -9,7 +9,8 @@
 class Solution1 {
 public:
 	vector<int> searchRange(vector<int> &nums, int target) {
-		int left = binarySearch(nums, target - 0.5, 0), right = binarySearch(nums, target + 0.5, left);
+		int left = binarySearch(nums, target - 0.5, 0),
+		    right = binarySearch(nums, target + 0.5, left);
 		if(left == right) {
 			return { -1, -1 };
 		} else {

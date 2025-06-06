@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*
 vector<int> s, vector<int>& words
@@ -11,14 +11,12 @@ public:
 		vector<int> vec;
 		int word_num = words.size(), i = 0, j = -1, count = 0;
 		unordered_map<int, int> smap;
-		for(auto w : words)
-			smap[w]++;
+		for(auto w : words) smap[w]++;
 		unordered_map<int, int> m;
 		while(j < int(s.size())) { // int 会被转为size_t 然后 -1 就是最大值
 			if(count < word_num) {
 				j++;
-				if(j >= s.size())
-					break;
+				if(j >= s.size()) break;
 				m[s[j]]++;
 				count++;
 				while(m[s[j]] > smap[s[j]]) {
@@ -43,8 +41,7 @@ public:
 		vector<int> vec;
 		int word_num = words.size(), i = 0, j = 0, count = 0;
 		unordered_map<int, int> words_map;
-		for(auto w : words)
-			words_map[w]++;
+		for(auto w : words) words_map[w]++;
 		unordered_map<int, int> window_words;
 
 		while(j < s.size()) {
@@ -58,8 +55,7 @@ public:
 					count--;
 				}
 
-				if(count == word_num)
-					vec.push_back(i);
+				if(count == word_num) vec.push_back(i);
 			} else {
 				window_words.clear();
 				count = 0;
@@ -77,8 +73,7 @@ public:
 		vector<int> vec;
 		int word_num = words.size(), i = 0, j = 0, count = 0;
 		unordered_map<int, int> words_map;
-		for(auto w : words)
-			words_map[w]++;
+		for(auto w : words) words_map[w]++;
 		unordered_map<int, int> window_words;
 
 		while(j < s.size()) {
@@ -94,8 +89,7 @@ public:
 					count--;
 				}
 
-				if(count == word_num)
-					vec.push_back(i);
+				if(count == word_num) vec.push_back(i);
 			} else {
 				window_words.clear();
 				count = 0;
@@ -109,8 +103,8 @@ public:
 int main() {
 	Solution1 sol1;
 	Solution2 sol2;
-	vector<int> words = {1, 2, 3};
-	vector<int> s = {1, 2, 0, 1, 3, 2, 1, 1, 2, 0, 1, 3, 2};
+	vector<int> words = { 1, 2, 3 };
+	vector<int> s = { 1, 2, 0, 1, 3, 2, 1, 1, 2, 0, 1, 3, 2 };
 	cout << sol1.findSubstring(s, words) << endl;
 	cout << sol2.findSubstring(s, words) << endl;
 }

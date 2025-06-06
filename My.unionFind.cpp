@@ -1,11 +1,12 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /**
  * @brief 模板化并查集（Union-Find）结构
  * 支持泛型元素，包含路径压缩与按秩合并优化。
  * @tparam T 元素类型，需支持拷贝和哈希（如 int、string 等）
  */
-template <typename T> class UnionFind {
+template <typename T>
+class UnionFind {
 private:
 	/// 每个元素的父节点映射
 	std::unordered_map<T, T> parent;
@@ -37,8 +38,7 @@ public:
 			rank[x] = 0;
 			return x;
 		}
-		if(parent[x] != x)
-			parent[x] = find(parent[x]);
+		if(parent[x] != x) parent[x] = find(parent[x]);
 		return parent[x];
 	}
 
@@ -51,8 +51,7 @@ public:
 	void unite(const T &x, const T &y) {
 		T rootX = find(x);
 		T rootY = find(y);
-		if(rootX == rootY)
-			return;
+		if(rootX == rootY) return;
 
 		if(rank[rootX] < rank[rootY]) {
 			parent[rootX] = rootY;
@@ -82,16 +81,14 @@ public:
 
 	// 查找根（带路径压缩）
 	size_t Find(size_t i) {
-		if(parent[i] < 0)
-			return i;
+		if(parent[i] < 0) return i;
 		return parent[i] = Find(parent[i]);
 	}
 
 	// 合并两个集合，返回新根
 	size_t Union(size_t i, size_t j) {
 		size_t rooti = Find(i), rootj = Find(j);
-		if(rooti == rootj)
-			return rooti;
+		if(rooti == rootj) return rooti;
 
 		if(-parent[rooti] > -parent[rootj]) {
 			parent[rooti] += parent[rootj];

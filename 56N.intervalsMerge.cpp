@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*56. 合并区间
 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
@@ -14,10 +14,11 @@
 class Solution {
 public:
 	vector<vector<int>> merge(vector<vector<int>> &intervals) {
-		sort(
-		    intervals.begin(), intervals.end(), [](const vector<int> &a, const vector<int> &b) { return a[0] < b[0]; });
+		sort(intervals.begin(), intervals.end(), [](const vector<int> &a, const vector<int> &b) {
+			return a[0] < b[0];
+		});
 		int i = 0, j = 1, n = intervals.size();
-		vector<vector<int>> res{intervals[0]};
+		vector<vector<int>> res { intervals[0] };
 		while(j < n) {
 			if(res[i][1] >= intervals[j][0]) {
 				// merge
@@ -34,6 +35,6 @@ public:
 
 int main() {
 	Solution sol;
-	vector<vector<int>> intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+	vector<vector<int>> intervals = { { 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 } };
 	cout << sol.merge(intervals) << endl;
 }

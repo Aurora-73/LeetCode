@@ -1,5 +1,5 @@
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 
 using namespace std;
 
@@ -27,8 +27,8 @@ public:
 };
 
 int main() {
-	ListNode *list1 = createList({1, 3, 4});
-	ListNode *list2 = createList({2, 5, 9});
+	ListNode *list1 = createList({ 1, 3, 4 });
+	ListNode *list2 = createList({ 2, 5, 9 });
 	Solution sol;
 	ListNode *res = sol.mergeTwoLists(list1, list2);
 	cout << res << endl;

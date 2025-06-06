@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 /*146. LRU 缓存
 请你设计并实现一个满足  LRU (最近最少使用) 缓存 约束的数据结构。
 实现 LRUCache 类：
@@ -32,8 +32,7 @@ public:
 	}
 
 	void moveToFirst(MyListNode *node) {
-		if(node->pre == head)
-			return;
+		if(node->pre == head) return;
 		if(node->pre != nullptr) {
 			node->pre->next = node->next;
 		}
@@ -104,7 +103,7 @@ private:
 	unordered_map<int, UDListNode *> map;
 
 	unique_ptr<UDListNode> head; // dummy head
-	UDListNode *tail; // dummy tail (裸指针，只接链)
+	UDListNode *tail;            // dummy tail (裸指针，只接链)
 
 public:
 	LRUCache(int cap) : capacity(cap) {
@@ -147,8 +146,7 @@ public:
 
 	int get(int key) {
 		auto it = map.find(key);
-		if(it == map.end())
-			return -1;
+		if(it == map.end()) return -1;
 		moveToFront(it->second);
 		return it->second->value;
 	}
@@ -191,8 +189,7 @@ int main() {
 	while(true) {
 		cout << "> ";
 		cin >> op;
-		if(op == 0)
-			break;
+		if(op == 0) break;
 		if(op == 1) {
 			int key;
 			cin >> key;

@@ -1,5 +1,5 @@
 // Created: 2025-05-27
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /* 740. 删除并获得点数
 给你一个整数数组 nums ，你可以对它进行一些操作。

@@ -1,6 +1,6 @@
 // Created: 2025-04-25
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 /*  */
 
 class Solution1 {
@@ -22,8 +22,7 @@ public:
 class Solution2 {
 public:
 	ListNode *reverseList(ListNode *head) {
-		if(!head)
-			return head;
+		if(!head) return head;
 		ListNode *pre = nullptr, *now = head;
 		while(now) {
 			ListNode *next = now->next;

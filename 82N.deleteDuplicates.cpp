@@ -1,6 +1,6 @@
 // Created: 2025-04-28
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 /*给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表， 不是去重，是只要多余一个都删掉*/
 
 class Solution {
@@ -32,7 +32,7 @@ public:
 };
 
 int main() {
-	ListNode *head = createList({1, 1, 2, 2, 4, 6, 7, 7, 8});
+	ListNode *head = createList({ 1, 1, 2, 2, 4, 6, 7, 7, 8 });
 	cout << head << endl;
 	Solution sol;
 	head = sol.deleteDuplicates(head);

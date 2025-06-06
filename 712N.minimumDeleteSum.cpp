@@ -1,5 +1,5 @@
 // Created: 2025-05-28
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*712. 两个字符串的最小ASCII删除和
 给定两个字符串s1 和 s2，返回 使两个字符串相等所需删除字符的 ASCII 值的最小和 。*/

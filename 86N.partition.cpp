@@ -1,6 +1,6 @@
 // Created: 2025-04-28
-#include "MyUtils.h"
 #include "MyListNode.h"
+#include "MyUtils.hpp"
 
 /*86. 分隔链表
 给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。
@@ -54,13 +54,13 @@ public:
 };
 
 int main() {
-	ListNode *head = createList({9, 3, 5, 2, 6, 2, 3, 5, 0});
+	ListNode *head = createList({ 9, 3, 5, 2, 6, 2, 3, 5, 0 });
 	cout << head << endl;
 	Solution1 sol1;
 	head = sol1.partition(head, 3);
 	cout << head << endl;
 	deleteList(head);
-	head = createList({9, 3, 5, 2, 6, 2, 3, 5, 0});
+	head = createList({ 9, 3, 5, 2, 6, 2, 3, 5, 0 });
 	Solution2 sol2;
 	head = sol2.partition(head, 3);
 	cout << head << endl;

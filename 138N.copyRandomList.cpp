@@ -1,5 +1,5 @@
 // Created: 2025-04-25
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*138. 随机链表的复制
 提示
@@ -101,8 +101,7 @@ public:
 
 Node *createTestList() {
 	vector<Node *> nodes;
-	for(int val : { 7, 13, 11, 10, 1 })
-		nodes.push_back(new Node(val));
+	for(int val : { 7, 13, 11, 10, 1 }) nodes.push_back(new Node(val));
 
 	nodes[0]->next = nodes[1];
 	nodes[1]->next = nodes[2];

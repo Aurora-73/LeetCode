@@ -1,5 +1,5 @@
 // Created: 2025-04-25
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*150. 逆波兰表达式求值
 中等
@@ -31,18 +31,10 @@ public:
 				int left = vals.top();
 				vals.pop();
 				switch(find->second) {
-				case 0:
-					vals.push(left + right);
-					break;
-				case 1:
-					vals.push(left - right);
-					break;
-				case 2:
-					vals.push(left * right);
-					break;
-				case 3:
-					vals.push(left / right);
-					break;
+				case 0: vals.push(left + right); break;
+				case 1: vals.push(left - right); break;
+				case 2: vals.push(left * right); break;
+				case 3: vals.push(left / right); break;
 				}
 			} else {
 				vals.push(std::stoi(token)); // string 转 int的函数
@@ -67,18 +59,10 @@ public:
 				int left = vals.top();
 				vals.pop();
 				switch(token[0]) { // 不直接用token去选择，switch只能用于整数或枚举类型
-				case '+':
-					vals.push(left + right);
-					break;
-				case '-':
-					vals.push(left - right);
-					break;
-				case '*':
-					vals.push(left * right);
-					break;
-				case '/':
-					vals.push(left / right);
-					break;
+				case '+': vals.push(left + right); break;
+				case '-': vals.push(left - right); break;
+				case '*': vals.push(left * right); break;
+				case '/': vals.push(left / right); break;
 				}
 			} else {
 				vals.push(std::stoi(token));

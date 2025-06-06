@@ -1,5 +1,5 @@
 // Created: 2025-05-14
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*74. 搜索二维矩阵
 给你一个满足下述两条属性的 cols x rows 整数矩阵：
@@ -13,10 +13,11 @@ class Solution2 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
 		if(matrix.empty() || matrix[0].empty()) return false;
-		int rows = matrix.size(), cols = matrix[0].size(); // 不一定是方形
+		int rows = matrix.size(), cols = matrix[0].size();              // 不一定是方形
 		int left_i = 0, left_j = 0, right_i = rows - 1, right_j = cols; // 左闭右开
 		while(left_i * cols + left_j < right_i * cols + right_j) {
-			int middle = ((right_i - left_i) * cols + right_j - left_j) / 2 + left_i * cols + left_j;
+			int middle
+			    = ((right_i - left_i) * cols + right_j - left_j) / 2 + left_i * cols + left_j;
 			int mid_i = middle / cols, mid_j = middle % cols;
 			int &mid_val = matrix[mid_i][mid_j];
 			if(target == mid_val) {
@@ -25,7 +26,8 @@ public:
 				right_i = mid_i;
 				right_j = mid_j;
 			} else {
-				middle += 1; // 直接给 right_j ± 1 可能导致进位或者 -1 的情况，必须重新计算  // 注意这里仍要加1
+				middle
+				    += 1; // 直接给 right_j ± 1 可能导致进位或者 -1 的情况，必须重新计算  // 注意这里仍要加1
 				left_i = middle / cols;
 				left_j = middle % cols;
 			}

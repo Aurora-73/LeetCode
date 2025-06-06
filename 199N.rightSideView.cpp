@@ -1,14 +1,13 @@
 // Created: 2025-05-02
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*199. 二叉树的右视图
 给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。*/
 class Solution1 {
 public:
 	vector<int> rightSideView(TreeNode *root) {
-		if(!root)
-			return {}; // 很重要
+		if(!root) return {}; // 很重要
 		vector<int> res;
 		queue<TreeNode *> q;
 		q.push(root);
@@ -39,8 +38,7 @@ public:
 		return res;
 	}
 	void dfs(TreeNode *root, int deepth) {
-		if(!root)
-			return;
+		if(!root) return;
 		if(deepth == res.size()) {
 			res.push_back(root->val);
 		}

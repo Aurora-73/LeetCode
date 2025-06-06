@@ -1,5 +1,5 @@
 // Created: 2025-05-20
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*  198. 打家劫舍
 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，
@@ -14,8 +14,7 @@ public:
 		return dfs(nums, 0);
 	}
 	int dfs(vector<int> &nums, int begin) {
-		if(begin >= nums.size())
-			return 0;
+		if(begin >= nums.size()) return 0;
 		return max(nums[begin] + dfs(nums, begin + 2), dfs(nums, begin + 1));
 	}
 };
@@ -31,8 +30,7 @@ public:
 private:
 	vector<int> dp;
 	int dfs(vector<int> &nums, int begin) {
-		if(begin >= nums.size())
-			return 0;
+		if(begin >= nums.size()) return 0;
 		if(dp[begin] == 0) {
 			dp[begin] = max(nums[begin] + dfs(nums, begin + 2), dfs(nums, begin + 1));
 		}

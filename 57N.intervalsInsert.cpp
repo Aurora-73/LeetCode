@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 class Solution1 {
 public:
@@ -27,12 +27,10 @@ class Solution2 {
 public:
 	vector<vector<int>> insert(vector<vector<int>> &intervals, vector<int> &newInterval) {
 		int i = 0;
-		while(i < intervals.size() && intervals[i][1] < newInterval[0])
-			i++; // 先跳过没有重叠的
+		while(i < intervals.size() && intervals[i][1] < newInterval[0]) i++; // 先跳过没有重叠的
 
 		intervals.insert(intervals.begin() + i, newInterval);
-		if(i < intervals.size() - 1)
-			intervals[i][0] = min(intervals[i][0], intervals[i + 1][0]);
+		if(i < intervals.size() - 1) intervals[i][0] = min(intervals[i][0], intervals[i + 1][0]);
 		// 将自身插入进去，必须插入，为了归一化后面为空的情况，同时调整自身的最小值
 
 		while(i + 1 < intervals.size() && intervals[i][1] >= intervals[i + 1][0]) {
@@ -46,8 +44,8 @@ public:
 int main() {
 	Solution1 sol1;
 	Solution2 sol2;
-	vector<vector<int>> intervals = {{1, 3}, {6, 9}};
-	vector<int> newInterval = {2, 5};
+	vector<vector<int>> intervals = { { 1, 3 }, { 6, 9 } };
+	vector<int> newInterval = { 2, 5 };
 	cout << sol1.insert(intervals, newInterval) << endl;
 	cout << sol2.insert(intervals, newInterval) << endl;
 }

@@ -1,5 +1,5 @@
 // Created: 2025-05-12
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*46. 全排列
 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。*/
@@ -10,8 +10,7 @@ public:
 		n = nums.size();
 		temp.resize(n);
 		size_t fact = 1;
-		for(int i = 2; i <= n; ++i)
-			fact *= i;
+		for(int i = 2; i <= n; ++i) fact *= i;
 		res.reserve(fact);
 		in_temp = vector<bool>(n, false);
 		for(int j = 0; j < n; ++j) {
@@ -52,8 +51,7 @@ public:
 		temp.resize(n);
 		in_temp = vector<bool>(n, false);
 		size_t fact = 1;
-		for(int i = 2; i <= n; ++i)
-			fact *= i;
+		for(int i = 2; i <= n; ++i) fact *= i;
 		res.reserve(fact);
 		top = 0;
 		dfs(nums, 0); // 只传递递归深度
@@ -88,8 +86,7 @@ public:
 		int n = nums.size();
 		// 预分配结果空间，n! 个排列
 		size_t fact = 1;
-		for(int i = 2; i <= n; ++i)
-			fact *= i;
+		for(int i = 2; i <= n; ++i) fact *= i;
 		res.reserve(fact);
 		backtrack(nums, 0);
 		return res;

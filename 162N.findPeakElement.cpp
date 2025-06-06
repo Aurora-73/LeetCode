@@ -1,5 +1,5 @@
 // Created: 2025-05-15
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*162. 寻找峰值
 峰值元素是指其值严格大于左右相邻值的元素。
@@ -81,7 +81,7 @@ public:
 				left = mid + 1;
 			} else {
 				right = mid; // 左闭右开
-				// mid小于两边则两边各有一个峰值
+				             // mid小于两边则两边各有一个峰值
 			}
 		}
 		return -1; // 不可能发生这种情况
@@ -110,7 +110,9 @@ public:
 class Solution5 {
 public:
 	int findPeakElement(vector<int> &nums) {
-		auto cond = [&](vector<int>::iterator &mid) { return *mid > *(mid + 1); };
+		auto cond = [&](vector<int>::iterator &mid) {
+			return *mid > *(mid + 1);
+		};
 		return my_find_first(nums.begin(), nums.end() - 1, cond) - nums.begin();
 	}
 };

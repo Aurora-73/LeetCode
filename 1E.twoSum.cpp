@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <unordered_map>
-
-using namespace std;
+#include "MyUtils.hpp"
 
 class Solution {
 public:
@@ -11,7 +7,7 @@ public:
 		for(int i = 0; i < nums.size(); i++) {
 			auto need = map.find(target - nums[i]);
 			if(need != map.end()) {
-				return {need->second, i};
+				return { need->second, i };
 			} else {
 				map[nums[i]] = i;
 			}
@@ -19,3 +15,12 @@ public:
 		return {};
 	}
 };
+
+int main() {
+	Solution solution;
+	vector<int> nums = { 2, 7, 11, 15 };
+	int target = 9;
+	auto result = solution.twoSum(nums, target);
+	cout << result << endl;
+	return 0;
+}

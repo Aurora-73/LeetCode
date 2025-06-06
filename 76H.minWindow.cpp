@@ -1,4 +1,4 @@
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*76. 最小覆盖子串
 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
@@ -23,11 +23,9 @@ class Solution {
 public:
 	string minWindow(string s, string t) {
 		unordered_map<char, int> map_s, map_t;
-		for(auto c : t)
-			map_t[c]++;
+		for(auto c : t) map_t[c]++;
 		int i = 0, j = 0, i_min = 0, j_min = -1, count = 0;
-		while(i < s.size() && !map_t.count(s[i]))
-			i++;
+		while(i < s.size() && !map_t.count(s[i])) i++;
 		if(i < s.size()) {
 			map_s[s[i]]++;
 			count++;

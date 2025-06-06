@@ -1,5 +1,5 @@
 // Created: 2025-05-19
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*50. Pow(x, n)
 实现 pow(x, n) ，即计算 x 的整数 n 次幂函数（即，xn ）。*/

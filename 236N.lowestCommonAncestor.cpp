@@ -1,6 +1,6 @@
 // Created: 2025-05-01
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 /*给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，
 满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
@@ -8,8 +8,7 @@
 class Solution1 {
 public:
 	TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
-		if(!root || root == p || root == q)
-			return root;
+		if(!root || root == p || root == q) return root;
 		TreeNode *l = lowestCommonAncestor(root->left, p, q);
 		TreeNode *r = lowestCommonAncestor(root->right, p, q);
 		if(l && r) {
@@ -35,8 +34,7 @@ public:
 		}
 
 		while(q) {
-			if(ancestors.count(q))
-				return q;
+			if(ancestors.count(q)) return q;
 			q = parent[q];
 		}
 
@@ -48,8 +46,7 @@ private:
 	int count = 0;
 
 	void buildParentMap(TreeNode *node, TreeNode *par, TreeNode *p, TreeNode *q) {
-		if(!node || count == 2)
-			return;
+		if(!node || count == 2) return;
 		count += (node == p || node == q);
 
 		parent[node] = par;
@@ -103,4 +100,4 @@ public:
 	}
 };
 
-int main() {}
+int main() { }

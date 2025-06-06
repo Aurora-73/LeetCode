@@ -1,6 +1,6 @@
 // Created: 2025-05-02
-#include "MyUtils.h"
 #include "MyTreeNode.h"
+#include "MyUtils.hpp"
 
 /*173. 二叉搜索树迭代器
 实现一个二叉搜索树迭代器类BSTIterator ，表示一个按中序遍历二叉搜索树（BST）的迭代器：
@@ -18,8 +18,7 @@ public:
 	}
 
 	void InOrder(TreeNode *root) {
-		if(!root)
-			return;
+		if(!root) return;
 		InOrder(root->left);
 		allval.push_back(root->val);
 		InOrder(root->right);
@@ -44,7 +43,7 @@ private:
 
 class BSTIterator {
 public:
-	BSTIterator(TreeNode *root) : now(root) {}
+	BSTIterator(TreeNode *root) : now(root) { }
 
 	int next() {
 		while(now) {
@@ -67,4 +66,4 @@ private:
 	TreeNode *now;
 };
 
-int main() {}
+int main() { }

@@ -1,5 +1,5 @@
 // Created: 2025-04-26
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*70. 爬楼梯
 简单
@@ -23,8 +23,7 @@ public:
 class Solution {
 public:
 	int climbStairs(int n) {
-		if(n == 1)
-			return 1;
+		if(n == 1) return 1;
 		unique_ptr<int[]> dfs(new int[n + 1]);
 		dfs[1] = 1, dfs[2] = 2;
 		for(int i = 3; i <= n; ++i) {
@@ -37,8 +36,7 @@ public:
 class Solution {
 public:
 	int climbStairs(int n) {
-		if(n < 3)
-			return n;
+		if(n < 3) return n;
 		int fn = 2, fn_1 = 1, fn_2 = 1;
 		for(int i = 3; i <= n; ++i) {
 			int temp = fn;

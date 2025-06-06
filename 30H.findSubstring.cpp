@@ -1,9 +1,9 @@
+#include "MyUtils.hpp"
 #include <iostream>
-#include <vector>
-#include <unordered_map>
 #include <map>
 #include <string>
-#include "MyUtils.h"
+#include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -11,19 +11,16 @@ class Solution {
 public:
 	vector<int> findSubstring(string s, vector<string> &words) {
 		vector<int> res;
-		if(words.empty() || s.empty())
-			return res;
+		if(words.empty() || s.empty()) return res;
 
 		int word_len = words[0].size();
 		int word_num = words.size();
 		int window_len = word_len * word_num;
 
-		if(s.size() < window_len)
-			return res;
+		if(s.size() < window_len) return res;
 
 		unordered_map<string, int> word_count;
-		for(auto &word : words)
-			word_count[word]++;
+		for(auto &word : words) word_count[word]++;
 
 		for(int i = 0; i < word_len; i++) { // 分组滑动
 			unordered_map<string, int> window_words;
@@ -46,8 +43,7 @@ public:
 					}
 
 					// 匹配成功
-					if(count == word_num)
-						res.push_back(left);
+					if(count == word_num) res.push_back(left);
 				} else {
 					// 单词不在 words 中，重置窗口
 					window_words.clear();
@@ -76,8 +72,7 @@ public:
 			while(j + word_len <= int(s.size())) {
 				if(count < word_num) {
 					j += word_len;
-					if(j + word_len > int(s.size()))
-						break;
+					if(j + word_len > int(s.size())) break;
 					string sub = s.substr(j, word_len);
 					m[sub]++;
 					count++;
@@ -106,7 +101,7 @@ public:
 		unordered_multimap<string, bool> map;
 		int n1 = words.size(), n2 = words[0].size(), i = 0;
 		for(auto word : words) {
-			map.insert({word, false});
+			map.insert({ word, false });
 		}
 		while(s.size() - i >= n1 * n2) { // 有等号，因为是大小之间的比较，并没有下标
 			for(int j = 0; j < n1; j++) {
@@ -121,8 +116,7 @@ public:
 							break;
 						}
 					}
-					if(!done)
-						break;
+					if(!done) break;
 				} else {
 					break;
 				}
@@ -177,10 +171,10 @@ public:
 int main() {
 	Solution1 sol;
 	string s = "barfoothefoobarman";
-	vector<string> words = {"foo", "bar"};
+	vector<string> words = { "foo", "bar" };
 	cout << sol.findSubstring(s, words) << endl;
 	s = "wordgoodgoodgoodbestword";
 	cout << s.size() << endl;
-	words = {"word", "good", "best", "good"};
+	words = { "word", "good", "best", "good" };
 	cout << sol.findSubstring(s, words) << endl;
 }

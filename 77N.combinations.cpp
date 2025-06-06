@@ -1,5 +1,5 @@
 // Created: 2025-05-11
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*77. 组合
 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
@@ -35,8 +35,7 @@ private:
 		}
 	}
 	double fa(size_t n, size_t k) {
-		if(n <= k)
-			return 1;
+		if(n <= k) return 1;
 		return n * fa(n - 1, k);
 	}
 };
@@ -81,16 +80,14 @@ public:
 		while(top > 0 || top == 0 && val <= n) {
 			if(val <= n && top < k) {
 				st[top++] = val++;
-				if(top == k)
-					ans.push_back(st);
+				if(top == k) ans.push_back(st);
 			} else
 				val = st[--top] + 1;
 		}
 		return ans;
 	}
 	size_t fa(size_t n, size_t end) {
-		if(n <= end)
-			return 1;
+		if(n <= end) return 1;
 		return n * fa(n - 1, end);
 	}
 };

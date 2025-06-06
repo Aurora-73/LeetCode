@@ -1,5 +1,5 @@
 // Created: 2025-04-27
-#include "MyUtils.h"
+#include "MyUtils.hpp"
 
 /*  */
 
@@ -36,8 +36,7 @@ public:
 				up = false;
 			res = (val ? one : zero) + res;
 		}
-		if(up)
-			res = one + res;
+		if(up) res = one + res;
 		return res;
 	}
 };
@@ -56,10 +55,8 @@ public:
 		while(ia >= 0 || ib >= 0 || up) {
 			int val = up; // 从上次的进位开始
 
-			if(ia >= 0)
-				val += (a[ia--] == '1'); // 处理a的当前位
-			if(ib >= 0)
-				val += (b[ib--] == '1'); // 处理b的当前位
+			if(ia >= 0) val += (a[ia--] == '1'); // 处理a的当前位
+			if(ib >= 0) val += (b[ib--] == '1'); // 处理b的当前位
 
 			up = val >= 2;
 			res[ir--] = (val % 2) + '0';
@@ -78,10 +75,8 @@ public:
 
 		while(i >= 0 || j >= 0 || carry) {
 			int sum = carry;
-			if(i >= 0)
-				sum += (a[i--] - '0');
-			if(j >= 0)
-				sum += (b[j--] - '0');
+			if(i >= 0) sum += (a[i--] - '0');
+			if(j >= 0) sum += (b[j--] - '0');
 			res.push_back(sum % 2 + '0');
 			carry = sum / 2;
 		}
@@ -100,10 +95,8 @@ public:
 
 		while(i >= 0 || j >= 0 || carry) {
 			int sum = carry;
-			if(i >= 0)
-				sum += (a[i--] - '0');
-			if(j >= 0)
-				sum += (b[j--] - '0');
+			if(i >= 0) sum += (a[i--] - '0');
+			if(j >= 0) sum += (b[j--] - '0');
 			res[k--] = (sum % 2) + '0';
 			carry = sum / 2;
 		}
