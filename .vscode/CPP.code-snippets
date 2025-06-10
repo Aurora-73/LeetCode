@@ -12,6 +12,7 @@
 		"",
 		"int main() {",
 		"    Solution sol;",
+		"    cout << sol. << endl;",
 		"}"
 	  ],
 	  "description": "Default template for my C++ files"
@@ -30,6 +31,7 @@
 		"",
 		"int main() {",
 		"    Solution sol;",
+		"    cout << sol. << endl;",
 		"}"
 	  ],
 	  "description": "Default template for my C++ files"
@@ -48,6 +50,7 @@
 		  "",
 		  "int main() {",
 		  "    Solution sol;",
+		  "    cout << sol. << endl;",
 		  "}"
 		],
 		"description": "Default template for my C++ files"
@@ -66,6 +69,7 @@
 	  "",
 	  "int main() {",
 	  "    Solution sol;",
+	  "    cout << sol. << endl;",
 	  "}"
 	],
 	"description": "Default template for my C++ files"

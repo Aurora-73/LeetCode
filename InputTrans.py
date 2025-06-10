@@ -71,8 +71,14 @@ def transform_string(s: str) -> str:
 
 
 if __name__ == "__main__":
-    with open("Input.txt", "r", encoding="utf-8") as f:
-        input_str = f.read()
+    try:
+        with open("Input.txt", "r", encoding="utf-8") as f:
+            input_str = f.read()
+    except FileNotFoundError:
+        # 文件不存在则创建空文件
+        with open("Input.txt", "w", encoding="utf-8") as f:
+            pass
+        input_str = ""
     output_str = transform_string(input_str)
     with open("Input.txt", "w", encoding="utf-8") as f:
         f.write(output_str)
