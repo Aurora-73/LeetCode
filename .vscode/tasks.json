@@ -15,29 +15,68 @@
           ]
         }
       },
+      "presentation": {
+        "reveal": "silent", // 👈 不抢占输出面板
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated" // 👈 使用独立面板避免干扰 build 输出
+      },
       "problemMatcher": [],
       "group": "none"
     },
     {
-      "label": "C++ Build",
+      "label": "build-dll",
       "type": "shell",
-      // 这里改成你安装目录下的 g++.exe
-      "command": "D:\\mingw64\\bin\\g++.exe",
+      "command": "D:/mingw64/bin/g++.exe",
+      "args": [
+        "-std=c++20",
+        "-O2",
+        "-shared",
+        // "-Wl,--out-implib,E:/Code/LeeCode/libmylibs.a",
+        "-Wl,--export-all-symbols",
+        "E:/Code/LeeCode/MyDateGen.cpp",
+        "E:/Code/LeeCode/MyListNode.cpp",
+        "E:/Code/LeeCode/MyTreeNode.cpp",
+        "-I",
+        "E:/Code/LeeCode",
+        "-o",
+        "E:/Code/LeeCode/mylibs.dll"
+      ],
+      "options": {
+        "cwd": "E:/Code/LeeCode",
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "build-main",
+      "type": "shell",
+      // "dependsOn": [
+      //   "C++ Clean",
+      // ],
+      "command": "D:/mingw64/bin/g++.exe",
       "args": [
         "-g",
         "-O0",
         "-Wall",
-        // "-Werror",
         "-std=c++20",
         "${file}",
-        "${workspaceFolder}\\MyDateGen.cpp",
-        "${workspaceFolder}\\MyListNode.cpp",
-        "${workspaceFolder}\\MyTreeNode.cpp",
+        "-I${workspaceFolder}",
+        "-L${workspaceFolder}",
+        "-lmylibs",
         "-o",
-        "${fileDirname}\\${fileBasenameNoExtension}.exe",
-        "-I${workspaceFolder}"
+        "${fileDirname}\\${fileBasenameNoExtension}.exe"
       ],
-      "dependsOn": "C++ Clean",
       "problemMatcher": [
         "$gcc"
       ],
@@ -46,7 +85,7 @@
         "isDefault": true
       },
       "options": {
-        "cwd": "${workspaceFolder}" // 可选：保证工作目录是项目根
+        "cwd": "${workspaceFolder}"
       }
     }
   ]

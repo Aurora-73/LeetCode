@@ -8,3 +8,5 @@ CMakeLists.txt
 .history/
 test*
 Input.txt
+*.a
+*.dll

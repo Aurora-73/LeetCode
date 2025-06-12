@@ -1,3 +1,4 @@
+// .vscode/launch.json 
 {
   "version": "0.2.0",
   "configurations": [
@@ -9,11 +10,17 @@
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "${workspaceFolder};${env:PATH}"
+        }
+      ],
       "externalConsole": false,
       "MIMode": "gdb",
       "miDebuggerPath": "D:/mingw64/bin/gdb.exe",
-      "preLaunchTask": "C++ Build",
+      "preLaunchTask": "build-main",
+      "postDebugTask": "C++ Clean",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
