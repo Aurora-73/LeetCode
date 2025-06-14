@@ -149,6 +149,12 @@ private:
 		return { head, tail };
 	}
 };
+/* 找链表中点
+    如果偶数长度时想取 右中点，就 fast = head;。
+    如果想取 左中点，就 fast = head->next; 
+环形链表（判环／找环入口）
+    一定要让 slow = head; fast = head;
+    并且用「先移动再判断是否相遇」的方式。这样逻辑最简洁、最不容易出错。*/
 
 int main() {
 	Solution1 sol1;

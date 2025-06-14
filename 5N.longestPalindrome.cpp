@@ -163,5 +163,5 @@ public:
 }; // 中心扩散，统一写法，没有剪枝 (8ms)
 
 int main() {
-	Solution sol;
+	Solution3 sol;
 }
