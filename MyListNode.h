@@ -1,6 +1,7 @@
 // MyListNode.h
 #ifndef MY_LISTNODE_H
 #define MY_LISTNODE_H
+#include <initializer_list>
 #include <iostream>
 #include <vector>
 

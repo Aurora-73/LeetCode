@@ -73,7 +73,7 @@ public:
 };
 
 // string 转为 数字: stoi stol stoll stoul stof stod stold
-// 处理不以数字开头的字符串或空字符串会抛出异常 std::invalid_argument？
+// 处理不以数字开头的字符串或空字符串会抛出异常 std::invalid_argument(?)
 // 处理合法数字开头包含非法字符（包括空格）的字符串时只会转换非法字符之前的内容
 // 自动删除前后空格，但是遇到中间的空格会停止转换
 // 可以自动处理负号、科学计数法
