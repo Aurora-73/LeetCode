@@ -43,20 +43,20 @@ void _debug(const T &t, const Args &...args) {
 }
 
 // ================= 容器输出重载 =================
+// pair
+template <typename T1, typename T2>
+ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
+	return os << "(" << p.first << ", " << p.second << ")";
+}
+
 // vector
 template <typename T>
 ostream &operator<<(ostream &os, const vector<T> &vec) {
 	os << "{ ";
 	for(size_t i = 0; i < vec.size(); ++i) {
-		os << vec[i] << (i == vec.size() - 1 ? "" : ", ");
+		os << vec[i] << ((i == vec.size() - 1) ? "" : ", ");
 	}
 	return os << " }";
-}
-
-// pair
-template <typename T1, typename T2>
-ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
-	return os << "(" << p.first << " → " << p.second << ")";
 }
 
 // map（按有序格式输出）
