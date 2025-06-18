@@ -101,6 +101,8 @@ public:
 	}
 }; // 先对硬币进行变量后对 dp 数组进行遍历 提高缓存命中率
 
+// 缺少完全背包问题解法
+
 int main() {
 	Solution sol;
 	vector<int> coins = { 1, 2, 5 };
