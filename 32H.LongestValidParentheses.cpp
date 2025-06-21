@@ -78,6 +78,34 @@ class Solution3 {
 public:
 	int longestValidParentheses(string &s) {
 		stack<int> st;
+		int n = s.size(), len = 0, max_len = 0;
+		vector<bool> mask(n);
+		for(int i = 0; i < n; ++i) {
+			if(s[i] == '(') {
+				st.push(i);
+			} else {
+				if(!st.empty()) {
+					mask[i] = mask[st.top()] = 1;
+					st.pop();
+				}
+			}
+		}
+		for(auto b : mask) {
+			if(b) {
+				++len;
+			} else {
+				max_len = max(max_len, len);
+				len = 0;
+			}
+		}
+		return max(max_len, len); // 防止漏掉最后一个，或者可以将数组长度设为 n + 1
+	}
+}; // 用栈进行括号匹配，匹配成功则将对应的mask标记为1，最后寻找最长连续的mask
+
+class Solution4 {
+public:
+	int longestValidParentheses(string &s) {
+		stack<int> st;
 		st.push(-1); // （哨兵）在栈底先放一个“-1”
 		int n = s.size(), len = 0, max_len = 0;
 		for(int i = 0; i < n; ++i) {
