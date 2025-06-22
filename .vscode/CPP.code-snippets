@@ -18,7 +18,7 @@
 	  "description": "Default template for my C++ files"
 	},
 	"My Contest CPP Template": {
-	  "prefix": "mycontest",  // 你输入这个触发模板
+	  "prefix": "contest",  // 你输入这个触发模板
 	  "body": [
 		"// Created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
 		"#include \"MyUtils.hpp\"",
