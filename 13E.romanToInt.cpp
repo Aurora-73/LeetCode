@@ -1,7 +1,7 @@
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
 /* 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
@@ -22,10 +22,10 @@ X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
 C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 给定一个罗马数字，将其转换成整数。 */
 
-class Solution {
+class Solution1 {
 public:
 	unordered_map<char, int> oneChar;
-	Solution() {
+	Solution1() {
 		oneChar['I'] = 1;
 		oneChar['V'] = 5;
 		oneChar['X'] = 10;
@@ -37,8 +37,9 @@ public:
 	int romanToInt(string s) {
 		int sum = 0;
 		for(int i = s.size() - 1; i >= 0; i--) {
-			if(i < s.size() - 1 &&
-			   (oneChar[s[i + 1]] == 5 * oneChar[s[i]] || oneChar[s[i + 1]] == 10 * oneChar[s[i]])) {
+			if(i < s.size() - 1
+			    && (oneChar[s[i + 1]] == 5 * oneChar[s[i]]
+			        || oneChar[s[i + 1]] == 10 * oneChar[s[i]])) {
 				sum -= oneChar[s[i]];
 			} else {
 				sum += oneChar[s[i]];
@@ -47,6 +48,34 @@ public:
 		return sum;
 	}
 };
+
+class Solution {
+public:
+	vector<int> oneChar;
+	Solution() {
+		oneChar.resize(26);
+		oneChar['I' - 'A'] = 1;
+		oneChar['V' - 'A'] = 5;
+		oneChar['X' - 'A'] = 10;
+		oneChar['L' - 'A'] = 50;
+		oneChar['C' - 'A'] = 100;
+		oneChar['D' - 'A'] = 500;
+		oneChar['M' - 'A'] = 1000;
+	}
+	int romanToInt(string s) {
+		int sum = 0;
+		for(int i = s.size() - 1; i >= 0; i--) {
+			if(i < s.size() - 1
+			    && (oneChar[s[i + 1] - 'A'] == 5 * oneChar[s[i] - 'A']
+			        || oneChar[s[i + 1] - 'A'] == 10 * oneChar[s[i] - 'A'])) {
+				sum -= oneChar[s[i] - 'A'];
+			} else {
+				sum += oneChar[s[i] - 'A'];
+			}
+		}
+		return sum;
+	}
+}; // 仅含有大写字母的哈希表可以用数组代替
 
 int main() {
 	Solution sol;

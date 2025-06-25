@@ -66,7 +66,7 @@ public:
 		}
 		return a1 - a2;
 	}
-};
+}; // 仅含有小写字母的哈希表可以用数组代替
 
 int main() {
 	Solution sol;

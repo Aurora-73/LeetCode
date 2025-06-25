@@ -1,14 +1,13 @@
-#include <string>
-#include <vector>
-#include <unordered_map>
 #include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
-/*
-给定一个赎金信 (ransom) 字符串和一个杂志(magazine)字符串，判断第一个字符串 ransom 
+/* 给定一个赎金信 (ransom) 字符串和一个杂志(magazine)字符串，判断第一个字符串 ransom 
 能不能由第二个字符串 magazines 里面的字符构成。如果可以构成，返回 true ；否则返回 false。
 以前绑架犯为了不暴露赎金信字迹，要从杂志上搜索各个需要的字母，组成单词来表达意思。
-*/
+ransomNote 和 magazine 由小写英文字母组成 */
 
 class Solution1 {
 public:
@@ -35,15 +34,15 @@ public:
 class Solution2 {
 public:
 	bool canConstruct(string ransomNote, string magazine) {
-		size_t count[CHAR_MAX - CHAR_MIN + 1]; // 不同编译器实现的char的范围可能不一样，使用宏可以自动适配
+		size_t count[26];
 		for(auto c : magazine) {
-			++count[c - CHAR_MIN];
+			++count[c - 'a'];
 		}
 		for(auto c : ransomNote) {
-			if(count[c - CHAR_MIN] <= 0) {
+			if(count[c - 'a'] <= 0) {
 				return false;
 			} else {
-				--count[c - CHAR_MIN];
+				--count[c - 'a'];
 			}
 		}
 		return true;
