@@ -5,7 +5,7 @@
     {
       "label": "C++ Clean",
       "type": "shell",
-      "command": "if exist \"${fileDirname}\\${fileBasenameNoExtension}.exe\" del \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
+      "command": "taskkill /F /IM \"${fileBasenameNoExtension}.exe\" 2>nul & if exist \"${fileDirname}\\${fileBasenameNoExtension}.exe\" del \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
       "options": {
         "shell": {
           "executable": "cmd.exe",
@@ -16,10 +16,10 @@
         }
       },
       "presentation": {
-        "reveal": "silent", // 👈 不抢占输出面板
+        "reveal": "silent",
         "echo": false,
         "focus": false,
-        "panel": "dedicated" // 👈 使用独立面板避免干扰 build 输出
+        "panel": "dedicated"
       },
       "problemMatcher": [],
       "group": "none"
@@ -83,6 +83,12 @@
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent",
+        "echo": true,
+        "focus": false,
+        "panel": "dedicated"
       },
       "options": {
         "cwd": "${workspaceFolder}"
