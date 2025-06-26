@@ -50,6 +50,6 @@ private:
 int main() {
 	Solution1 sol1;
 	Solution2 sol2;
-	auto tree = createTree({ 1, 2, 3, 4, 5, -1, 7 });
+	TreeNode *tree = createTree({ 1, 2, 3, 4, 5, EMPTY_NODE, 7 });
 	cout << sol1.diameterOfBinaryTree(tree) << " " << sol2.diameterOfBinaryTree(tree) << endl;
 }

@@ -86,7 +86,7 @@ public:
 };
 
 int main() {
-	auto tree = createTree({ 1, 2, 3, 4, 5, -1, 7 });
+	TreeNode *tree = createTree({ 1, 2, 3, 4, 5, EMPTY_NODE, 7 });
 	Solution1 sol1;
 	cout << sol1.zigzagLevelOrder(tree) << endl;
 	Solution2 sol2;

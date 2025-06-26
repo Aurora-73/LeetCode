@@ -62,6 +62,6 @@ public:
 int main() {
 	Solution sol;
 	TreeNode *root;
-	root = createTree({ 8, 17, 21, 18, -1, -1, 6 });
+	root = createTree({ 8, 17, 21, 18, EMPTY_NODE, EMPTY_NODE, 6 });
 	cout << sol.decorateRecord(root) << endl;
 }

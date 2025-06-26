@@ -45,5 +45,5 @@ public:
 int main() {
 	Solution sol;
 	vector<int> nums { 1, 3, 5, 4, 7 };
-	cout << sol.findNumberOfLIS(nums);
+	cout << sol.findNumberOfLIS(nums) << endl;
 }

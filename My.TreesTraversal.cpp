@@ -84,7 +84,7 @@ void PostOrder2(TreeNode *root) {
 }
 
 int main() {
-	auto tree = createTree({ 1, 2, 3, 4, 5, 6, 7 });
+	TreeNode *tree = createTree({ 1, 2, 3, 4, 5, 6, 7 });
 	PreOrder(tree);
 	cout << endl;
 	InOrder(tree);

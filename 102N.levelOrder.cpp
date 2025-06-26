@@ -30,7 +30,7 @@ public:
 };
 
 int main() {
-	auto tree = createTree({ 1, 2, 3, 4, 5, -1, 7 });
+	TreeNode *tree = createTree({ 1, 2, 3, 4, 5, EMPTY_NODE, 7 });
 	Solution sol;
 	cout << sol.levelOrder(tree) << endl;
 }

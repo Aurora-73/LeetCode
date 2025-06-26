@@ -4,7 +4,7 @@
 using namespace std;
 
 TreeNode *createTree(const std::vector<int> &values) {
-	if(values.empty() || values[0] == -1) return nullptr;
+	if(values.empty() || values[0] == EMPTY_NODE) return nullptr;
 
 	TreeNode *root = new TreeNode(values[0]);
 	std::queue<TreeNode *> q;
@@ -16,14 +16,14 @@ TreeNode *createTree(const std::vector<int> &values) {
 		q.pop();
 
 		// 左子节点
-		if(i < values.size() && values[i] != -1) {
+		if(i < values.size() && values[i] != EMPTY_NODE) {
 			current->left = new TreeNode(values[i]);
 			q.push(current->left);
 		}
 		++i;
 
 		// 右子节点
-		if(i < values.size() && values[i] != -1) {
+		if(i < values.size() && values[i] != EMPTY_NODE) {
 			current->right = new TreeNode(values[i]);
 			q.push(current->right);
 		}
@@ -39,7 +39,7 @@ void printTreeFancy(TreeNode *node,
     bool isLeft,
     const std::string &tag) {
 	if(!node) {
-		os << prefix << (isLeft ? "└── " : "├── ") << "n " << tag << std::endl;
+		os << prefix << (isLeft ? "└── " : "├── ") << "null " << tag << std::endl;
 		return;
 	}
 
