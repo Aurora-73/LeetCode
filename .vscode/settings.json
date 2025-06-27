@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.in": "plaintext",
         "string": "cpp",
         "iostream": "cpp",
         "vector": "cpp",
@@ -96,7 +97,9 @@
         "stdfloat": "cpp",
         "stop_token": "cpp",
         "syncstream": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     },
     "github.copilot.enable": {
         "cpp": false,
