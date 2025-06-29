@@ -71,7 +71,7 @@ public:
 int main() {
 	Solution1 sol1;
 	Solution2 sol2;
-	auto nums = randomIntArray(2000, 1, 10000, 0, 1);
+	auto nums = randomIntVector(2000, 1, 10000, 0, 1);
 	cout << nums << endl;
 	auto t0 = std::chrono::system_clock::now();
 	int res1 = sol1.combinationSum4(nums, 10000);

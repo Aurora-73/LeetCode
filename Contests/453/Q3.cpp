@@ -66,7 +66,7 @@ public:
 
 int main() {
 	Solution sol;
-	vector<int> nums = randomIntArray(10, 1, 100, false, true);
+	vector<int> nums = randomIntVector(10, 1, 100, false, true);
 	int k;
 	nums = { 9, 4, 1, 3, 7 }, k = 4;
 	cout << sol.countPartitions(nums, k) << endl; // 输出: 6

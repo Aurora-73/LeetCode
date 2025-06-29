@@ -12,7 +12,7 @@
  * @param ordered 是否有序
  * @param unique 是否唯一
  */
-std::vector<int> randomIntArray(
+std::vector<int> randomIntVector(
     int n, int minVal, int maxVal, bool ordered = false, bool unique = false);
 
 /**

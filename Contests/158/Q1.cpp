@@ -83,8 +83,8 @@ int main() {
 	cout << sol.maxSumDistinctTriplet(x, y) << endl;
 	x = { 1, 2, 1, 2 }, y = { 4, 5, 6, 7 };
 	cout << sol.maxSumDistinctTriplet(x, y) << endl;
-	x = randomIntArray(10000, 0, 100000);
-	y = randomIntArray(10000, 0, 100000);
+	x = randomIntVector(10000, 0, 100000);
+	y = randomIntVector(10000, 0, 100000);
 	cout << sol.maxSumDistinctTriplet(x, y) << endl;
 	cout << sol1.maxSumDistinctTriplet(x, y) << endl;
 }

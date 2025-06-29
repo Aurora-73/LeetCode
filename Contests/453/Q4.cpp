@@ -56,6 +56,6 @@ public:
 
 int main() {
 	Solution sol;
-	vector<int> nums = randomIntArray(10, 1, 100, false, true);
+	vector<int> nums = randomIntVector(10, 1, 100, false, true);
 	cout << nums << endl;
 }

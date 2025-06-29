@@ -118,7 +118,7 @@ int main() {
 	nums = { -1, 1, 1, 1, -1, -1, -1, 1, 1 }, k = 4;
 	cout << Solution().canMakeEqual(nums, k) << endl; // 输出: fasle
 	for(int i = 0; i < 100; ++i) {
-		nums = randomIntArray(30, -1, 1, 0, 0);
+		nums = randomIntVector(30, -1, 1, 0, 0);
 		for(auto &n : nums) {
 			if(n == 0) {
 				n = 1; // 确保只有 1 和 -1

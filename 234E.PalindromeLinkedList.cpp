@@ -87,7 +87,7 @@ int main() {
 	cout << sol.isPalindrome(head) << endl;
 	cout << sol1.isPalindrome(head) << endl;
 	for(int i = 0; i < 1000; ++i) {
-		vector<int> vals = randomIntArray(10, 0, 5);
+		vector<int> vals = randomIntVector(10, 0, 5);
 		head = createList(vals);
 		bool a = sol.isPalindrome(head), b = sol1.isPalindrome(head);
 		if(a != b) {

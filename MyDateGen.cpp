@@ -9,7 +9,7 @@
 
 using namespace std;
 
-vector<int> randomIntArray(int n, int minVal, int maxVal, bool ordered, bool unique) {
+vector<int> randomIntVector(int n, int minVal, int maxVal, bool ordered, bool unique) {
 	vector<int> arr;
 	mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 	if(unique) {
