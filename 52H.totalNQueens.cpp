@@ -19,10 +19,10 @@ public:
 private:
 	size_t find = 0, n;
 	vector<bool> line, right, left; // 分别表示该列，右侧斜线，左侧斜线是否有元素
-	inline size_t ij2right(size_t i, size_t j) {
+	size_t ij2right(size_t i, size_t j) {
 		return n - 1 + i - j;
 	}
-	inline size_t ij2left(size_t i, size_t j) {
+	size_t ij2left(size_t i, size_t j) {
 		return i + j;
 	}
 	void dfs(size_t i) {

@@ -45,7 +45,7 @@ public:
 };
 
 class Solution1 {
-	inline bool isOperator(const string &s) {
+	bool isOperator(const string &s) {
 		return s == "+" || s == "-" || s == "*" || s == "/";
 	}
 

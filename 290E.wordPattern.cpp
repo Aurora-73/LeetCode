@@ -1,10 +1,7 @@
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <string_view>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+// Created: 2025-06-30
+#include "MyUtils.hpp"
+// #ifdef MY_UTILS_H
+
 using namespace std;
 
 /* 给定一种规律 pattern 和一个字符串 s ，判断 s 是否遵循相同的规律。
@@ -46,19 +43,6 @@ public:
 
 class Solution2 {
 public:
-	inline bool line2string(const string &line, string &str, size_t &i) {
-		str = "";
-		if(line[i] == ' ') i++;
-		for(; i < line.length(); i++) {
-			if(line[i] != ' ') {
-				str.push_back(line[i]);
-			} else {
-				i++;
-				break;
-			}
-		}
-		return str.length();
-	}
 	bool wordPattern(string pattern, string s) {
 		size_t i = 0;
 		unordered_map<string, char> m2;
@@ -72,12 +56,27 @@ public:
 			}
 		}
 		if(line2string(s, temp, i)) return false;
-		vector<bool> unique(CHAR_MAX - CHAR_MIN + 1, false);
+		vector<bool> unique(128, false);
 		for(auto par : m2) {
-			if(unique[par.second - CHAR_MIN]) return false;
-			unique[par.second - CHAR_MIN] = true;
+			if(unique[par.second]) return false;
+			unique[par.second] = true;
 		}
 		return true;
+	}
+
+private:
+	bool line2string(const string &line, string &str, size_t &i) {
+		str = "";
+		if(line[i] == ' ') i++;
+		for(; i < line.length(); i++) {
+			if(line[i] != ' ') {
+				str.push_back(line[i]);
+			} else {
+				i++;
+				break;
+			}
+		}
+		return str.length();
 	}
 };
 

@@ -91,7 +91,7 @@ public:
 		}
 		return canToEnd[0];
 	}
-	inline bool equal(const string &s, const string &word, int begin) {
+	bool equal(const string &s, const string &word, int begin) {
 		for(int i = 0; i < word.size(); ++i) {
 			if(word[i] != s[begin + i]) {
 				return false;
