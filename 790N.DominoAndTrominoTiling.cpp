@@ -83,6 +83,29 @@ public:
 	}
 }; // 可以在进入 solution 之前打表
 
+class Solution4 {
+public:
+	int numTilings(int n) {
+		return tilings[n];
+	}
+
+private:
+	inline static constexpr array<int, 1001> tilings = []() constexpr {
+		array<int, 1001> arr {};
+		const long long mod = 1000000007;
+		arr[0] = 1;
+		array<int, 3> curr { 0, 0, 0 }, prev {}; // 全部都要有初始值
+		for(int i = 1; i <= 1000; ++i) {
+			std::swap(curr, prev);
+			curr[0] = arr[i - 1];
+			curr[1] = (prev[0] + prev[2]) % mod;
+			curr[2] = (prev[0] + prev[1]) % mod;
+			arr[i] = ((prev[0] + prev[1]) % mod + (prev[2] + arr[i - 1]) % mod) % mod;
+		}
+		return arr;
+	}();
+}; // 编译期打表
+
 // 矩阵快速幂，有上面的递推公式可知：
 // curr = [[0, 0, 0, 1], [1, 0, 1, 0], [1, 1, 0, 0], [1, 1, 1, 1]] * prev
 // curr = ([[0, 0, 0, 1], [1, 0, 1, 0], [1, 1, 0, 0], [1, 1, 1, 1]]) ^ n * [0, 0, 0, 1]

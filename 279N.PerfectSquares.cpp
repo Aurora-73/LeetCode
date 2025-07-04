@@ -82,6 +82,31 @@ public:
 	}
 };
 
+/* 
+class Solution {
+public:
+	int numSquares(int n) {
+		return Squares[n];
+	}
+
+private:
+	inline static constexpr array<int, 10001> Squares = []() constexpr {
+		array<int, 10001> arr {};
+		arr[0] = 0;
+		for(int i = 1; i <= 10000; ++i) {
+			int minn = INT_MAX;
+			for(int j = 1; j * j <= i; ++j) {
+				minn = minn < (arr[i - j * j] + 1) ? minn : (arr[i - j * j] + 1);
+			}
+			arr[i] = minn;
+		}
+		return arr;
+	}(); // 编译期运行
+}; 
+
+表达式必须含有常量值C/C++(28)
+279N.PerfectSquares.cpp(92, 54): 表达式未折叠为常量，因为 constexpr 函数调用过于复杂 */
+
 int main() {
 	Solution sol;
 }

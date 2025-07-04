@@ -69,7 +69,7 @@ public:
 	}
 }; // 利用 uglyNum 递增的性质可以直接去除重复，小于等于上一个值的都是重复的
 
-class Solution {
+class Solution3 {
 public:
 	int nthUglyNumber(int n) {
 		return uglyNum[n];
@@ -80,7 +80,7 @@ private:
 		int p2 = 1, p3 = 1, p5 = 1;
 		for(int i = 2; i < 1691; i++) {
 			int num2 = uglyNum[p2] * 2, num3 = uglyNum[p3] * 3, num5 = uglyNum[p5] * 5;
-			uglyNum[i] = min(min(num2, num3), num5);
+			uglyNum[i] = std::min({ num2, num3, num5 });
 			if(uglyNum[i] == num2) p2++;
 			if(uglyNum[i] == num3) p3++;
 			if(uglyNum[i] == num5) p5++;
@@ -90,7 +90,29 @@ private:
 	static int uglyNum[1691], a;
 };
 
-int Solution::uglyNum[1691], Solution::a = Solution::uN();
+int Solution3::uglyNum[1691], Solution3::a = Solution3::uN();
+
+class Solution {
+public:
+	int nthUglyNumber(int n) {
+		return uglyNum[n];
+	}
+
+private:
+	inline static constexpr std::array<int, 1691> uglyNum = []() constexpr {
+		std::array<int, 1691> arr {}; // 使用 {} 确保在编译期初始化
+		arr[1] = 1;
+		int p2 = 1, p3 = 1, p5 = 1;
+		for(int i = 2; i < 1691; i++) {
+			int num2 = arr[p2] * 2, num3 = arr[p3] * 3, num5 = arr[p5] * 5;
+			arr[i] = std::min({ num2, num3, num5 });
+			if(arr[i] == num2) ++p2;
+			if(arr[i] == num3) ++p3;
+			if(arr[i] == num5) ++p5;
+		}
+		return arr;
+	}();
+};
 
 int main() {
 	Solution sol;
