@@ -42,7 +42,7 @@ public:
 	array<unique_ptr<TireNode>, 26> chirds {};
 };
 
-class Solution {
+class Solution1 {
 public:
 	vector<vector<string>> suggestedProducts(vector<string> &products, string &searchWord) {
 		TireNode root, *now = &root;
@@ -92,33 +92,25 @@ private:
 class Solution {
 public:
 	vector<vector<string>> suggestedProducts(vector<string> &products, string &searchWord) {
-		std::sort(products.begin(), products.end());
-		TireNode root, *now = &root;
-		int ns = searchWord.size(), np = products.size();
-		for(int i = 0; i < np; ++i) {
-			buildTireNode(products[i], &root, i);
-		}
-		vector<vector<string>> res(ns);
-		for(int i = 0; i < ns; ++i) {
-			if(now->chirds[searchWord[i] - 'a']) {
-			} else {
-				return res;
+		sort(products.begin(), products.end());
+		int n = searchWord.size();
+		vector<vector<string>> ans(n);
+		constexpr char bigger = 'z' + 1;
+		string prefix;
+		prefix.reserve(n + 1);
+		prefix.push_back(bigger);
+		for(int i = 0; i < n; ++i) {
+			prefix.back() = searchWord[i];
+			auto beg = lower_bound(products.begin(), products.end(), prefix);
+			prefix.push_back(bigger);
+			auto end = lower_bound(products.begin(), products.end(), prefix);
+			for(int k = 0; k < 3 && beg + k != end; ++k) {
+				ans[i].push_back(beg[k]);
 			}
 		}
-		return res;
+		return ans;
 	}
-
-private:
-	void buildTireNode(string &product, TireNode *now, int id) {
-		for(auto c : product) {
-			if(!now->chirds[c - 'a']) {
-				now->chirds[c - 'a'] = make_unique<TireNode>();
-			}
-			now = now->chirds[c - 'a'].get();
-		}
-		now->id = id;
-	}
-};
+}; // 先对产品进行排序，然后寻找当前前缀的上下限，从上限开始取至多 3 个元素
 
 int main() {
 	Solution sol;
