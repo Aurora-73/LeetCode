@@ -7,7 +7,7 @@ autogit.bat
 CMakeLists.txt
 .history/
 test*
-Input.txt
+text.txt
 *.a
 *.dll
 lcpr/
