@@ -109,5 +109,9 @@
         "markdown": true,
         "scminput": true
     },
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    // 禁用 clangd 的头文件插入/清理建议（避免 "Included header ... is not used directly" 提示）
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ]
 }

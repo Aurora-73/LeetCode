@@ -1,98 +1,114 @@
-// .vscode/tasks.json 
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "C++ Clean",
-      "type": "shell",
-      "command": "taskkill /F /IM \"${fileBasenameNoExtension}.exe\" 2>nul & if exist \"${fileDirname}\\${fileBasenameNoExtension}.exe\" del \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
-      "options": {
-        "shell": {
-          "executable": "cmd.exe",
-          "args": [
-            "/d",
-            "/c"
-          ]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "C++ Clean",
+            "type": "shell",
+            "command": "taskkill /F /IM \"${fileBasenameNoExtension}.exe\" 2>nul & if exist \"${fileDirname}\\${fileBasenameNoExtension}.exe\" del \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/d",
+                        "/c"
+                    ]
+                }
+            },
+            "presentation": {
+                "reveal": "silent",
+                "echo": false,
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "problemMatcher": [],
+            "group": "none"
+        },
+        {
+            "label": "build-dll",
+            "type": "shell",
+            "command": "D:/mingw64/bin/g++.exe",
+            "args": [
+                "-std=c++20",
+                "-O2",
+                "-shared",
+                "-Wl,--export-all-symbols",
+                "E:/Code/LeeCode/MyDateGen.cpp",
+                "E:/Code/LeeCode/MyListNode.cpp",
+                "E:/Code/LeeCode/MyTreeNode.cpp",
+                "-I",
+                "E:/Code/LeeCode",
+                "-o",
+                "E:/Code/LeeCode/mylibs.dll"
+            ],
+            "options": {
+                "cwd": "E:/Code/LeeCode",
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [
+                        "/d",
+                        "/c"
+                    ]
+                }
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "build-main",
+            "type": "shell",
+            "command": "D:/mingw64/bin/g++.exe",
+            "args": [
+                "-g",
+                "-O0",
+                "-Wall",
+                "-std=c++20",
+                "${file}",
+                "-I${workspaceFolder}",
+                "-L${workspaceFolder}",
+                "-lmylibs",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent",
+                "echo": true,
+                "focus": false,
+                "panel": "dedicated"
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe 生成活动文件",
+            "command": "D:/mingw64/bin/g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-std=c++20"
+            ],
+            "options": {
+                "cwd": "D:/mingw64/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
         }
-      },
-      "presentation": {
-        "reveal": "silent",
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated"
-      },
-      "problemMatcher": [],
-      "group": "none"
-    },
-    {
-      "label": "build-dll",
-      "type": "shell",
-      "command": "D:/mingw64/bin/g++.exe",
-      "args": [
-        "-std=c++20",
-        "-O2",
-        "-shared",
-        // "-Wl,--out-implib,E:/Code/LeeCode/libmylibs.a",
-        "-Wl,--export-all-symbols",
-        "E:/Code/LeeCode/MyDateGen.cpp",
-        "E:/Code/LeeCode/MyListNode.cpp",
-        "E:/Code/LeeCode/MyTreeNode.cpp",
-        "-I",
-        "E:/Code/LeeCode",
-        "-o",
-        "E:/Code/LeeCode/mylibs.dll"
-      ],
-      "options": {
-        "cwd": "E:/Code/LeeCode",
-        "shell": {
-          "executable": "cmd.exe",
-          "args": [
-            "/d",
-            "/c"
-          ]
-        }
-      },
-      "problemMatcher": [],
-      "group": {
-        "kind": "build",
-        "isDefault": false
-      }
-    },
-    {
-      "label": "build-main",
-      "type": "shell",
-      // "dependsOn": [
-      //   "C++ Clean",
-      // ],
-      "command": "D:/mingw64/bin/g++.exe",
-      "args": [
-        "-g",
-        "-O0",
-        "-Wall",
-        "-std=c++20",
-        "${file}",
-        "-I${workspaceFolder}",
-        "-L${workspaceFolder}",
-        "-lmylibs",
-        "-o",
-        "${fileDirname}\\${fileBasenameNoExtension}.exe"
-      ],
-      "problemMatcher": [
-        "$gcc"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "silent",
-        "echo": true,
-        "focus": false,
-        "panel": "dedicated"
-      },
-      "options": {
-        "cwd": "${workspaceFolder}"
-      }
-    }
-  ]
+    ]
 }
