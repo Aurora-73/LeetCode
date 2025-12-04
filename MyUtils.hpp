@@ -3,6 +3,7 @@
 
 // 常用标准库
 #include <algorithm>
+#include <array>
 #include <bitset>
 #include <cassert>
 #include <cctype>

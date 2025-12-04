@@ -99,7 +99,9 @@
         "syncstream": "cpp",
         "variant": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "xstring": "cpp",
+        "xtree": "cpp"
     },
     "github.copilot.enable": {
         "cpp": false,
