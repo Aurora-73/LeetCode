@@ -27,7 +27,7 @@
 
 typedef ListNode Node;
 
-class Solution {
+class Solution1 {
 public:
 	Node *insert(Node *head, int insertVal) {
 		Node *now = new Node;
@@ -50,6 +50,68 @@ public:
 		while(p->next->val < insertVal) {
 			p = p->next;
 		}
+		now->next = p->next;
+		p->next = now;
+		return head;
+	}
+};
+
+class Solution {
+public:
+	Node *insert(Node *head, int insertVal) {
+		Node *now = new Node;
+		now->val = insertVal;
+		if(!head) {
+			now->next = now;
+			return now;
+		}
+		auto p = head, maxNode = head;
+		do {
+			if(p->val >= maxNode->val) {
+				maxNode = p;
+			} // 如果有很多个最大值，要移动到最后一个最大值处
+			if(p->val <= insertVal && p->next->val >= insertVal) {
+				now->next = p->next;
+				p->next = now;
+				return head;
+			}
+			p = p->next;
+		} while(p != head);
+		now->next = maxNode->next;
+		maxNode->next = now;
+		return head;
+	}
+}; // 分为三种情况：1、链表为空  2、待插入值夹在链表的最大最小值之间 3、待插入值大于链表最大值或小于链表最小值
+// 第二种情况直接插入在当前值小于等于待插入值，下一个值大于等于待插入值的位置
+// 如果不存在第二种情况的位置，则说明是第三种情况，直接插入在最大值之和即可
+
+class Solution2 {
+public:
+	Node *insert(Node *head, int insertVal) {
+		Node *now = new Node(insertVal);
+		if(!head) {
+			now->next = now;
+			return now;
+		}
+
+		Node *p = head;
+		while(true) {
+			// 情形一：正常区间 p->val <= insertVal <= p->next->val
+			if(p->val <= insertVal && insertVal <= p->next->val) {
+				break;
+			}
+			// 情形二：转折点：p 为最大，p->next 为最小
+			if(p->val > p->next->val) {
+				if(insertVal >= p->val || insertVal <= p->next->val) {
+					break;
+				}
+			}
+			p = p->next;
+			// 遍历一圈后，如果回到 head，说明没有找到合适位置（例如所有元素相同）
+			if(p == head) break;
+		}
+
+		// 在 p 和 p->next 之间插入
 		now->next = p->next;
 		p->next = now;
 		return head;

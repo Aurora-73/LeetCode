@@ -17,7 +17,7 @@
 	0 <= heights{i} <= 10^4
 注意：本题与主站 84题相同： */
 
-class Solution {
+class Solution1 {
 public:
 	int largestRectangleArea(vector<int> &heights) {
 		int res = 0, n = heights.size();
@@ -43,6 +43,49 @@ public:
 };
 // 矩形的高一定是数组中的某个元素，且宽是这个元素向左向右扩展的最大宽度之和，只需要遍历每个 {元素 * 扩展的最大宽度}
 // 单调栈用于求每个元素向左向右扩展的最大宽度，类似于LCR038N.dailyTemperatures
+
+class Solution2 {
+public:
+	int largestRectangleArea(vector<int> &heights) {
+		int res = 0, n = heights.size();
+		stack<int> st;
+		for(int i = 0; i < n; ++i) {
+			while(!st.empty() && heights[st.top()] > heights[i]) {
+				int right = i, height = heights[st.top()];
+				st.pop();
+				int left = st.empty() ? -1 : st.top();
+				res = max((right - left - 1) * height, res);
+			}
+			st.push(i);
+		}
+		while(!st.empty()) {
+			int right = n, height = heights[st.top()];
+			st.pop();
+			int left = st.empty() ? -1 : st.top();
+			res = max((right - left - 1) * height, res);
+		}
+		return res;
+	}
+}; // 实际上出栈时不仅确定了出栈元素的高度的右边界，左边界也确定了，出栈后的栈顶就是左侧第一个低于该元素的位置
+
+class Solution {
+public:
+	int largestRectangleArea(vector<int> &heights) {
+		heights.push_back(0); // 数组最后加入一个0当做哨兵，可以让所有元素自动出栈
+		int res = 0, n = heights.size();
+		stack<int> st;
+		for(int i = 0; i < n; ++i) {
+			while(!st.empty() && heights[st.top()] > heights[i]) {
+				int right = i, height = heights[st.top()];
+				st.pop();
+				int left = st.empty() ? -1 : st.top();
+				res = max((right - left - 1) * height, res);
+			}
+			st.push(i);
+		}
+		return res;
+	}
+};
 
 int main() {
 	Solution sol;
