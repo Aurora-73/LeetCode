@@ -34,8 +34,8 @@ private:
 		}
 		int left = max(0, dfs(node->left, res));
 		int right = max(0, dfs(node->right, res));
-		res = max(left + right + node->val,
-		    res); // 自己作为根节点的最大路径长度，根节点只有一个，可以连接双侧
+		res = max(left + right + node->val, res);
+		// 自己作为根节点的最大路径长度，根节点只有一个，可以连接双侧，可以以根节点作为更新结果的标识
 		return max(left, right) + node->val; // 自己作为孩子节点的最大路径长度，孩子只能连接单侧
 	}
 };
