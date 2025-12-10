@@ -53,6 +53,40 @@ public:
 	}
 }; // 使用堆的暴力解法，大规模会超时
 
+class Solution2 {
+public:
+	vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k) {
+		auto cmp = [&nums1, &nums2](const pair<int, int> &left, const pair<int, int> &right) {
+			return nums1[left.first] + nums2[left.second]
+			    > nums1[right.first] + nums2[right.second];
+		}; // 小根堆
+		priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq(cmp);
+		for(int i = 0; i < min(int(nums1.size()), k); ++i) {
+			pq.emplace(i, 0);
+		}
+		vector<vector<int>> res;
+		while(k-- && !pq.empty()) {
+			auto [i, j] = pq.top();
+			pq.pop();
+			res.push_back({ nums1[i], nums2[j] });
+			if(++j < nums2.size()) {
+				pq.emplace(i, j);
+			}
+		}
+		return res;
+	}
+}; // 由于两个数组都是递增的，因此下一个最小的元素一定是已经出现过的元素的下标加1后的结果，且最小的元素一定是(0, 0)
+// 因此可以先让(0, 0)入队，然后每次出队(i, j)后将(i + 1, j)和(i ,j + 1)入队
+// 但是这样会产生重复的元素，因为一个元素有多种可达的路径
+// 因此一开始将全部的(i, 0)入队，出队的时仅允许j + 1，这样就避免得了重复
+/*
+(0,0) → (0,1) → (0,2)
+
+(1,0) → (1,1) → (1,2)
+
+(2,0) → (2,1) → (2,2)
+*/
+
 class Solution {
 public:
 	vector<vector<int>> kSmallestPairs(vector<int> &nums1, vector<int> &nums2, int k) {
@@ -61,21 +95,29 @@ public:
 			    > nums1[right.first] + nums2[right.second];
 		}; // 小根堆
 		priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq(cmp);
-		for(int j = 0; j < min(int(nums2.size()), k); ++j) {
-			pq.emplace(0, j);
-		}
+		pq.emplace(0, 0);
 		vector<vector<int>> res;
 		while(k-- && !pq.empty()) {
 			auto [i, j] = pq.top();
 			pq.pop();
 			res.push_back({ nums1[i], nums2[j] });
-			if(++i < nums1.size()) {
-				pq.emplace(i, j);
+			if(j + 1 < nums2.size()) {
+				pq.emplace(i, j + 1);
+			}
+			if(j == 0 && i + 1 < nums1.size()) {
+				pq.emplace(i + 1, 0);
 			}
 		}
 		return res;
 	}
-}; // 首先，假设前
+}; // 允许双向扩展，但是横向的扩展仅在第一行允许，这样每个点只有一条路径可达
+/*
+(0,0) → (0,1) → (0,2)
+↓
+(1,0) → (1,1) → (1,2)
+↓
+(2,0) → (2,1) → (2,2)
+*/
 
 int main() {
 	Solution sol;
