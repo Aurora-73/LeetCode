@@ -1,6 +1,6 @@
-#include <vector>
-#include <unordered_map>
 #include <random>
+#include <unordered_map>
+#include <vector>
 
 /*
 实现RandomizedSet 类：
@@ -13,16 +13,15 @@ int getRandom() 随机返回现有集合中的一项（测试用例保证调用�
 
 class RandomizedSet {
 private:
-	std::vector<int> values; // 存储元素的动态数组
-	std::unordered_map<int, size_t> value_to_index; // 值到索引的映射
-	std::mt19937 random_engine{std::random_device{}()}; // 随机数引擎
+	std::vector<int> values;                                // 存储元素的动态数组
+	std::unordered_map<int, size_t> value_to_index;         // 值到索引的映射
+	std::mt19937 random_engine { std::random_device {}() }; // 随机数引擎
 
 public:
 	RandomizedSet() = default;
 
 	bool insert(int val) {
-		if(value_to_index.find(val) != value_to_index.end())
-			return false;
+		if(value_to_index.find(val) != value_to_index.end()) return false;
 
 		value_to_index[val] = values.size();
 		values.push_back(val);
@@ -31,8 +30,7 @@ public:
 
 	bool remove(int val) {
 		auto it = value_to_index.find(val);
-		if(it == value_to_index.end())
-			return false;
+		if(it == value_to_index.end()) return false;
 
 		size_t index = it->second;
 		int last_val = values.back();
@@ -53,12 +51,12 @@ public:
 
 int main() {
 	RandomizedSet randomizedSet = RandomizedSet();
-	randomizedSet.insert(1); // 向集合中插入 1 。返回 true 表示 1 被成功地插入。
-	randomizedSet.remove(2); // 返回 false ，表示集合中不存在 2 。
-	randomizedSet.insert(2); // 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。
+	randomizedSet.insert(1);   // 向集合中插入 1 。返回 true 表示 1 被成功地插入。
+	randomizedSet.remove(2);   // 返回 false ，表示集合中不存在 2 。
+	randomizedSet.insert(2);   // 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。
 	randomizedSet.getRandom(); // getRandom 应随机返回 1 或 2 。
-	randomizedSet.remove(1); // 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。
-	randomizedSet.insert(2); // 2 已在集合中，所以返回 false 。
+	randomizedSet.remove(1);   // 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。
+	randomizedSet.insert(2);   // 2 已在集合中，所以返回 false 。
 	randomizedSet.getRandom(); // 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
 }
 
@@ -73,6 +71,13 @@ priority_queue(优先队列只能通过堆顶top访问元素无法后续等概�
 ，stack和queue(同优先队列)，剩下vector、deque，都行，
 使用vector即可，添加只需push_back，删除需通过unordered_map找到要删除节点的索引，
 和尾部元素交换即可。随机获取等概率只需要用rand()%v.size()就能等概率获取数组索引也就得到元素。
+*/
+
+/*
+C++生成随机数的方式包含三个部分：
+	random_deviced是一个生成真随机数的生成器类，重载了函数调用运算符，调用后生成一个真随机数，类型是无符号整型。（比较慢）
+    mt19937 是一个伪随机数引擎，构造时传入的无符号整数用于初始化状态，从而决定未来伪随机序列的全部取值。
+    uniform_int_distribution<>是一个数值转换器，将取到的随机数按照符合要求的概率分布进行映射，构造函数的参数是最大最小值，调用的参数是一个为随机数引擎。
 */
 
 /*
