@@ -15,7 +15,7 @@
 将它们合并到一个有序链表中得到。
 1->1->2->3->4->4->5->6*/
 
-class Solution {
+class Solution1 {
 public:
 	ListNode *mergeKLists(vector<ListNode *> &lists) {
 		if(!lists.size()) return nullptr;
@@ -52,7 +52,28 @@ public:
 		tail->next = list1 ? list1 : list2;
 		return head;
 	}
-};
+}; // 归并合并写法
+
+class Solution {
+public:
+	ListNode *mergeKLists(vector<ListNode *> &lists) {
+		auto cmp = [](ListNode *l, ListNode *r) {
+			return l->val > r->val;
+		};
+		priority_queue<ListNode *, vector<ListNode *>, decltype(cmp)> pq(cmp);
+		for(auto node : lists) {
+			if(node) pq.push(node);
+		}
+		ListNode head, *tail = &head;
+		while(!pq.empty()) {
+			tail->next = pq.top();
+			tail = tail->next;
+			pq.pop();
+			if(tail->next) pq.push(tail->next);
+		}
+		return head.next;
+	}
+}; // 优先队列合并写法
 
 int main() {
 	Solution sol;

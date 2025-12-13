@@ -15,7 +15,7 @@
 	0 <= cnt <= stock.length <= 10000
 	0 <= stock{i} <= 10000 */
 
-class Solution {
+class Solution1 {
 public:
 	vector<int> inventoryManagement(vector<int> &stock, int cnt) {
 		if(cnt == 0) return {};

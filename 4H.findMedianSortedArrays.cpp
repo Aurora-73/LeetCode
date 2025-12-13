@@ -21,7 +21,7 @@
 	1 <= m + n <= 2000
 	-10^6 <= nums1[i], nums2[i] <= 10^6  */
 
-class Solution {
+class Solution1 {
 public:
 	double findMedianSortedArrays(const vector<int> &nums1, const vector<int> &nums2) {
 		int n1 = nums1.size(), n2 = nums2.size();
