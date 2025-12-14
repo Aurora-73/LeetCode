@@ -9,7 +9,7 @@ nums1[i] == nums2[j]
 请注意，连线即使在端点也不能相交：每个数字只能属于一条连线。
 以这种方法绘制线条，并返回可以绘制的最大连线数。*/
 
-class Solution {
+class Solution1 {
 public:
 	int maxUncrossedLines(vector<int> &nums1, vector<int> &nums2) {
 		if(nums1.size() < nums2.size()) {
