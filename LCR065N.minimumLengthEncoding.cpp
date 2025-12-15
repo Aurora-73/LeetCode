@@ -30,13 +30,13 @@ s 的一个从 indices{i} 开始、到下一个 "#" 字符结束（但不包括 
 class Solution {
 public:
 	int minimumLengthEncoding(const vector<string> &words) {
-		TireNode *root = new TireNode;
+		TrieNode *root = new TrieNode;
 		for(auto &str : words) {
-			TireNode *p = root;
+			TrieNode *p = root;
 			int n = str.size();
 			for(int i = n - 1; i >= 0; --i) {
 				if(!p->chirds[str[i] - 'a']) {
-					p->chirds[str[i] - 'a'] = new TireNode;
+					p->chirds[str[i] - 'a'] = new TrieNode;
 				}
 				p = p->chirds[str[i] - 'a'];
 			}
@@ -45,10 +45,10 @@ public:
 	}
 
 private:
-	struct TireNode {
-		array<TireNode *, 26> chirds {};
+	struct TrieNode {
+		array<TrieNode *, 26> chirds {};
 	};
-	int DFS(TireNode *node, int deepth) {
+	int DFS(TrieNode *node, int deepth) {
 		int cnt = 0;
 		for(auto chird : node->chirds) {
 			if(chird) {
@@ -57,7 +57,7 @@ private:
 		}
 		return cnt > 0 ? cnt : deepth;
 	}
-}; // 从后向前构建tire，统计最终树的全部叶子结点的高度(+1)之和
+}; // 从后向前构建Trie，统计最终树的全部叶子结点的高度(+1)之和
 
 int main() {
 	Solution sol;

@@ -36,14 +36,14 @@ magicDictionary.search("leetcoded"); // 返回 False
 
 class MagicDictionary {
 public:
-	MagicDictionary() : root { new TireNode } { }
+	MagicDictionary() : root { new TrieNode } { }
 
 	void buildDict(vector<string> dictionary) {
 		for(string &str : dictionary) {
-			TireNode *p = root;
+			TrieNode *p = root;
 			for(char c : str) {
 				if(!p->childs[c - 'a']) {
-					p->childs[c - 'a'] = new TireNode;
+					p->childs[c - 'a'] = new TrieNode;
 				}
 				p = p->childs[c - 'a'];
 			}
@@ -56,12 +56,12 @@ public:
 	}
 
 private:
-	struct TireNode {
+	struct TrieNode {
 		bool isEnd = false;
-		array<TireNode *, 26> childs {};
+		array<TrieNode *, 26> childs {};
 	};
-	TireNode *root;
-	bool help_search(const string &searchWord, int i, TireNode *p, bool changed) {
+	TrieNode *root;
+	bool help_search(const string &searchWord, int i, TrieNode *p, bool changed) {
 		if(!p) return false;
 		if(i == searchWord.size()) return changed && p->isEnd; // 没修改过也是false
 		auto real = p->childs[searchWord[i] - 'a'];

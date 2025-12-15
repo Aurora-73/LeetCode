@@ -36,18 +36,18 @@
 	1 <= searchWord.length <= 1000
 	searchWord中所有字符都是小写英文字母。 */
 
-class TireNode {
+class TrieNode {
 public:
 	int id = -1;
-	array<unique_ptr<TireNode>, 26> chirds {};
+	array<unique_ptr<TrieNode>, 26> chirds {};
 };
 
 class Solution1 {
 public:
 	vector<vector<string>> suggestedProducts(vector<string> &products, string &searchWord) {
-		TireNode root, *now = &root;
+		TrieNode root, *now = &root;
 		for(unsigned i = 0; i < products.size(); ++i) {
-			buildTireNode(products[i], &root, i);
+			buildTrieNode(products[i], &root, i);
 		}
 		int n = searchWord.size();
 		vector<vector<string>> res(n);
@@ -64,16 +64,16 @@ public:
 	}
 
 private:
-	void buildTireNode(string &product, TireNode *now, int id) {
+	void buildTrieNode(string &product, TrieNode *now, int id) {
 		for(auto c : product) {
 			if(!now->chirds[c - 'a']) {
-				now->chirds[c - 'a'] = make_unique<TireNode>();
+				now->chirds[c - 'a'] = make_unique<TrieNode>();
 			}
 			now = now->chirds[c - 'a'].get();
 		}
 		now->id = id;
 	}
-	void findNear(vector<string> &products, TireNode *root, vector<string> &now, int &num) {
+	void findNear(vector<string> &products, TrieNode *root, vector<string> &now, int &num) {
 		if(root->id != -1) {
 			now.push_back(products[root->id]);
 			--num;

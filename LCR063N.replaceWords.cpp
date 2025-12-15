@@ -38,7 +38,7 @@
 class Solution {
 public:
 	string replaceWords(vector<string> &dictionary, string sentence) {
-		TireNode *root = new TireNode;
+		TrieNode *root = new TrieNode;
 		for(auto &str : dictionary) {
 			insert(str, root);
 		}
@@ -57,24 +57,24 @@ public:
 	}
 
 private:
-	struct TireNode {
+	struct TrieNode {
 		bool isEnd = false;
-		array<TireNode *, 26> child { nullptr };
+		array<TrieNode *, 26> child { nullptr };
 	};
-	void insert(string &str, TireNode *root) {
+	void insert(string &str, TrieNode *root) {
 		for(auto c : str) {
 			if(root->isEnd) {
 				return; // 仅保留最短前缀
 			}
 			int id = c - 'a';
 			if(!root->child[id]) {
-				root->child[id] = new TireNode;
+				root->child[id] = new TrieNode;
 			}
 			root = root->child[id];
 		}
 		root->isEnd = true;
 	}
-	string_view find_succ(const string_view &sv, TireNode *root) {
+	string_view find_succ(const string_view &sv, TrieNode *root) {
 		for(int i = 0; i < sv.size(); ++i) {
 			if(!root) {
 				return sv;
