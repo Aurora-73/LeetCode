@@ -86,6 +86,7 @@ private:
 		for(int end = start; end < n; ++end) {
 			if(dp[start][end]) {
 				path.emplace_back(s, start, end - start + 1);
+				// string 有和 substr 相同参数的构造函数
 				dfs(s, end + 1, dp, path, res);
 				path.pop_back();
 			}
