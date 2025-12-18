@@ -65,7 +65,10 @@ public:
 class Solution3 {
 public:
 	bool canPartition(vector<int> &nums) {
-		int sum = accumulate(nums.begin(), nums.end(), 0);
+		int sum = 0, n = nums.size();
+		for(int i = 0; i < n; ++i) {
+			sum += nums[i];
+		}
 		if(sum % 2) return false;
 		int target = sum / 2;
 		vector<bool> dp(target + 1, false);
@@ -91,17 +94,19 @@ public:
 class Solution {
 public:
 	bool canPartition(vector<int> &nums) {
-		int s = reduce(nums.begin(), nums.end());
-		if(s % 2) {
+		int sum = 0, n = nums.size();
+		for(int i = 0; i < n; ++i) sum += nums[i];
+
+		if(sum % 2) {
 			return false;
 		}
-		s /= 2;
+		sum /= 2;
 		bitset<10001> f; // sum(nums[i]) / 2 <= 10000 bitset的大小必须在编译期确定
 		f[0] = 1;
 		for(int x : nums) {
 			f |= f << x; // 或等于 相当于选(原始) 或者 不选(左移 x 位)
 		}
-		return f[s]; // 判断 f 中第 s 位是否为 1
+		return f[sum]; // 判断 f 中第 s 位是否为 1
 	}
 };
 
