@@ -104,12 +104,12 @@
         "xtree": "cpp"
     },
     "github.copilot.enable": {
-        "cpp": false,
-        "h": false,
         "*": true,
         "plaintext": true,
         "markdown": true,
-        "scminput": true
+        "scminput": true,
+        "cpp": false,
+        "h": false
     },
     "C_Cpp.errorSquiggles": "enabled",
     // 禁用 clangd 的头文件插入/清理建议（避免 "Included header ... is not used directly" 提示）
