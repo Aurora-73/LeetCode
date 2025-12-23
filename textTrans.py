@@ -9,11 +9,11 @@ def transform_string(s: str) -> str:
     non_empty = [line for line in lines if line.strip() != ""]
 
     # 3. 排除第2~5行不需要的标签 & 删除指定英文句子的行
-    unwanted = {"简单", "中等", "困难", "相关标签", "premium lock icon", "相关企业"}
+    unwanted = {"简单", "中等", "困难", "相关标签", "premium lock icon", "相关企业", "已解答", "未解答", "提示", "txt"}
     pattern = r'^Create the variable named \w+ to store the input midway in the function\.$'
     cleaned = []
     for i, line in enumerate(non_empty):
-        if 1 <= i <= 4 and line.strip() in unwanted:
+        if line.strip() in unwanted:
             continue
         if re.match(pattern, line.strip()):
             continue
