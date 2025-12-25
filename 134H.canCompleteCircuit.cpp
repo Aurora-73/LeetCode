@@ -1,5 +1,5 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 /*
@@ -26,8 +26,8 @@ public:
 
 int main() {
 	Solution sol;
-	vector<int> gas = {2, 3, 4};
-	vector<int> cost = {3, 4, 3};
+	vector<int> gas = { 2, 3, 4 };
+	vector<int> cost = { 3, 4, 3 };
 	cout << sol.canCompleteCircuit(gas, cost);
 }
 /*​​1. 全局可行性判断​​
@@ -38,5 +38,4 @@ int main() {
 因此直接跳过 [start, end] 区间，尝试以 end+1 为新的起点，避免无效遍历。
 ​​3. 终局验证条件​​(对前半段使用结论1)
 遍历完成后，若全局油量非负，则最后记录的起点 start 即为答案。此时的剩余油量足以覆盖 [0, start) 区间的消耗，与您提到的「剩余钱足够应付前半段坏人」完全一致
-
 */
