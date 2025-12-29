@@ -30,6 +30,27 @@
 class Solution1 {
 public:
 	void nextPermutation(vector<int> &nums) {
+		multiset<int> removed; // removed：保存从右往左“移除”的元素，也就是当前位置右边的所有元素
+		int n = nums.size(), i;
+		for(i = n - 1; i >= 0; --i) {
+			int currVal = nums[i];
+			removed.insert(currVal);
+			auto it = removed.upper_bound(currVal);
+			if(it != removed.end()) { // 在 removed 中找一个 严格大于 currVal 的最小元素
+				nums[i] = *it;
+				removed.erase(it);
+				break;
+			}
+		}
+		for(int val : removed) {
+			nums[++i] = val;
+		} // 把后缀重排成最小字典序
+	}
+};
+
+class Solution2 {
+public:
+	void nextPermutation(vector<int> &nums) {
 		int n = nums.size();
 		int i = n - 2;
 		// 1. 从后往前找到第一个升序对（nums[i] < nums[i+1]）
@@ -47,6 +68,25 @@ public:
 		reverse(nums.begin() + i + 1, nums.end());
 	}
 };
+
+class Solution3 {
+public:
+	void nextPermutation(vector<int> &nums) {
+		int n = nums.size(), i;
+		for(i = n - 2; i >= 0; --i) {
+			if(nums[i] < nums[i + 1]) { // 在 removed 中找一个 严格大于 currVal 的最小元素
+				std::reverse(nums.begin() + i + 1, nums.end());
+				auto it = upper_bound(nums.begin() + i + 1, nums.end(), nums[i]);
+				std::swap(nums[i], *it);
+				break;
+			}
+		}
+		if(i == -1) {
+			std::reverse(nums.begin(), nums.end());
+		}
+	}
+}; // 注意upper_bound的前提是数组是升序的，但是这里的[i + 1, end]是递减的，因此必须要翻转之后才能用，并且需要注意如果这个排列本身就是最后一个排列则不会进行逆序，需要进行额外判断
+// 时间复杂度没有改变，收益不大
 
 class Solution {
 public:
@@ -77,6 +117,9 @@ int main() {
 	nums = { 1, 2, 3 };
 	sol.nextPermutation(nums);
 	cout << nums << endl; // {1, 3, 2}
+	nums = { 1, 3, 2 };
+	sol.nextPermutation(nums);
+	cout << nums << endl; // {2, 1, 3}
 	nums = { 3, 2, 1 };
 	sol.nextPermutation(nums);
 	cout << nums << endl; // {1, 2, 3}
