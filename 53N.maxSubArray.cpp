@@ -8,7 +8,7 @@
 class Solution1 {
 public:
 	int maxSubArray(vector<int> &nums) {
-		int max_sum = INT_MIN, pre_now = 0;
+		int max_sum = numeric_limits<int>::min(), pre_now = 0;
 		for(auto &x : nums) {
 			pre_now = max(pre_now + x, x);
 			max_sum = max(max_sum, pre_now);

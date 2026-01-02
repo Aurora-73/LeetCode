@@ -27,7 +27,7 @@ public:
 	int maxLevelSum(TreeNode *root) {
 		queue<TreeNode *> q;
 		q.push(root);
-		int max_sum = INT_MIN, max_level = 0, level_now = 1;
+		int max_sum = numeric_limits<int>::min(), max_level = 0, level_now = 1;
 		while(!q.empty()) {
 			int sum = 0, n = q.size();
 			for(int i = 0; i < n; ++i) {
@@ -56,7 +56,7 @@ public:
 	int maxLevelSum(TreeNode *root) {
 		sums.push_back(0);
 		dfs(root, 1);
-		int max_sum = INT_MIN, max_level = 0, n = sums.size();
+		int max_sum = numeric_limits<int>::min(), max_level = 0, n = sums.size();
 		for(int i = 1; i < n; ++i) {
 			if(sums[i] > max_sum) {
 				max_sum = sums[i];

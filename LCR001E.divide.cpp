@@ -31,10 +31,10 @@ class Solution {
 public:
 	int divide(int a, int b) {
 		// 处理特殊溢出
-		if(a == INT_MIN && b == -1) {
-			return INT_MAX;
+		if(a == numeric_limits<int>::min() && b == -1) {
+			return numeric_limits<int>::max();
 		}
-		// 用 long long 存绝对值，防止 abs(INT_MIN) 溢出
+		// 用 long long 存绝对值，防止 abs(numeric_limits<int>::min()) 溢出
 		long long dvd = a;
 		dvd = abs(dvd);
 		long long dvs = b;

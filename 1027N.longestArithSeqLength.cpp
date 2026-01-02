@@ -14,7 +14,8 @@
 class Solution {
 public:
 	int longestArithSeqLength(vector<int> &arr) {
-		int n = arr.size(), res = 1, maxVal = INT_MIN, minVal = INT_MAX;
+		int n = arr.size(), res = 1, maxVal = numeric_limits<int>::min(),
+		    minVal = numeric_limits<int>::max();
 		for(auto &a : arr) {
 			maxVal = max(a, maxVal);
 			minVal = min(a, minVal);

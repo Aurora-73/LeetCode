@@ -9,7 +9,7 @@ class Solution1 {
 public:
 	int longestPalindromeSubseq(const string &s) {
 		n = s.size();
-		memo.resize(n, vector<int>(n, INT_MAX));
+		memo.resize(n, vector<int>(n, numeric_limits<int>::max()));
 		return dfs(s, 0, n - 1);
 	}
 
@@ -19,7 +19,7 @@ private:
 	int dfs(const string &s, int begin, int end) {
 		if(begin > end) return 0;
 		if(begin == end) return 1;
-		if(memo[begin][end] != INT_MAX) return memo[begin][end];
+		if(memo[begin][end] != numeric_limits<int>::max()) return memo[begin][end];
 		if(s[begin] == s[end]) {
 			memo[begin][end] = dfs(s, begin + 1, end - 1) + 2;
 		} else {

@@ -31,7 +31,7 @@ public:
 		if(n < 3) {
 			return false;
 		}
-		int first = nums[0], second = INT_MAX;
+		int first = nums[0], second = numeric_limits<int>::max();
 		for(int i = 1; i < n; i++) {
 			int num = nums[i];
 			if(num > second) {

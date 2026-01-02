@@ -58,7 +58,7 @@ public:
 // 分割线左侧的最大元素是 max(nums1[i - 1], nums2[j - 1]) 右侧最小元素是 min(nums[i], nums[j])，则只需要满足 max(nums1[i - 1], nums2[j - 1]) <=  min(nums[i], nums[j])
 // 又由于单个数组内部是单调的，可以简化的为 nums1[i - 1] <= nums[j]; nums2[j - 1] <= nums[i]
 // 结束时，如果是奇数返回 max(nums1[i - 1], nums2[j - 1])，偶数返回 (max(nums1[i - 1], nums2[j - 1]) + min(nums[i], nums[j])) / 2
-// 为了避免第二个数组越界，我们对长度较小的数组进行二分查找，我们将-1下标定为 INT_MIN, size 下标定为INT_MAX
+// 为了避免第二个数组越界，我们对长度较小的数组进行二分查找，我们将-1下标定为 numeric_limits<int>::min(), size 下标定为numeric_limits<int>::max()
 // 对较短的数组进行分割时可以保证另一个数组的分割位置始终是合法的
 // 分割到较短的数组的尽头时 其实就已经找到了中位数了。因此对较短的数组进行分割
 
@@ -83,12 +83,15 @@ public:
 			int partitionLong = halfLen - partitionShort;
 
 			// nums1 左/右两侧的临界值
-			int shortPartitionLeft = (partitionShort == 0 ? INT_MIN : nums1[partitionShort - 1]);
+			int shortPartitionLeft
+			    = (partitionShort == 0 ? numeric_limits<int>::min() : nums1[partitionShort - 1]);
 			int shortPartitionRight
-			    = (partitionShort == shortLen ? INT_MAX : nums1[partitionShort]);
+			    = (partitionShort == shortLen ? numeric_limits<int>::max() : nums1[partitionShort]);
 			// nums2 左/右两侧的临界值
-			int longPartitionLeft = (partitionLong == 0 ? INT_MIN : nums2[partitionLong - 1]);
-			int longPartitionRight = (partitionLong == longLen ? INT_MAX : nums2[partitionLong]);
+			int longPartitionLeft
+			    = (partitionLong == 0 ? numeric_limits<int>::min() : nums2[partitionLong - 1]);
+			int longPartitionRight
+			    = (partitionLong == longLen ? numeric_limits<int>::max() : nums2[partitionLong]);
 
 			// 找到满足「左侧最大 ≤ 右侧最小」的划分
 			if(shortPartitionLeft <= longPartitionRight

@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#define EMPTY_NODE INT_MIN // 定义空节点构造时的值
+#define EMPTY_NODE numeric_limits<int>::min() // 定义空节点构造时的值
 
 struct TreeNode {
 	int val;

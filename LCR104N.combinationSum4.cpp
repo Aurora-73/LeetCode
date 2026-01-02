@@ -79,7 +79,7 @@ public:
 		dp[0] = 1;
 		for(int i = 1; i < target + 1; ++i) {
 			for(int num : nums) {
-				if(num <= i) dp[i] += min(INT_MAX - dp[i], dp[i - num]);
+				if(num <= i) dp[i] += min(numeric_limits<int>::max() - dp[i], dp[i - num]);
 			}
 		}
 		return dp.back();

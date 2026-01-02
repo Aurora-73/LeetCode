@@ -17,7 +17,7 @@ private:
 	vector<int> memo;
 	int dfs(int n) {
 		if(n < 0) {
-			return INT_MAX >> 2;
+			return numeric_limits<int>::max() >> 2;
 		}
 		if(n == 0 || n == 1) {
 			return n;
@@ -30,7 +30,7 @@ private:
 			memo[n] = 1;
 			return 1;
 		}
-		int minTimes = INT_MAX >> 2;
+		int minTimes = numeric_limits<int>::max() >> 2;
 		for(int i = maxSq; i > 0; --i) {
 			minTimes = min(minTimes, dfs(n - i * i) + 1);
 		}
@@ -42,16 +42,16 @@ private:
 class Solution2 {
 public:
 	int numSquares(int n) {
-		vector<int> dp(n + 1, INT_MAX);
+		vector<int> dp(n + 1, numeric_limits<int>::max());
 		for(int i = 1; i * i <= n; ++i) {
 			dp[i * i] = 1;
 		}
-		if(dp.back() != INT_MAX) {
+		if(dp.back() != numeric_limits<int>::max()) {
 			return dp.back();
 		}
 		dp[0] = 0;
 		for(int i = 1; i <= n; ++i) {
-			if(dp[i] == INT_MAX) {
+			if(dp[i] == numeric_limits<int>::max()) {
 				for(int j = 1; j * j <= i; --j) {
 					dp[i] = min(dp[i], 1 + dp[i - j * j]);
 				}
@@ -66,7 +66,7 @@ int RES[10001];
 int a = []() {
 	RES[0] = 0;
 	for(int i = 1; i <= 10000; ++i) {
-		int minn = INT_MAX;
+		int minn = numeric_limits<int>::max();
 		for(int j = 1; j * j <= i; ++j) {
 			minn = min(minn, RES[i - j * j] + 1);
 		}
@@ -94,7 +94,7 @@ private:
 		array<int, 10001> arr {};
 		arr[0] = 0;
 		for(int i = 1; i <= 10000; ++i) {
-			int minn = INT_MAX;
+			int minn = numeric_limits<int>::max();
 			for(int j = 1; j * j <= i; ++j) {
 				minn = minn < (arr[i - j * j] + 1) ? minn : (arr[i - j * j] + 1);
 			}

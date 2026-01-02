@@ -23,7 +23,7 @@ public:
 		int indexs[3] = { 0, 0, 0 }, factors[3] = { 2, 3, 5 };
 		uglyNum[0] = 1;
 		for(int i = 1; i < n; ++i) {
-			int min_val = INT_MAX, min_i = 0;
+			int min_val = numeric_limits<int>::max(), min_i = 0;
 			for(int j = 0; j < 3; ++j) {
 				int val = factors[j] * uglyNum[indexs[j]];
 				while(us.count(val)) {
@@ -50,7 +50,7 @@ public:
 		int indexs[3] = { 0, 0, 0 }, factors[3] = { 2, 3, 5 };
 		uglyNum.reserve(n), uglyNum.push_back(1);
 		for(int i = 1; i < n; ++i) {
-			int min_val = INT_MAX, min_i = 0;
+			int min_val = numeric_limits<int>::max(), min_i = 0;
 			for(int j = 0; j < 3; ++j) {
 				int this_val = factors[j] * uglyNum[indexs[j]];
 				while(this_val <= uglyNum.back()) {

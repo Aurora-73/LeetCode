@@ -39,7 +39,7 @@ public:
 				suff[i] = nums[i];
 			}
 		}
-		int m = ZeroIndex.size(), maxP = (m - 2) ? 0 : INT_MIN;
+		int m = ZeroIndex.size(), maxP = (m - 2) ? 0 : numeric_limits<int>::min();
 		for(int i = 0; i < m - 1; ++i) {
 			int left = ZeroIndex[i] + 1, right = ZeroIndex[i + 1]; // 左闭右开
 			int maxNeg = 1;                                        // 最小正前缀和最大负前缀
@@ -102,7 +102,7 @@ public:
 class Solution {
 public:
 	int maxProduct(vector<int> &nums) {
-		int ans = INT_MIN; // 注意答案可能是负数
+		int ans = numeric_limits<int>::min(); // 注意答案可能是负数
 		int f_max = 1, f_min = 1;
 		for(int x : nums) {
 			int mx = f_max;

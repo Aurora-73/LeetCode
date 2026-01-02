@@ -109,7 +109,7 @@ public:
 		vector<bool> canToEnd(n + 1, false);
 		canToEnd[n] = true;
 		// 预处理字典中最短和最长单词长度，减少无效遍历
-		int minLen = INT_MAX, maxLen = 0;
+		int minLen = numeric_limits<int>::max(), maxLen = 0;
 		for(auto &w : wordDict) {
 			minLen = min(minLen, (int)w.size());
 			maxLen = max(maxLen, (int)w.size());

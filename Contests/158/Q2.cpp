@@ -33,7 +33,9 @@ class Solution1 {
 public:
 	long long maximumProfit(vector<int> &prices, int k) {
 		this->k = k, n = prices.size();
-		memo.assign(n + 1, vector<vector<long long>>(k + 1, vector<long long>(3, LLONG_MIN)));
+		memo.assign(n + 1,
+		    vector<vector<long long>>(
+		        k + 1, vector<long long>(3, numeric_limits<long long>::min())));
 		return dfs(prices, 0, 0, 0);
 	}
 
@@ -45,7 +47,8 @@ private:
 		// state: 0：可以开始新的交易 	1：已经买入，没有卖出（普通）
 		// 2：已经卖出，没有买入（做空） 3：处于冷却期
 		if(day >= n || times == k) return 0;
-		if(memo[day][times][state] != LLONG_MIN) return memo[day][times][state];
+		if(memo[day][times][state] != numeric_limits<long long>::min())
+			return memo[day][times][state];
 		long long res = dfs(prices, day + 1, times, state); // 不操作
 
 		if(state == 0) {
@@ -69,7 +72,9 @@ class Solution {
 public:
 	long long maximumProfit(vector<int> &prices, int k) {
 		this->k = k, n = prices.size();
-		memo.assign(n, vector<vector<long long>>(k + 1, vector<long long>(3, LLONG_MIN)));
+		memo.assign(n,
+		    vector<vector<long long>>(
+		        k + 1, vector<long long>(3, numeric_limits<long long>::min())));
 		return dfs(prices, 0, 0, 0);
 	}
 
@@ -84,7 +89,8 @@ private:
 			return -prices.back();
 		}
 		if(day >= n || times == k) return 0;
-		if(memo[day][times][state] != LLONG_MIN) return memo[day][times][state];
+		if(memo[day][times][state] != numeric_limits<long long>::min())
+			return memo[day][times][state];
 		long long res = dfs(prices, day + 1, times, state); // 不操作
 
 		if(state == 0) {

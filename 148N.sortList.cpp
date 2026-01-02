@@ -8,7 +8,7 @@
 class Solution1 {
 public:
 	ListNode *sortList(ListNode *head) {
-		ListNode dummy(INT_MIN, nullptr);
+		ListNode dummy(numeric_limits<int>::min(), nullptr);
 		while(head) {
 			auto temp = head->next, find = &dummy;
 			while(find->next && find->next->val < head->val) {

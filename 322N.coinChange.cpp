@@ -89,7 +89,7 @@ public:
 class Solution4 {
 public:
 	int coinChange(vector<int> &coins, int amount) {
-		vector<int> f(amount + 1, INT_MAX >> 1);
+		vector<int> f(amount + 1, numeric_limits<int>::max() >> 1);
 		f[0] = 0;
 		for(const auto &x : coins) {
 			for(int v = x; v <= amount; v++) {

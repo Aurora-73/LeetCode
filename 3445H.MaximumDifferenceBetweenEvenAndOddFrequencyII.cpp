@@ -36,7 +36,7 @@ public:
 	int maxDifference(string &s, int k) {
 		array<int, 5> freqs;
 		int n = s.size();
-		long long maxDiff = INT_MIN;
+		long long maxDiff = numeric_limits<int>::min();
 		for(int i = 0; i < n - k + 1; ++i) {
 			freqs.fill(0);
 			int j = i, noNeadMatch = max(i + k - 1, i + int(maxDiff));
@@ -47,7 +47,7 @@ public:
 			for(; j < n; ++j) {
 				int val = s[j] - '0';
 				++freqs[val];
-				int maxa = INT_MIN, minb = INT_MAX;
+				int maxa = numeric_limits<int>::min(), minb = numeric_limits<int>::max();
 				for(auto freq : freqs) {
 					if(freq != 0) {
 						if(freq % 2) {
@@ -74,10 +74,10 @@ public:
 			freqs[i] = freqs[i - 1];
 			++freqs[i][s[i - 1] - '0'];
 		}
-		long long res = INT_MIN;
+		long long res = numeric_limits<int>::min();
 		for(int i = 0; i <= n - k; ++i) {
 			for(int j = i + k; j <= n; ++j) {
-				int maxa = INT_MIN, minb = INT_MAX;
+				int maxa = numeric_limits<int>::min(), minb = numeric_limits<int>::max();
 				for(int m = 0; m < 5; ++m) {
 					int count = freqs[j][m] - freqs[i][m];
 					if(count % 2) {

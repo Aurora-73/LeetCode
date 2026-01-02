@@ -33,7 +33,8 @@ class Solution {
 public:
 	vector<int> longestObstacleCourseAtEachPosition(vector<int> &obstacles) {
 		int n = obstacles.size();
-		vector<int> dp(n), minTails { INT_MIN }; // 加一个初始值可以防止空数组取 back 和 dp + 1
+		vector<int> dp(n),
+		    minTails { numeric_limits<int>::min() }; // 加一个初始值可以防止空数组取 back 和 dp + 1
 		minTails.reserve(n);
 		for(int i = 0; i < n; ++i) {
 			if(obstacles[i] >= minTails.back()) {

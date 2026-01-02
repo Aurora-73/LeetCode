@@ -37,7 +37,7 @@ private:
 	vector<vector<bool>> dp;
 	int dfs(string &s, int i) {
 		if(i >= n) return 0;
-		int temp = INT_MAX;
+		int temp = numeric_limits<int>::max();
 		for(int j = i; j < n; ++j) {
 			if(dp[i][j]) temp = min(temp, dfs(s, j + 1));
 		}
@@ -58,7 +58,7 @@ public:
 		} // ispal[i][j]：闭区间[i, j]是否是回文子串
 		vector<int> dp(n + 1); // dp[i]：从 i 开始子串的最少分割次数
 		for(int i = n - 1; i >= 0; --i) {
-			int temp = INT_MAX;
+			int temp = numeric_limits<int>::max();
 			for(int j = i; j < n; ++j) {
 				if(ispal[i][j]) temp = min(temp, dp[j + 1]);
 			}
@@ -79,7 +79,7 @@ public:
 			for(int j = i + 1; j < n; ++j) { // 此处双向皆可，因为依赖的是上一行的数据
 				ispal[i][j] = (s[i] == s[j]) && (i + 1 > j - 1 || ispal[i + 1][j - 1]);
 			}
-			int temp = INT_MAX;
+			int temp = numeric_limits<int>::max();
 			for(int j = i; j < n; ++j) {
 				if(ispal[i][j]) temp = min(temp, dp[j + 1]);
 			}
@@ -100,7 +100,7 @@ public:
 			for(int j = n - 1; j >= i + 1; --j) { // 反向迭代防止覆盖ispal[j - 1]
 				ispal[j] = (s[i] == s[j]) && (i + 1 > j - 1 || ispal[j - 1]);
 			}
-			int temp = INT_MAX;
+			int temp = numeric_limits<int>::max();
 			for(int j = i; j < n; ++j) {
 				if(ispal[j]) temp = min(temp, dp[j + 1]);
 			}

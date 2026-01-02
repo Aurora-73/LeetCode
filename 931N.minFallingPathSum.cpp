@@ -11,8 +11,8 @@ class Solution1 {
 public:
 	int minFallingPathSum(vector<vector<int>> &matrix) {
 		m = matrix.size(), n = matrix[0].size();
-		memo.resize(m, vector<int>(n, INT_MAX));
-		int min_val = INT_MAX >> 6;
+		memo.resize(m, vector<int>(n, numeric_limits<int>::max()));
+		int min_val = numeric_limits<int>::max() >> 6;
 		for(int j = 0; j < n; ++j) {
 			min_val = min(min_val, dfs(matrix, 0, j));
 		}
@@ -24,9 +24,9 @@ private:
 	int m, n;
 	int dfs(vector<vector<int>> &matrix, int i, int j) {
 		if(i == m) return 0;
-		if(j < 0 || j >= n) return INT_MAX >> 6;
-		if(memo[i][j] != INT_MAX) return memo[i][j];
-		int min_val = INT_MAX >> 6;
+		if(j < 0 || j >= n) return numeric_limits<int>::max() >> 6;
+		if(memo[i][j] != numeric_limits<int>::max()) return memo[i][j];
+		int min_val = numeric_limits<int>::max() >> 6;
 		for(int k = -1; k < 2; ++k) {
 			min_val = min(min_val, dfs(matrix, i + 1, j + k));
 		}
@@ -41,7 +41,7 @@ public:
 		int m = matrix.size(), n = matrix[0].size();
 		auto get_dp = [&](int i, int j) {
 			if(j < 0 || j >= n) {
-				return INT_MAX;
+				return numeric_limits<int>::max();
 			}
 			return matrix[i][j];
 		};
@@ -51,7 +51,7 @@ public:
 				    += min({ matrix[i + 1][j], get_dp(i + 1, j + 1), get_dp(i + 1, j - 1) });
 			}
 		}
-		int min_val = INT_MAX;
+		int min_val = numeric_limits<int>::max();
 		for(int j = 0; j < n; ++j) {
 			min_val = min(min_val, matrix[0][j]);
 		}
@@ -65,14 +65,15 @@ public:
 		int m = matrix.size(), n = matrix[0].size();
 		vector<int> dp = matrix.back();
 		for(int i = m - 2; i >= 0; --i) {
-			int prev = INT_MAX;
+			int prev = numeric_limits<int>::max();
 			for(int j = 0; j < n; ++j) {
 				int temp = dp[j];
-				dp[j] = min({ dp[j], (j > n - 2) ? INT_MAX : dp[j + 1], prev }) + matrix[i][j];
+				dp[j] = min({ dp[j], (j > n - 2) ? numeric_limits<int>::max() : dp[j + 1], prev })
+				    + matrix[i][j];
 				prev = temp;
 			}
 		}
-		int min_val = INT_MAX;
+		int min_val = numeric_limits<int>::max();
 		for(int j = 0; j < n; ++j) {
 			min_val = min(min_val, dp[j]);
 		}

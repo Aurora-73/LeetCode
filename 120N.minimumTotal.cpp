@@ -28,7 +28,7 @@ public:
 	int minimumTotal(vector<vector<int>> &triangle) {
 		memo.resize(triangle.size());
 		for(int i = 0; i < triangle.size(); ++i) {
-			memo[i].resize(triangle[i].size(), INT_MIN);
+			memo[i].resize(triangle[i].size(), numeric_limits<int>::min());
 		}
 		return dfs(triangle, 0, 0);
 	}
@@ -39,7 +39,7 @@ private:
 		if(i >= triangle.size() || j >= triangle[i].size() || j < 0) {
 			return 0;
 		}
-		if(memo[i][j] != INT_MIN) {
+		if(memo[i][j] != numeric_limits<int>::min()) {
 			return memo[i][j];
 		}
 		int now = triangle[i][j];

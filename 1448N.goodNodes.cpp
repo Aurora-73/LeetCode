@@ -30,7 +30,7 @@ class Solution1 {
 public:
 	int goodNodes(TreeNode *root) {
 		res = 0;
-		dfs(root, INT_MIN);
+		dfs(root, numeric_limits<int>::min());
 		return res;
 	}
 
@@ -49,7 +49,7 @@ private:
 
 class Solution {
 public:
-	int goodNodes(TreeNode *root, int mx = INT_MIN) {
+	int goodNodes(TreeNode *root, int mx = numeric_limits<int>::min()) {
 		if(root == nullptr) return 0;
 		int res = 0;
 		if(root->val >= mx) {

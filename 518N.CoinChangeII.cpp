@@ -28,8 +28,8 @@ public:
 		dp.front() = 1;
 		for(auto j : coins) {
 			for(int i = j; i < amount + 1; ++i) {
-				if(INT_MAX - dp[i] < dp[i - j]) {
-					dp[i] = INT_MAX;
+				if(numeric_limits<int>::max() - dp[i] < dp[i - j]) {
+					dp[i] = numeric_limits<int>::max();
 				} else {
 					dp[i] += dp[i - j];
 				}

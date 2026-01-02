@@ -27,7 +27,8 @@ class Solution1 {
 public:
 	vector<int> partitionLabels(string &s) {
 		int n = s.size();
-		vector<pair<int, int>> MinMaxPos(26, { INT_MAX, INT_MIN });
+		vector<pair<int, int>> MinMaxPos(
+		    26, { numeric_limits<int>::max(), numeric_limits<int>::min() });
 		for(int i = 0; i < n; ++i) {
 			auto &[minPos, maxPos] = MinMaxPos[s[i] - 'a'];
 			minPos = min(minPos, i);
@@ -36,7 +37,7 @@ public:
 		ranges::sort(MinMaxPos);
 		vector<int> res;
 		int begin = 0, end = -1; // 左闭右闭
-		for(int i = 0; i < 26 && MinMaxPos[i].first != INT_MAX; ++i) {
+		for(int i = 0; i < 26 && MinMaxPos[i].first != numeric_limits<int>::max(); ++i) {
 			if(end < MinMaxPos[i].first) {
 				if(end != -1) {
 					res.push_back(end - begin + 1);

@@ -71,10 +71,10 @@ public:
 		}
 		while(str[i] >= '0' && str[i] <= '9') {
 			res *= 10, res += str[i] - '0';
-			if(flag == 1 && res >= INT_MAX) {
-				return INT_MAX;
-			} else if(flag == -1 && -res <= INT_MIN) {
-				return INT_MIN;
+			if(flag == 1 && res >= numeric_limits<int>::max()) {
+				return numeric_limits<int>::max();
+			} else if(flag == -1 && -res <= numeric_limits<int>::min()) {
+				return numeric_limits<int>::min();
 			}
 			++i;
 		}

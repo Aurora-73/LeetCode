@@ -32,7 +32,7 @@ public:
 private:
 	int dfs(vector<vector<int>> &costs, int i, int prevj) {
 		if(i == costs.size()) return 0;
-		int minCost = INT_MAX;
+		int minCost = numeric_limits<int>::max();
 		for(int j = 0; j < 3; ++j) {
 			if(prevj != j) minCost = min(dfs(costs, i + 1, j) + costs[i][j], minCost);
 		}
@@ -47,7 +47,7 @@ public:
 		vector<vector<int>> dp(n + 1, vector<int>(3));
 		for(int i = n - 1; i >= 0; --i) {
 			for(int j = 0; j < 3; ++j) {
-				int curr = INT_MAX;
+				int curr = numeric_limits<int>::max();
 				for(int prevj = 0; prevj < 3; ++prevj) {
 					if(prevj != j) curr = min(dp[i + 1][prevj] + costs[i][j], curr);
 				}

@@ -92,7 +92,8 @@ int main() {
 	// cout << sol.maxSubsequence(nums, k) << endl; // {3,4}
 	std::chrono::duration<double, std::milli> t1(0), t2(0);
 	for(int i = 200; i < 1201; ++i) {
-		vector<int> nums = randomIntVector(20000, INT_MIN, INT_MAX);
+		vector<int> nums
+		    = randomIntVector(20000, numeric_limits<int>::min(), numeric_limits<int>::max());
 		int k = 2 * i;
 		auto b = std::chrono::system_clock::now();
 		auto res1 = sol1.maxSubsequence(nums, k);

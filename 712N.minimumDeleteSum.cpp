@@ -9,7 +9,7 @@ public:
 	int minimumDeleteSum(const string &s1, const string &s2) {
 		n1 = s1.size(), n2 = s2.size();
 		memo.resize(n1, vector<int>(n2, -1));
-		int min_val = INT_MAX;
+		int min_val = numeric_limits<int>::max();
 		min_val = min(dfs(s1, s2, 0, 0), min_val);
 		cout << memo << endl;
 		return min_val;

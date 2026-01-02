@@ -11,7 +11,7 @@ class Solution1 {
 public:
 	int minPathSum(vector<vector<int>> &grid) {
 		m = grid.size(), n = grid[0].size();
-		memo.resize(m, vector<int>(n, INT_MAX >> 3));
+		memo.resize(m, vector<int>(n, numeric_limits<int>::max() >> 3));
 		return dfs(grid, 0, 0);
 	}
 
@@ -23,9 +23,9 @@ private:
 			return grid.back().back();
 		}
 		if(i >= m || j >= n) {
-			return INT_MAX >> 3;
+			return numeric_limits<int>::max() >> 3;
 		}
-		if(memo[i][j] != INT_MAX >> 3) {
+		if(memo[i][j] != numeric_limits<int>::max() >> 3) {
 			return memo[i][j];
 		}
 		int next_min = min(dfs(grid, i + 1, j), dfs(grid, i, j + 1));

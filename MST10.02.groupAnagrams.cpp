@@ -71,7 +71,7 @@ public:
 	vector<vector<string>> groupAnagrams(vector<string> &strs) {
 		unordered_map<string, vector<string>> mapp;
 		for(auto &str : strs) {
-			string key(26, CHAR_MIN);
+			string key(26, numeric_limits<char>::min());
 			for(auto c : str) {
 				++key[c - 'a'];
 			}

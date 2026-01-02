@@ -12,8 +12,8 @@
 class Solution1 {
 public:
 	bool isValidBST(TreeNode *root) {
-		long long prev = INT_MIN;
-		--prev; // 有可能会存在INT_MIN的节点
+		long long prev = numeric_limits<int>::min();
+		--prev; // 有可能会存在numeric_limits<int>::min()的节点
 		return dfs(root, prev);
 	}
 	bool dfs(TreeNode *root, long long &prev) {
@@ -35,7 +35,7 @@ public:
 class Solution2 {
 public:
 	bool isValidBST(TreeNode *root) {
-		int prev = INT_MIN;
+		int prev = numeric_limits<int>::min();
 		return dfs(root, prev);
 	}
 	bool dfs(TreeNode *root, int &prev) {

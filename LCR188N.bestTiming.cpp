@@ -21,7 +21,7 @@
 class Solution {
 public:
 	int bestTiming(vector<int> &prices) {
-		int res = 0, min_p = INT_MAX, n = prices.size();
+		int res = 0, min_p = numeric_limits<int>::max(), n = prices.size();
 		for(int i = 0; i < n; ++i) {
 			res = max(res, prices[i] - min_p);
 			min_p = min(min_p, prices[i]);

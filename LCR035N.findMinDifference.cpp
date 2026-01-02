@@ -77,7 +77,7 @@ public:
 			seen[m] = 1;
 		}
 
-		int first = -1, prev = -1, ans = INT_MAX;
+		int first = -1, prev = -1, ans = numeric_limits<int>::max();
 		for(int i = 0; i < 1440; ++i) {
 			if(!seen[i]) continue;
 			if(first == -1) first = i;

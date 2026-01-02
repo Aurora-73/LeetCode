@@ -65,7 +65,7 @@ public:
 			Mins.push(min(val, Mins.top()));
 		} else {
 			Mins.push(val);
-		} // 如果初始化的时候直接在MinStake中压入一个INT_MAX 并且不会对空栈弹出，则不需要判断
+		} // 如果初始化的时候直接在MinStake中压入一个numeric_limits<int>::max() 并且不会对空栈弹出，则不需要判断
 	}
 
 	void pop() {

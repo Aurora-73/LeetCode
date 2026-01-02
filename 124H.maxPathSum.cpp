@@ -11,7 +11,7 @@
 class Solution {
 public:
 	int maxPathSum(TreeNode *root) {
-		maxPath = INT_MIN;
+		maxPath = numeric_limits<int>::min();
 		dfs(root);
 		return maxPath;
 	}
@@ -26,7 +26,7 @@ public:
 		return root->val + max(r, l); // 要当前节点的父节点，只能保留一个子树
 		                              // 留一个最大的，另一边给父节点
 	}
-	int maxPath = INT_MIN;
+	int maxPath = numeric_limits<int>::min();
 };
 // 二叉树中每个节点最多有三个连线
 // 但是在路径中一个节点最多有两个连线

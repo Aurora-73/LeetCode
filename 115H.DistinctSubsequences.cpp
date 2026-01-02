@@ -63,8 +63,8 @@ public:
 		for(int i = m - 1; i >= 0; --i) {
 			for(int j = n - 1; j >= 0; --j) {
 				if(s[i] == t[j]) {
-					if(INT_MAX - dp[i + 1][j + 1] < dp[i + 1][j]) {
-						dp[i][j] = INT_MAX;
+					if(numeric_limits<int>::max() - dp[i + 1][j + 1] < dp[i + 1][j]) {
+						dp[i][j] = numeric_limits<int>::max();
 					} else {
 						dp[i][j] = dp[i + 1][j + 1] + dp[i + 1][j];
 					}
@@ -90,8 +90,8 @@ public:
 			for(int j = n - 1; j >= 0; --j) {
 				int temp = dp[j];
 				if(s[i] == t[j]) {
-					if(INT_MAX - pre < dp[j]) {
-						dp[j] = INT_MAX;
+					if(numeric_limits<int>::max() - pre < dp[j]) {
+						dp[j] = numeric_limits<int>::max();
 					} else {
 						dp[j] = pre + dp[j];
 					}

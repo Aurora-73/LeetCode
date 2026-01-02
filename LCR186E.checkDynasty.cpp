@@ -62,7 +62,7 @@ public:
 class Solution {
 public:
 	bool checkDynasty(vector<int> &places) {
-		int max_val = INT_MIN, min_val = INT_MAX, set = 0;
+		int max_val = numeric_limits<int>::min(), min_val = numeric_limits<int>::max(), set = 0;
 		for(auto p : places) {
 			if(p != 0) {
 				if(set & 1 << p) return false;

@@ -30,9 +30,10 @@ public:
 		for(int i = m - 2; i >= 0; --i) {
 			for(int j = n - 2; j >= 0; --j) {
 				if(obstacleGrid[i][j] != 1) {
-					if(INT_MAX - obstacleGrid[i + 1][j] < obstacleGrid[i][j + 1]) {
+					if(numeric_limits<int>::max() - obstacleGrid[i + 1][j]
+					    < obstacleGrid[i][j + 1]) {
 						// 测试用例保证答案小于等于 2*10^9。因此当前值一定会被舍弃，随便填个值就行
-						obstacleGrid[i][j] = INT_MAX;
+						obstacleGrid[i][j] = numeric_limits<int>::max();
 					} else {
 						obstacleGrid[i][j] = obstacleGrid[i + 1][j] + obstacleGrid[i][j + 1];
 					}
@@ -59,8 +60,8 @@ public:
 					continue;
 				}
 				if(j - 1 >= 0 && obstacleGrid[i][j - 1] == 0) {
-					if(INT_MAX - f[j - 1] < f[j]) {
-						f[j] = INT_MAX;
+					if(numeric_limits<int>::max() - f[j - 1] < f[j]) {
+						f[j] = numeric_limits<int>::max();
 					} else {
 						f[j] += f[j - 1];
 					}

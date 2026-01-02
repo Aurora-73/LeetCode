@@ -46,7 +46,8 @@ public:
 		for(int i = ns - 1; i >= 0; --i) {     // 必须单向
 			for(int j = nt - 1; j >= 0; --j) { // 双向皆可
 				if(s[i] == t[j]) {
-					dp[i][j] = min(dp[i + 1][j + 1], INT_MAX - dp[i + 1][j]) + dp[i + 1][j];
+					dp[i][j] = min(dp[i + 1][j + 1], numeric_limits<int>::max() - dp[i + 1][j])
+					    + dp[i + 1][j];
 				} else {
 					dp[i][j] = dp[i + 1][j];
 				}
@@ -65,7 +66,7 @@ public:
 		for(int i = ns - 1; i >= 0; --i) {
 			for(int j = 0; j < nt; ++j) { // 双向皆可 + 防覆盖 = 必须单向
 				if(s[i] == t[j]) {
-					dp[j] += min(dp[j + 1], INT_MAX - dp[j]);
+					dp[j] += min(dp[j + 1], numeric_limits<int>::max() - dp[j]);
 				}
 			}
 		}

@@ -25,7 +25,7 @@ public:
 		queue<TreeNode *> que;
 		que.push(root);
 		while(!que.empty()) {
-			int size = que.size(), max_val = INT_MIN;
+			int size = que.size(), max_val = numeric_limits<int>::min();
 			for(int i = 0; i < size; ++i) {
 				auto q = que.front();
 				que.pop();

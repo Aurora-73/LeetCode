@@ -24,7 +24,7 @@
 class Solution1 {
 public:
 	int findPeakElement(vector<int> &nums) {
-		int max_val = INT_MIN, index = -1, n = nums.size();
+		int max_val = numeric_limits<int>::min(), index = -1, n = nums.size();
 		for(int i = 0; i < n; ++i) {
 			if(nums[i] >= max_val) {
 				max_val = nums[i];

@@ -71,7 +71,7 @@ public:
 		dp.front() = 1;
 		for(int i = 1; i <= target; ++i) {
 			for(auto num : nums) {
-				if(i >= num) dp[i] += min(dp[i - num], INT_MAX - dp[i]);
+				if(i >= num) dp[i] += min(dp[i - num], numeric_limits<int>::max() - dp[i]);
 			}
 		}
 		return dp.back();

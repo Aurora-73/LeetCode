@@ -91,7 +91,7 @@ public:
 		}
 
 		int l = 0, r = -1;
-		int len = INT_MAX, ansL = -1;
+		int len = numeric_limits<int>::max(), ansL = -1;
 
 		while(r + 1 < int(s.size())) {
 			++r;
@@ -122,7 +122,7 @@ public:
 			++ori[c - 'A'];
 		}
 		int l = 0, r = -1;
-		int len = INT_MAX, ansL = -1;
+		int len = numeric_limits<int>::max(), ansL = -1;
 
 		while(r + 1 < int(s.size())) {
 			++r;

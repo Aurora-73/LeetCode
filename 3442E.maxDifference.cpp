@@ -33,7 +33,7 @@ public:
 		for(auto c : s) {
 			++map[c];
 		}
-		int a1 = 0, a2 = INT_MAX;
+		int a1 = 0, a2 = numeric_limits<int>::max();
 		for(auto &pair : map) {
 			int a = pair.second;
 			if(a % 2) {
@@ -54,7 +54,7 @@ public:
 		for(auto c : s) {
 			++map[c - 'a'];
 		}
-		int a1 = 0, a2 = INT_MAX;
+		int a1 = 0, a2 = numeric_limits<int>::max();
 		for(auto a : map) {
 			if(a != 0) {
 				if(a % 2) {

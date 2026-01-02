@@ -52,14 +52,14 @@ public:
 						set.insert(grid[i + di][j + dj]);
 					}
 				}
-				int minDiff = INT_MAX, prev = INT_MIN >> 2;
+				int minDiff = numeric_limits<int>::max(), prev = numeric_limits<int>::min() >> 2;
 				for(auto x : set) {
 					if(x != prev && x - prev < minDiff) {
 						minDiff = x - prev;
 					}
 					prev = x;
 				}
-				res[i][j] = (INT_MAX >> 3) > minDiff ? minDiff : 0;
+				res[i][j] = (numeric_limits<int>::max() >> 3) > minDiff ? minDiff : 0;
 			}
 		}
 		return res;

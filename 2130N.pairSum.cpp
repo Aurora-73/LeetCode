@@ -36,7 +36,7 @@
 class Solution1 {
 public:
 	int pairSum(ListNode *head) {
-		int n = 0, res = INT_MIN;
+		int n = 0, res = numeric_limits<int>::min();
 		ListNode *p = head;
 		while(p) {
 			++n;
@@ -75,7 +75,7 @@ public:
 			fast = temp;
 		}
 		fast = head, slow = slow->next;
-		int res = INT_MIN;
+		int res = numeric_limits<int>::min();
 		while(slow) {
 			res = max(res, fast->val + slow->val);
 			slow = slow->next;

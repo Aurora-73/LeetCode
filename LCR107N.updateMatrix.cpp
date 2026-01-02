@@ -22,7 +22,7 @@ class Solution1 {
 public:
 	vector<vector<int>> updateMatrix(vector<vector<int>> &mat) {
 		int m = mat.size(), n = mat[0].size();
-		vector<vector<int>> res(m, vector<int>(n, INT_MAX >> 1));
+		vector<vector<int>> res(m, vector<int>(n, numeric_limits<int>::max() >> 1));
 		for(int i = 0; i < m; ++i) {
 			for(int j = 0; j < n; ++j) {
 				if(mat[i][j] == 0) res[i][j] = 0;
@@ -56,7 +56,7 @@ class Solution2 {
 public:
 	vector<vector<int>> updateMatrix(vector<vector<int>> &mat) {
 		int m = mat.size(), n = mat[0].size();
-		vector<vector<int>> res(m, vector<int>(n, INT_MAX));
+		vector<vector<int>> res(m, vector<int>(n, numeric_limits<int>::max()));
 		queue<pair<int, int>> que; // 必须用queue，因为后面不同层的会混在一起
 		for(int i = 0; i < m; ++i) {
 			for(int j = 0; j < n; ++j) {
@@ -75,7 +75,7 @@ public:
 				for(int (&dir)[2] : dirs) {
 					int ii = i + dir[0], jj = j + dir[1];
 					if(ii >= 0 && ii < m && jj >= 0 && jj < n) {
-						if(res[ii][jj] == INT_MAX) {
+						if(res[ii][jj] == numeric_limits<int>::max()) {
 							res[ii][jj] = depth;
 							que.emplace(ii, jj);
 						}
@@ -91,7 +91,7 @@ public:
 class Solution {
 public:
 	vector<vector<int>> updateMatrix(vector<vector<int>> &mat) {
-		constexpr int INFVAL = INT_MAX >> 1; // 防溢出
+		constexpr int INFVAL = numeric_limits<int>::max() >> 1; // 防溢出
 		int m = mat.size(), n = mat[0].size();
 		vector<vector<int>> dp(m, vector<int>(n, INFVAL));
 		for(int i = 0; i < m; ++i) {

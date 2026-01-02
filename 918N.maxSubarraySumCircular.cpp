@@ -11,7 +11,8 @@ class Solution1 { //0 ms 42.7 MB
 public:
 	int maxSubarraySumCircular(vector<int> &nums) {
 		int sum_all = 0, current_min = 0, current_max = 0;
-		int best_min = INT_MAX, best_max = INT_MIN; // 至少包含一个元素
+		int best_min = numeric_limits<int>::max(),
+		    best_max = numeric_limits<int>::min(); // 至少包含一个元素
 		for(int &x : nums) {
 			// Kadane for max
 			current_max = max(current_max, 0) + x; // 注意这里要加 x ，否则该元素无法加入当前前缀和
@@ -37,7 +38,7 @@ public:
 class Solution2 { // 0 ms 44.5 MB
 public:
 	int maxSubarraySumCircular(vector<int> &nums) {
-		int current_max = 0, best_max = INT_MIN, n = nums.size(), prefix_sum = 0;
+		int current_max = 0, best_max = numeric_limits<int>::min(), n = nums.size(), prefix_sum = 0;
 		vector<int> max_prefix(n);
 		for(int i = 0; i < n; ++i) {
 			int &x = nums[i];
@@ -46,7 +47,7 @@ public:
 			current_max = max(current_max, 0) + x; // 注意这里要加 x ，否则该元素无法加入当前前缀和
 			best_max = max(best_max, current_max);
 		}
-		int sum_right = 0, max_cross = INT_MIN;
+		int sum_right = 0, max_cross = numeric_limits<int>::min();
 		for(int j = n - 1; j > 0; --j) {
 			sum_right += nums[j];
 			max_cross = max(max_cross, sum_right + max_prefix[j - 1]);

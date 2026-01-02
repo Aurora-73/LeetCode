@@ -80,7 +80,7 @@ public:
 		bool can_to_n1 = (cnt_pos % 2 == 0);
 		if(!can_to_1 && !can_to_n1) return false;
 
-		int best = INT_MAX;
+		int best = numeric_limits<int>::max();
 		if(can_to_1) best = min(best, steps_to(nums, 1));
 		if(can_to_n1) best = min(best, steps_to(nums, -1));
 
@@ -101,7 +101,7 @@ private:
 			}
 		}
 		for(int x : a) {
-			if(x != target) return INT_MAX;
+			if(x != target) return numeric_limits<int>::max();
 		}
 		return cnt;
 	}

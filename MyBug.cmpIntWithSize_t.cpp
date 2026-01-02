@@ -1,7 +1,8 @@
 // Created: 2025-05-15
-#include <vector>
-#include <iostream>
 #include <climits>
+#include <iostream>
+#include <limits>
+#include <vector>
 using namespace std;
 
 int main() {
@@ -10,7 +11,7 @@ int main() {
 		try {
 			return nums.at(i);
 		} catch(const std::exception &e) {
-			return INT_MIN; // 超边界返回最小值
+			return numeric_limits<int>::min(); // 超边界返回最小值
 		}
 	};
 	for(int i = -1; i <= nums.size(); ++i) {

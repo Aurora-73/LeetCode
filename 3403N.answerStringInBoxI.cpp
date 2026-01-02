@@ -26,7 +26,7 @@ public:
 		// | 前面的 |  需要的 | 后面的 | len(前面的) + len(后面的) + 1 >= numFriends
 		// 满足这个的前提下寻找字典序最大的元素，先找到最大的字典序的开头，然后尽可能的往后延伸
 		if(numFriends == 1) return word;
-		int maxChar = INT_MIN;
+		int maxChar = numeric_limits<int>::min();
 		unsigned n = word.size();
 		vector<unsigned> maxIndexs;
 		for(unsigned i = 0; i < n; ++i) {
@@ -40,7 +40,7 @@ public:
 		}
 		int length = 1;
 		while(maxIndexs.size() > 1) {
-			int maxNext = INT_MIN;
+			int maxNext = numeric_limits<int>::min();
 			vector<unsigned> oldIndexs = std::move(maxIndexs);
 			for(auto i : oldIndexs) {
 				if(i + length >= n) {

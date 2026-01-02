@@ -37,7 +37,7 @@ public:
 			if(ch == '+' || ch == '-' || ch == '*') {
 				expre.push_back(curr);
 				curr = 0;
-				int op = INT_MAX - (ch == '+' ? 1 : (ch == '-' ? 2 : 3));
+				int op = numeric_limits<int>::max() - (ch == '+' ? 1 : (ch == '-' ? 2 : 3));
 				expre.push_back(op);
 			} else {
 				curr *= 10;
@@ -47,7 +47,7 @@ public:
 		expre.push_back(curr);
 		dfs(expre);
 		return std::move(res);
-	} // 运算结果不会超过10000，因此，(INT_MAX - 1)表示+, (INT_MAX - 2)表示-，(INT_MAX - 3)表示*
+	} // 运算结果不会超过10000，因此，(numeric_limits<int>::max() - 1)表示+, (numeric_limits<int>::max() - 2)表示-，(numeric_limits<int>::max() - 3)表示*
 
 private:
 	vector<int> res;
@@ -63,11 +63,11 @@ private:
 				nexte.push_back(expre[j]);
 			}
 			int l = expre[2 * i - 2], op = expre[2 * i - 1], r = expre[2 * i], result;
-			if(op == (INT_MAX - 1)) {
+			if(op == (numeric_limits<int>::max() - 1)) {
 				result = l + r;
-			} else if(op == (INT_MAX - 2)) {
+			} else if(op == (numeric_limits<int>::max() - 2)) {
 				result = l - r;
-			} else if(op == (INT_MAX - 3)) {
+			} else if(op == (numeric_limits<int>::max() - 3)) {
 				result = l * r;
 			} else {
 				cout << "ERROR" << endl;

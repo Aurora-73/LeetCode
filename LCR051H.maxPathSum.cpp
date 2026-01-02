@@ -22,7 +22,7 @@
 class Solution {
 public:
 	int maxPathSum(TreeNode *root) {
-		int res = INT_MIN;
+		int res = numeric_limits<int>::min();
 		dfs(root, res);
 		return res;
 	}

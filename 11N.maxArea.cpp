@@ -29,7 +29,7 @@ class Solution1 {
 public:
 	int maxArea(vector<int> &height) {
 		int n = height.size();
-		int max = INT_MIN;
+		int max = numeric_limits<int>::min();
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < n; j++) {
 				if(max < min(height[i], height[j]) * (j - i)) {

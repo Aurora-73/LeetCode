@@ -34,7 +34,7 @@ class Solution2 {
 public:
 	int maxProfit(int k, vector<int> &prices) {
 		this->k = k, n = prices.size();
-		memo.resize(prices.size(), vector<int>(2 * k, INT_MAX));
+		memo.resize(prices.size(), vector<int>(2 * k, numeric_limits<int>::max()));
 		return dfs(prices, 0, 0);
 	}
 
@@ -43,7 +43,7 @@ private:
 	vector<vector<int>> memo;
 	int dfs(vector<int> &prices, int day, int state) {
 		if(day >= n || state == 2 * k) return 0;
-		if(memo[day][state] == INT_MAX) {
+		if(memo[day][state] == numeric_limits<int>::max()) {
 			int keep, move;
 			if(state % 2 == 0) { // state % 2 == 0：手中没有股票
 				keep = dfs(prices, day + 1, state);

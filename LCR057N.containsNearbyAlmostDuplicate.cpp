@@ -26,8 +26,9 @@ public:
 	bool containsNearbyAlmostDuplicate(vector<int> &nums, int k, int t) {
 		set<int> st;
 		for(int i = 0; i < nums.size(); ++i) {
-			// int lowerLimit = max(long(nums[i]) - t, long(INT_MIN)); // 下界不能小于INT_MIN
-			int lowerLimit = max(nums[i], INT_MIN + t) - t; // 下界不能小于INT_MIN
+			// int lowerLimit = max(long(nums[i]) - t, long(numeric_limits<int>::min())); // 下界不能小于numeric_limits<int>::min()
+			int lowerLimit = max(nums[i], numeric_limits<int>::min() + t)
+			    - t; // 下界不能小于numeric_limits<int>::min()
 			auto it = st.lower_bound(lowerLimit);
 			if(it != st.end() && long(*it) - nums[i] <= t) {
 				return true;

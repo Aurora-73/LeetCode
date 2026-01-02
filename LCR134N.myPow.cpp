@@ -46,8 +46,8 @@ int main() {
 	cout << sol.myPow(x, n) << endl; // 9.26100
 	x = 2.00000, n = -2;
 	cout << sol.myPow(x, n) << endl; // 0.25000
-	x = 1, n = INT_MIN;
+	x = 1, n = numeric_limits<int>::min();
 	cout << sol.myPow(x, n) << endl; // 1
-	x = -1, n = INT_MIN;
+	x = -1, n = numeric_limits<int>::min();
 	cout << sol.myPow(x, n) << endl; // 1
 }

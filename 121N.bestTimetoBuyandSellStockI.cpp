@@ -31,7 +31,7 @@ class Solution2 {
 public:
 	int maxProfit(vector<int> &prices) {
 		n = prices.size();
-		memo.resize(n, { INT_MAX, INT_MAX });
+		memo.resize(n, { numeric_limits<int>::max(), numeric_limits<int>::max() });
 		return dfs(prices, 0, false);
 	}
 
@@ -40,7 +40,7 @@ private:
 	vector<array<int, 2>> memo;
 	int dfs(vector<int> &prices, int day, bool has_stock) {
 		if(day >= n) return 0;
-		if(memo[day][has_stock] == INT_MAX) {
+		if(memo[day][has_stock] == numeric_limits<int>::max()) {
 			int keep, move;
 			if(!has_stock) {
 				keep = dfs(prices, day + 1, false);
@@ -85,7 +85,7 @@ public:
 class Solution {
 public:
 	int maxProfit(vector<int> &prices) {
-		int minprice = INT_MAX, maxprofit = 0;
+		int minprice = numeric_limits<int>::max(), maxprofit = 0;
 		for(int price : prices) {
 			if(price > minprice) {
 				maxprofit = max(maxprofit, price - minprice);

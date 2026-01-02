@@ -14,8 +14,8 @@ public:
 		unsigned int size;
 
 		if(negative) {
-			if(n == INT_MIN) {
-				size = static_cast<unsigned int>(INT_MAX) + 1; // 防止溢出
+			if(n == numeric_limits<int>::min()) {
+				size = static_cast<unsigned int>(numeric_limits<int>::max()) + 1; // 防止溢出
 			} else {
 				size = static_cast<unsigned int>(-n);
 			}

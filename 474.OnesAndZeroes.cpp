@@ -37,7 +37,8 @@ public:
 			count[i][0] = zero;
 			count[i][1] = strs[i].size() - zero;
 		}
-		memo.assign(m + 1, vector<vector<int>>(n + 1, vector<int>(size, INT_MAX)));
+		memo.assign(
+		    m + 1, vector<vector<int>>(n + 1, vector<int>(size, numeric_limits<int>::max())));
 		return dfs(m, n, 0);
 	}
 
@@ -49,7 +50,7 @@ private:
 		if(i >= size || (m <= 0 && n <= 0)) {
 			return 0;
 		}
-		if(memo[m][n][i] != INT_MAX) {
+		if(memo[m][n][i] != numeric_limits<int>::max()) {
 			return memo[m][n][i];
 		}
 		int res = dfs(m, n, i + 1);

@@ -38,7 +38,7 @@ public:
 		for(int x : nums) {
 			xorsum ^= x;
 		}
-		int lowbit = (xorsum == INT_MIN ? xorsum : xorsum & -xorsum);
+		int lowbit = (xorsum == numeric_limits<int>::min() ? xorsum : xorsum & -xorsum);
 		vector<int> ans(2);
 		for(int x : nums) {
 			ans[(x & lowbit) != 0] ^= x;
@@ -62,7 +62,7 @@ public:
 		}
 		return ans;
 	}
-}; // 无符号整型可以防止 -INT_MIN的错误
+}; // 无符号整型可以防止 -numeric_limits<int>::min()的错误
 
 int main() {
 	Solution1 sol;
