@@ -107,7 +107,7 @@ pair<int, int> three_way_partition(vector<int> &nums, int l, int r) {
 		}
 	}
 	return { lt, gt };
-}
+} // [  <  |lt|  =  |i|    ?     |gt| > ]
 
 void quicksort_threeway(vector<int> &nums, int l, int r) {
 	if(l >= r) return;
