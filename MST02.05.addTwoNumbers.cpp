@@ -15,7 +15,7 @@ class Solution1 {
 public:
 	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
 		bool up = false;
-		ListNode dummpy, *tail = &dummpy;
+		ListNode dummy, *tail = &dummy;
 		while(l1 && l2) {
 			int sum = up + l1->val + l2->val;
 			if(sum > 9) {
@@ -51,7 +51,7 @@ public:
 		if(up) {
 			tail->next = new ListNode(1);
 		}
-		return dummpy.next;
+		return dummy.next;
 	}
 };
 

@@ -26,7 +26,7 @@ public:
 		que.push(tree);
 		while(!que.empty()) {
 			int size = que.size();
-			ListNode dummpy, *tail = &dummpy;
+			ListNode dummy, *tail = &dummy;
 			for(int k = 0; k < size; ++k) {
 				TreeNode *curr = que.front();
 				que.pop();
@@ -35,7 +35,7 @@ public:
 				if(curr->left) que.push(curr->left);
 				if(curr->right) que.push(curr->right);
 			}
-			res.push_back(dummpy.next);
+			res.push_back(dummy.next);
 		}
 		return res;
 	}
