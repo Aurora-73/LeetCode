@@ -58,7 +58,7 @@ public:
 class MedianFinder {
 public:
 	/** initialize your data structure here. */
-	MedianFinder1() { }
+	MedianFinder() { }
 
 	void addNum(int num) {
 		if(large.size() == small.size()) {
