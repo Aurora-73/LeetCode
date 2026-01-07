@@ -28,13 +28,13 @@ mapSum.sum("ap");           // return 5 (apple + app = 3 + 2 = 5)
 
 class MapSum {
 public:
-	MapSum() : root { new TireNode } { }
+	MapSum() : root { new TrieNode } { }
 
 	void insert(const string &key, int val) {
-		TireNode *p = root;
+		TrieNode *p = root;
 		for(auto c : key) {
 			if(!p->childs[c - 'a']) {
-				p->childs[c - 'a'] = new TireNode;
+				p->childs[c - 'a'] = new TrieNode;
 			}
 			p = p->childs[c - 'a'];
 		}
@@ -42,10 +42,10 @@ public:
 	}
 
 	int sum(const string &prefix) {
-		TireNode *p = root;
+		TrieNode *p = root;
 		for(auto c : prefix) {
 			if(!p->childs[c - 'a']) {
-				p->childs[c - 'a'] = new TireNode;
+				p->childs[c - 'a'] = new TrieNode;
 			}
 			p = p->childs[c - 'a'];
 		}
@@ -53,12 +53,12 @@ public:
 	}
 
 private:
-	struct TireNode {
+	struct TrieNode {
 		int val = 0;
-		array<TireNode *, 26> childs {};
+		array<TrieNode *, 26> childs {};
 	};
-	TireNode *root;
-	int dfs_sum(TireNode *node) {
+	TrieNode *root;
+	int dfs_sum(TrieNode *node) {
 		int res = node->val;
 		for(auto child : node->childs) {
 			if(child) res += dfs_sum(child);
