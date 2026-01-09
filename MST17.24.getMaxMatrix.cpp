@@ -39,7 +39,7 @@ public:
 			for(int ej = 0; ej < n; ++ej) {
 				for(int bi = 0; bi <= ei; ++bi) {
 					for(int bj = 0; bj <= ej; ++bj) {
-						int curr = matrix[ei][ej] + (bi * bj ? matrix[bi - 1][bj - 1] : 0)
+						int curr = matrix[ei][ej] + (bi & bj ? matrix[bi - 1][bj - 1] : 0)
 						    - (bj ? matrix[ei][bj - 1] : 0) - (bi ? matrix[bi - 1][ej] : 0);
 						if(curr > max_sum) {
 							max_sum = curr;
