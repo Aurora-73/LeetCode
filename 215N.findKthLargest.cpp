@@ -1,7 +1,18 @@
 // Created: 2025-05-19
 #include "MyUtils.hpp"
 
-/*  */
+/* 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
+请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+你必须设计并实现时间复杂度为 O(n) 的算法解决此问题。
+示例 1:
+	输入: {3,2,1,5,6,4}, k = 2
+	输出: 5
+示例2:
+	输入: {3,2,3,1,2,4,5,5,6}, k = 4
+	输出: 4
+提示： 
+	1 <= k <= nums.length <= 10^5
+	-10^4<= nums{i} <= 10^4 */
 
 class Solution1 {
 public:
@@ -66,45 +77,47 @@ public:
 	}
 };
 
-class Solution4 {
+class Solution {
 public:
-	int quickselect(vector<int> &nums, int l, int r, int k) {
-		if(l == r) return nums[l];
-
-		// 三数取中法选 pivot
-		int mid = l + (r - l) / 2;
-		int a = nums[l], b = nums[mid], c = nums[r];
-		int pivot = (a < b ? (b < c ? b : (a < c ? c : a)) : (c < b ? b : (c < a ? c : a)));
-
-		int i = l, j = r;
-		// 外层用 i<=j 保证所有元素都被检查
-		while(i <= j) {
-			// 找到第一个 >= pivot 的 i
-			while(i <= j && nums[i] < pivot) ++i;
-			// 找到第一个 <= pivot 的 j
-			while(i <= j && nums[j] > pivot) --j;
-			if(i < j) {
-				swap(nums[i], nums[j]);
-				++i; // 交换后推进，避免死循环
-				--j;
+	int findKthLargest(vector<int> &nums, int k) {
+		int l = 0, r = nums.size() - 1;
+		k = nums.size() - k;
+		while(true) {
+			auto [eq, gt] = partition(nums, l, r);
+			if(eq <= k && gt >= k) {
+				return nums[k];
+			} else if(eq > k) {
+				r = eq - 1;
+			} else {
+				l = gt + 1;
 			}
 		}
-
-		if(k <= j)
-			return quickselect(nums, l, j, k);
-		else /* k >= i */
-			return quickselect(nums, i, r, k);
 	}
 
-	int findKthLargest(vector<int> &nums, int k) {
-		int n = nums.size();
-		return quickselect(nums, 0, n - 1, n - k);
+private:
+	pair<int, int> partition(vector<int> &nums, int l, int r) {
+		int mid = l + (r - l) / 2;
+		int a = nums[l], b = nums[mid], c = nums[r]; // 三数取中法选 pivot
+		int pivote = a + b + c - max({ a, b, c }) - min({ a, b, c });
+		int eq = l, gt = r, i = l;
+		while(i <= gt) {
+			if(nums[i] == pivote) {
+				++i;
+			} else if(nums[i] < pivote) {
+				swap(nums[i], nums[eq]);
+				++i, ++eq;
+			} else {
+				swap(nums[i], nums[gt]);
+				--gt;
+			}
+		}
+		return { eq, gt };
 	}
 };
 
 int main() {
-	Solution4 sol1;
+	Solution sol;
 	vector<int> nums = { 3, 2, 1, 5, 6, 4 };
 	int k = 2;
-	cout << sol1.findKthLargest(nums, k);
+	cout << sol.findKthLargest(nums, k);
 }
