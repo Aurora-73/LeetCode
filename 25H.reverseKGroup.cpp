@@ -38,33 +38,73 @@ public:
 	}
 };
 
+class Solution2 {
+public:
+	ListNode *reverseKGroup(ListNode *head, int k) {
+		ListNode dummy(0, head);
+		ListNode *pre = &dummy;
+
+		while(true) {
+			// 1. 找到这一组的第 k 个节点
+			ListNode *kth = pre;
+			for(int i = 0; i < k && kth; ++i) {
+				kth = kth->next;
+			}
+			if(!kth) break;
+
+			// 2. 记录下一组的起点
+			ListNode *nxt = kth->next;
+
+			// 3. 原地反转 [pre->next, kth]
+			ListNode *prev = nxt;
+			ListNode *cur = pre->next;
+			while(cur != nxt) {
+				ListNode *tmp = cur->next;
+				cur->next = prev;
+				prev = cur;
+				cur = tmp;
+			}
+
+			// 4. 接回去
+			ListNode *oldHead = pre->next;
+			pre->next = kth;
+			pre = oldHead;
+		}
+		return dummy.next;
+	}
+};
+
 class Solution {
 public:
 	ListNode *reverseKGroup(ListNode *head, int k) {
-		if(k == 1 || !head) return head;
-		ListNode *left = head, *right = head, *next, *prev = nullptr;
-		while(right) {
-			for(int i = 1; i < k && right; i++) {
-				right = right->next;
-			}
-			if(!right) break;
-			next = right->next;
-			if(prev) {
-				prev->next = right;
+		ListNode dummy(-1, head), *curr = &dummy;
+		while(curr && curr->next) {
+			ListNode *p = curr, *temp = nullptr;
+			for(int i = 0; i < k && p; ++i) p = p->next;
+			if(p) {
+				temp = p->next;
+				p->next = nullptr;
 			} else {
-				head = right;
+				break;
 			}
-			prev = left;
-			ListNode *pre = right->next, *temp;
-			while(left != next) {
-				temp = left->next;
-				left->next = pre;
-				pre = left;
-				left = temp;
-			}
-			left = right = next;
+			auto [beg, end] = reverse(curr->next);
+			curr->next = beg;
+			end->next = temp;
+			curr = end;
 		}
-		return head;
+		return dummy.next;
+	}
+
+private:
+	pair<ListNode *, ListNode *> reverse(ListNode *head) {
+		ListNode *prev = nullptr, *curr = head;
+		while(curr) {
+			ListNode *temp = curr->next;
+			curr->next = prev;
+			prev = curr;
+			curr = temp;
+		}
+		return { prev, head };
 	}
 };
 
