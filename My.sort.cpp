@@ -4,167 +4,182 @@ using namespace std;
 
 /*常见的排序算法*/
 
-void insertSort(vector<int> &vec) {
-	int n = vec.size();
-	for(int i = 1; i < n; ++i) {
-		int temp = vec[i];
-		int j = i;
-		while(j > 0 && vec[j - 1] > temp) {
-			vec[j] = vec[j - 1];
-			--j;
-		}
-		vec[j] = temp;
-	}
-}
-
-template <typename BidirectionalIterator>
-void insertSort(BidirectionalIterator begin, BidirectionalIterator end) {
-	using ValueType = typename std::iterator_traits<BidirectionalIterator>::value_type;
-
-	for(auto it = begin; it != end; ++it) {
-		ValueType temp = std::move(*it);
-		auto insertPos = it;
-
-		while(insertPos != begin && *(std::prev(insertPos)) > temp) {
-			*insertPos = std::move(*(std::prev(insertPos)));
-			--insertPos;
-		}
-
-		*insertPos = std::move(temp);
-	}
-}
-
-void selectSort(vector<int> &vec) {
-	int n = vec.size();
-	for(int i = 0; i < n; ++i) {
-		int min_index = i;
-		for(int j = i + 1; j < n; ++j) {
-			if(vec[j] < vec[min_index]) {
-				min_index = j;
-			}
-		}
-		std::swap(vec[i], vec[min_index]);
-	}
-}
-
-template <typename ForwardIterator>
-void selectSort(ForwardIterator begin, ForwardIterator end) {
-	for(auto it1 = begin; it1 != end; ++it1) {
-		ForwardIterator min = it1;
-		for(auto it2 = std::next(it1); it2 != end; ++it2) {
-			if(*it2 < *min) {
-				min = it2;
-			}
-		}
-		if(min != it1) {
-			std::swap(*it1, *min);
-		}
-	}
-}
-
-// QuickSort
-class QuickSort1 {
+class InsertionSort {
 public:
-	void operator()(vector<int> &vec) {
-		_quickSort(vec, 0, int(vec.size()) - 1);
-	}
-
-private:
-	void _quickSort(vector<int> &vec, int left, int right) {
-		if(left >= right) return;
-		int pivotPos = partition(vec, left, right);
-		_quickSort(vec, left, pivotPos - 1);
-		_quickSort(vec, pivotPos + 1, right);
-	}
-
-	int partition(vector<int> &vec, int left, int right) {
-		std::swap(vec[left], vec[left + rand() % (right - left + 1)]);
-		int pivot = vec[left];
-		while(left < right) {
-			while(left < right && vec[right] >= pivot) --right;
-			vec[left] = vec[right];
-			while(left < right && vec[left] <= pivot) ++left;
-			vec[right] = vec[left];
+	// vector<int> 版本
+	static void sort(std::vector<int> &vec) {
+		int n = vec.size();
+		for(int i = 1; i < n; ++i) {
+			int temp = vec[i];
+			int j = i;
+			while(j > 0 && vec[j - 1] > temp) {
+				vec[j] = vec[j - 1];
+				--j;
+			}
+			vec[j] = temp;
 		}
-		vec[left] = pivot;
-		return left;
+	}
+
+	// 泛型迭代器版本（双向迭代器）
+	template <typename BidirectionalIterator>
+	static void sort(BidirectionalIterator begin, BidirectionalIterator end) {
+		using ValueType = typename std::iterator_traits<BidirectionalIterator>::value_type;
+
+		for(auto it = std::next(begin); it != end; ++it) {
+			ValueType temp = std::move(*it);
+			auto insertPos = it;
+
+			while(insertPos != begin && *(std::prev(insertPos)) > temp) {
+				*insertPos = std::move(*(std::prev(insertPos)));
+				--insertPos;
+			}
+			*insertPos = std::move(temp);
+		}
 	}
 };
 
-template <typename RandomAccessIterator>
-class QuickSort {
+class SelectionSort {
 public:
-	void operator()(RandomAccessIterator begin, RandomAccessIterator end) {
-		if(end - begin <= 1) return;
-		auto pivotPos = partition(begin, end);
-		(*this)(begin, pivotPos);   // 左闭右开
-		(*this)(pivotPos + 1, end); // 左闭右开
+	// vector<int> 版本
+	static void sort(std::vector<int> &vec) {
+		int n = vec.size();
+		for(int i = 0; i < n; ++i) {
+			int min_index = i;
+			for(int j = i + 1; j < n; ++j) {
+				if(vec[j] < vec[min_index]) {
+					min_index = j;
+				}
+			}
+			if(min_index != i) {
+				std::swap(vec[i], vec[min_index]);
+			}
+		}
 	}
 
-private:
-	RandomAccessIterator partition(RandomAccessIterator left, RandomAccessIterator right) {
-		size_t ra = rand() % (right - left);
-		std::swap(*left, *(left + ra));
-		auto pivot = std::move(*left);
-		--right;
-		while(left < right) {
-			while(left < right && *right >= pivot) --right;
-			*left = std::move(*right);
-			while(left < right && *left <= pivot) ++left;
-			*right = std::move(*left);
+	// 泛型迭代器版本（前向迭代器即可）
+	template <typename ForwardIterator>
+	static void sort(ForwardIterator begin, ForwardIterator end) {
+		for(auto it1 = begin; it1 != end; ++it1) {
+			ForwardIterator minIt = it1;
+			for(auto it2 = std::next(it1); it2 != end; ++it2) {
+				if(*it2 < *minIt) {
+					minIt = it2;
+				}
+			}
+			if(minIt != it1) {
+				std::swap(*it1, *minIt);
+			}
 		}
-		*left = std::move(pivot);
-		return left;
 	}
 };
 
-template <typename RandomIt>
-void quickSort(RandomIt first, RandomIt last) {
-	auto len = std::distance(first, last);
-	if(len <= 1) return;
+class HeapSort {
+public:
+	vector<int> sortArray(vector<int> &nums) {
+		int n = nums.size();
+		if(n <= 1) return nums;
 
-	// 随机选一个枢轴，放到 first
-	static thread_local std::mt19937_64 eng { std::random_device {}() };
-	std::uniform_int_distribution<decltype(len)> dist(0, len - 1);
-	RandomIt pivotIt = std::next(first, dist(eng));
-	std::iter_swap(first, pivotIt);
+		// 建大根堆
+		for(int i = (n - 2) / 2; i >= 0; --i) {
+			adjustHeap(nums, n, i);
+		}
 
-	using Value_Type = typename std::iterator_traits<RandomIt>::value_type;
-	Value_Type pivot = *first;
-
-	// left、right 两头扫描
-	RandomIt left = first, right = std::prev(last);
-
-	while(left < right) {
-
-		while(left < right && *right >= pivot) --right;
-		*left = std::move(*right);
-
-		while(left < right && *left <= pivot) ++left;
-		*right = std::move(*left);
+		// 依次取堆顶
+		for(int i = n - 1; i > 0; --i) {
+			swap(nums[0], nums[i]);
+			adjustHeap(nums, i, 0);
+		}
+		return nums;
 	}
 
-	*left = std::move(pivot);
+private:
+	void adjustHeap(vector<int> &nums, int n, int parent) {
+		int pivot = nums[parent];
+		int child = parent * 2 + 1; // 左孩子, nums[i] 的孩子是nums[i * 2 + 1]和nums[i * 2 + 2]
 
-	quickSort(first, left);           // 左闭右开
-	quickSort(std::next(left), last); // 左闭右开
-}
-
-// HeapSort
+		while(child < n) {
+			// 选更大的孩子
+			if(child + 1 < n && nums[child + 1] > nums[child]) {
+				++child;
+			}
+			if(nums[child] > pivot) {
+				nums[parent] = nums[child];
+				parent = child;
+				child = parent * 2 + 1;
+			} else {
+				break;
+			}
+		}
+		nums[parent] = pivot;
+	} // 对节点k进行下滤操作
+}; // 堆排序
 
 // MergeSort
-
-int main() {
-	vector<int> t = {};
-	QuickSort1()(t);
-	vector<int> vec { 1, 4, 2, 7, 3, 5, 0 };
-	// selectSort(vec.begin(), vec.end());
-	QuickSort<vector<int>::iterator>()(vec.begin(), vec.end());
-	cout << vec << endl;
-	int aaa[] = { 1, 4, 2, 7, 3, 5, 0 };
-	selectSort(aaa, aaa + 7);
-	for(auto &a : aaa) {
-		cout << a << " ";
+class MergeSort {
+public:
+	vector<int> sortArray(vector<int> &nums) {
+		vector<int> temp(nums.size());
+		mergeSort(nums, temp, 0, nums.size() - 1);
+		return nums;
 	}
-	cout << endl;
-}
+
+private:
+	void mergeSort(vector<int> &nums, vector<int> &temp, int left, int right) {
+		if(right <= left) return;
+		int mid = left + (right - left) / 2;
+		mergeSort(nums, temp, left, mid);
+		mergeSort(nums, temp, mid + 1, right);
+		if(nums[mid] <= nums[mid + 1]) return; // 已经有序
+		merge(nums, temp, left, mid, right);
+	}
+
+	void merge(vector<int> &nums, vector<int> &temp, int left, int mid, int right) {
+		int a = left, b = mid + 1, c = left;
+		while(a <= mid && b <= right) {
+			if(nums[a] <= nums[b]) { // 等于号才能保证稳定性
+				temp[c++] = nums[a++];
+			} else {
+				temp[c++] = nums[b++];
+			}
+		}
+		while(a <= mid) temp[c++] = nums[a++];
+		while(b <= right) temp[c++] = nums[b++];
+		for(; left <= right; ++left) nums[left] = temp[left];
+	}
+};
+
+// QuickSort
+class QuickSort {
+public:
+	vector<int> sortArray(vector<int> &nums) {
+		quickSort(nums, 0, nums.size() - 1);
+		return nums;
+	}
+
+private:
+	void quickSort(vector<int> &nums, int l, int r) {
+		if(r - l < 1) return;
+		auto [eq, gt] = partition(nums, l, r);
+		quickSort(nums, l, eq - 1);
+		quickSort(nums, gt + 1, r);
+	}
+	pair<int, int> partition(vector<int> &nums, int l, int r) {
+		int a = nums[l], b = nums[(r - l) / 2 + l], c = nums[r];
+		int pivot = (long long)a - max({ a, b, c }) + b - min({ a, b, c }) + c; // 或用小函数求中位
+		int eq = l, gt = r, k = l;
+		while(k <= gt) {
+			if(nums[k] == pivot) {
+				++k;
+			} else if(nums[k] > pivot) {
+				swap(nums[k], nums[gt]);
+				--gt;
+			} else {
+				swap(nums[k], nums[eq]);
+				++eq, ++k;
+			}
+		}
+		return { eq, gt };
+	}
+};
+
+int main() { }

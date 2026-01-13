@@ -98,12 +98,12 @@ private:
 	pair<int, int> partition(vector<int> &nums, int l, int r) {
 		int mid = l + (r - l) / 2;
 		int a = nums[l], b = nums[mid], c = nums[r]; // 三数取中法选 pivot
-		int pivote = a + b + c - max({ a, b, c }) - min({ a, b, c });
+		int pivot = a + b + c - max({ a, b, c }) - min({ a, b, c });
 		int eq = l, gt = r, i = l;
 		while(i <= gt) {
-			if(nums[i] == pivote) {
+			if(nums[i] == pivot) {
 				++i;
-			} else if(nums[i] < pivote) {
+			} else if(nums[i] < pivot) {
 				swap(nums[i], nums[eq]);
 				++i, ++eq;
 			} else {
