@@ -32,7 +32,7 @@ private:
 			dfs(grid, i + dir2[d][0], j + dir2[d][1]);
 		}
 	}
-}; // BFS 深度优先便利
+}; // BFS 深度优先遍历
 
 class Solution2 {
 public:
