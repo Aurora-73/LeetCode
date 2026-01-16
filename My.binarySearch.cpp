@@ -110,5 +110,4 @@ int main() {
 	cout << "lower_bound STL " << lower_bound(vec.begin(), vec.end(), key) - vec.begin() << endl;
 	cout << "lower_bound " << lower_bound(vec, key) << endl;
 	cout << "find_first " << find_first(vec, cond) << endl;
-	// key是以引用方式捕获，修改外部key会自动同步到内部
 }

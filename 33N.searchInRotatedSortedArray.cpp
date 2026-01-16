@@ -1,28 +1,30 @@
 // Created: 2025-05-15
 #include "MyUtils.hpp"
 
-/*33. 搜索旋转排序数组
-整数数组 nums 按升序排列，数组中的值 互不相同 。
+/* 33. 搜索旋转排序数组
+整数数组 nums 按升序排列，数组中的值 互不相同。
 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了 旋转，
-使数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]（下标 从 0 开始 计数）。
-例如， [0,1,2,4,5,6,7] 在下标 3 处经旋转后可能变为 [4,5,6,7,0,1,2] 。
-给你 旋转后 的数组 nums 和一个整数 target ，如果 nums 中存在这个目标值 target ，则返回它的下标，否则返回 -1 。
+使数组变为 {nums{k}, nums{k+1}, ..., nums{n-1}, nums{0}, nums{1}, ..., nums{k-1}}（下标 从 0 开始 计数）。
+
+例如， {0,1,2,4,5,6,7} 在下标 3 处经旋转后可能变为 {4,5,6,7,0,1,2}。
+给你 旋转后 的数组 nums 和一个整数 target，
+如果 nums 中存在这个目标值 target，则返回它的下标，否则返回 -1。
 你必须设计一个时间复杂度为 O(log n) 的算法解决此问题。
 示例 1：
-    输入：nums = [4,5,6,7,0,1,2], target = 0
-    输出：4
+	输入：nums = {4,5,6,7,0,1,2}, target = 0
+	输出：4
 示例 2：
-    输入：nums = [4,5,6,7,0,1,2], target = 3
-    输出：-1
+	输入：nums = {4,5,6,7,0,1,2}, target = 3
+	输出：-1
 示例 3：
-    输入：nums = [1], target = 0
-    输出：-1
+	输入：nums = {1}, target = 0
+	输出：-1
 提示：
-    1 <= nums.length <= 5000
-    -104 <= nums[i] <= 104
-    nums 中的每个值都 独一无二
-    题目数据保证 nums 在预先未知的某个下标上进行了旋转
-    -104 <= target <= 104*/
+	1 <= nums.length <= 5000
+	-104 <= nums{i} <= 104
+	nums 中的每个值都 独一无二
+	题目数据保证 nums 在预先未知的某个下标上进行了旋转
+	-104 <= target <= 104 */
 
 class Solution1 {
 public:
@@ -103,6 +105,48 @@ public:
 	}
 };
 
+class Solution {
+public:
+	int search(vector<int> &nums, int target) {
+		int l = 0, r = nums.size() - 1;
+		while(l < r) {
+			int mid_val = nums[l + (r - l) / 2];
+			if(mid_val > nums.back()) {
+				l = l + (r - l) / 2 + 1;
+			} else {
+				r = l + (r - l) / 2;
+			}
+		}
+		int div = l; // 先寻找分界点
+		if(target > nums.back()) {
+			l = 0, r = div - 1;
+		} else {
+			l = div, r = nums.size() - 1;
+		} // 左闭右闭
+		while(l <= r) {
+			int mid = l + (r - l) / 2;
+			if(nums[mid] == target) {
+				return mid;
+			} else if(nums[mid] < target) {
+				l = mid + 1;
+			} else {
+				r = mid - 1;
+			}
+		} // 然后在分解点的某一侧进行二分查找
+		return -1;
+	}
+};
+
 int main() {
-	Solution1 sol1;
+	Solution sol;
+	vector<int> nums;
+	int target;
+	nums = { 4, 5, 6, 7, 0, 1, 2 }, target = 0;
+	cout << sol.search(nums, target) << endl; // 4
+
+	nums = { 4, 5, 6, 7, 0, 1, 2 }, target = 3;
+	cout << sol.search(nums, target) << endl; // -1
+
+	nums = { 1 }, target = 0;
+	cout << sol.search(nums, target) << endl; // -1
 }
