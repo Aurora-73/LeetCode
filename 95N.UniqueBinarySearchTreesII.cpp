@@ -1,20 +1,20 @@
 // Created: 2025-06-06
+#include "MyTreeNode.h"
 #include "MyUtils.hpp"
 
 /* 95. 不同的二叉搜索树 II
-给你一个整数 n，请你生成并返回所有由 n 个节点组成且节点值
-从 1 到 n 互不相同的不同 二叉搜索树。可以按 任意顺序 返回答案。*/
+给你一个整数 n，请你生成并返回所有由 n 个节点组成且节点值从 1 到 n 互不相同的不同 二叉搜索树。
+可以按 任意顺序 返回答案。
+示例 1：
+	输入：n = 3
+	输出：{{1,null,2,null,3},{1,null,3,2},{2,1,3},{3,1,null,null,2},{3,2,null,1}}
+示例 2：
+	输入：n = 1
+	输出：{{1}}
+提示：
+	1 <= n <= 8 */
 
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode() : val(0), left(nullptr), right(nullptr) { }
-	TreeNode(int x) : val(x), left(nullptr), right(nullptr) { }
-	TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) { }
-};
-
-class Solution {
+class Solution1 {
 public:
 	vector<TreeNode *> generateTrees(int n) {
 		vector<vector<TreeNode *>> dp(n + 1);
@@ -59,29 +59,45 @@ private:
 class Solution {
 public:
 	vector<TreeNode *> generateTrees(int n) {
-		return dfs(1, n + 1);
+		memo.clear();
+		return std::move(dfs(1, n)); // 成员变量不会进行返回值优化，需要move
 	}
 
 private:
-	vector<TreeNode *> null = { nullptr };
-	unordered_map<int, vector<TreeNode *>> memo;
+	struct HashPair {
+		size_t operator()(const pair<int, int> &pa) const {
+			return (size_t)pa.first << 32 | (size_t)pa.second;
+		}
+	};
+	unordered_map<pair<int, int>, vector<TreeNode *>, HashPair> memo;
 	vector<TreeNode *> &dfs(int l, int r) {
-		if(l >= r) return null;
-		int key = l + r * 10; // l r 都在 0 - 9, 或者使用二元组哈希的方法也行
-		auto [it, inserted] = memo.insert({ key, {} });
-		if(inserted) {
-			for(int i = l; i < r; ++i) {
-				const auto &leftVec = dfs(l, i);
-				const auto &rightVec = dfs(i + 1, r);
-				for(auto &left : leftVec) {
-					for(auto &right : rightVec) {
-						it->second.push_back(new TreeNode(i, left, right));
-					}
+		vector<TreeNode *> &res = memo[{ l, r }];
+		if(!res.empty()) return res;
+		vector<TreeNode *> nullvec { nullptr }; // 递归终点
+		res.reserve(size[r - l + 1]);
+		for(int i = l; i <= r; ++i) {
+			vector<TreeNode *> &lvec = l <= i - 1 ? dfs(l, i - 1) : nullvec;
+			vector<TreeNode *> &rvec = i + 1 <= r ? dfs(i + 1, r) : nullvec;
+			for(auto l : lvec) {
+				for(auto r : rvec) {
+					res.push_back(new TreeNode(i));
+					res.back()->left = l;
+					res.back()->right = r;
 				}
 			}
 		}
-		return it->second;
+		return res;
 	}
+	inline static constexpr array<int, 20> size = []() {
+		array<int, 20> dp {};
+		dp[0] = 1, dp[1] = 1;
+		for(int i = 2; i < 20; ++i) {
+			for(int j = 0; j < i; ++j) {
+				dp[i] += dp[j] * dp[i - j - 1];
+			}
+		}
+		return dp;
+	}();
 };
 
 int main() {

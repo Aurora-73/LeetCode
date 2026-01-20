@@ -20,7 +20,7 @@
 	-100 <= Node.val <= 100
 	进阶:递归算法很简单，你可以通过迭代算法完成吗？ */
 
-class Solution {
+class Solution1 {
 public:
 	vector<int> inorderTraversal(TreeNode *root) {
 		vector<int> res;
