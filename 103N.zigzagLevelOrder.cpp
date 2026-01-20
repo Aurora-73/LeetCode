@@ -46,7 +46,7 @@ public:
 					back.push_back(now->val);
 				}
 			}
-			left2right = !left2right;
+			left2right ^= 1;
 		}
 		return res;
 	}
@@ -57,11 +57,9 @@ public:
 	vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
 		vector<vector<int>> res;
 		if(!root) return res;
-
 		queue<TreeNode *> que; // 还是用普通的层序遍历的顺序
 		que.push(root);
 		bool left2right = true;
-
 		while(!que.empty()) {
 			int size = que.size();
 			vector<int> temp; // 每一层的结果保存用deque
@@ -77,7 +75,7 @@ public:
 				res.emplace_back(temp.begin(), temp.end());
 			else
 				res.emplace_back(temp.rbegin(), temp.rend());
-			left2right = !left2right;
+			left2right ^= 1;
 		}
 		return res;
 	}
@@ -112,9 +110,17 @@ public:
 }; // 不真的进行Z字形遍历，只是对结果数组进行翻转
 
 int main() {
-	TreeNode *tree = createTree({ 1, 2, 3, 4, 5, EMPTY_NODE, 7 });
-	Solution1 sol1;
-	cout << sol1.zigzagLevelOrder(tree) << endl;
-	Solution2 sol2;
-	cout << sol2.zigzagLevelOrder(tree) << endl;
+	TreeNode *root;
+	Solution sol;
+	root = createTree({ 1, 2, 3, 4, 5, EMPTY_NODE, 7 });
+	cout << sol.zigzagLevelOrder(root) << endl;
+
+	root = createTree({});
+	cout << sol.zigzagLevelOrder(root) << endl;
+
+	root = createTree({ 1 });
+	cout << sol.zigzagLevelOrder(root) << endl;
+
+	root = createTree({ 3, 9, 20, EMPTY_NODE, EMPTY_NODE, 15, 7 });
+	cout << sol.zigzagLevelOrder(root) << endl;
 }
