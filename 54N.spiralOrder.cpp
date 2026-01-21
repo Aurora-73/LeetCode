@@ -57,9 +57,9 @@ public:
 		}
 		return vec;
 	}
-};
+}; // 控制一个位置进行位移，非常复杂
 
-class Solution {
+class Solution2 {
 public:
 	vector<int> spiralOrder(vector<vector<int>> &matrix) {
 		vector<int> res;
@@ -87,6 +87,40 @@ public:
 		return res;
 	}
 }; // 每次遍历四个边框
+
+class Solution {
+public:
+	vector<int> spiralOrder(vector<vector<int>> &matrix) {
+		int m = matrix.size(), n = matrix[0].size();
+		vector<int> res;
+		res.reserve(m * n);
+		int l = 0, r = n - 1, u = 0, d = m - 1;
+		bool rd = true;
+		while(l <= r && u <= d) {
+			if(rd) {
+				for(int j = l; j <= r; ++j) {
+					res.push_back(matrix[u][j]);
+				}
+				++u;
+				for(int i = u; i <= d; ++i) {
+					res.push_back(matrix[i][r]);
+				}
+				--r;
+			} else {
+				for(int j = r; j >= l; --j) {
+					res.push_back(matrix[d][j]);
+				}
+				--d;
+				for(int i = d; i >= u; --i) {
+					res.push_back(matrix[i][l]);
+				}
+				++l;
+			}
+			rd ^= 1;
+		}
+		return res;
+	}
+};
 
 int main() {
 	Solution sol;

@@ -16,7 +16,6 @@ public:
 
 private:
 	vector<int> memo;
-
 	int dfs(const vector<int> &nums, int prev) {
 		int n = nums.size();
 		if(prev >= 0 && memo[prev] != -1) {
@@ -51,24 +50,24 @@ public:
 		}
 		return *max_element(dp.begin(), dp.end());
 	}
-}; // dp O(n ^ 2)
+}; // 动态规划 dp O(n ^ 2)
 
 class Solution {
 public:
 	int lengthOfLIS(vector<int> &nums) {
-		vector<int> minTails;
-		for(auto &x : nums) {
-			auto it = lower_bound(minTails.begin(), minTails.end(), x);
+		vector<int> lst;
+		for(auto num : nums) {
+			auto it = lower_bound(nums.begin(), nums.end(), num);
 			// lower_bound是严格递增，upper_bound是非严格递增
-			if(it == minTails.end()) {
-				minTails.push_back(x);
+			if(it == lst.end()) {
+				lst.push_back(num);
 			} else {
-				*it = x;
+				*it = num;
 			}
 		}
-		return minTails.size();
+		return lst.size();
 	}
-}; // 贪心 + 二分查找 （分层DAG）   https://writings.sh/post/longest-increasing-subsequence-revisited
+}; // 贪心 + 二分查找 O(n log n)（分层DAG）   https://writings.sh/post/longest-increasing-subsequence-revisited
 
 int main() {
 	Solution sol;
