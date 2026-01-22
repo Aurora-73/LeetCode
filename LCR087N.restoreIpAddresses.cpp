@@ -83,7 +83,7 @@ private:
 	}
 }; // 每次调用不一定确定一个位置
 
-class Solution {
+class Solution2 {
 public:
 	vector<string> restoreIpAddresses(string &s) {
 		n = s.size();
@@ -117,7 +117,49 @@ private:
 			path[seg] = s.substr(pos, len);
 			dfs(pos + len, seg + 1);
 		}
-	} // 每次调用确定一个位置
+	}
+}; // 每次调用确定一个位置
+
+class Solution {
+public:
+	vector<string> restoreIpAddresses(const string &s) {
+		n = s.size();
+		traceBack(0, 0, s);
+		return std::move(res);
+	}
+
+private:
+	int n;
+	vector<string> res;
+	array<int, 4> dotPos {}; // 记录每段的结束位置
+	void traceBack(int i, int j, const string &s) {
+		if(i == n || j == 4) {
+			if(i == n && j == 4) {
+				addToRes(s);
+			}
+			return;
+		}
+		int curr = 0;
+		for(; i < n; ++i) {
+			curr = curr * 10 + s[i] - '0';
+			if(curr > 255) return;
+			dotPos[j] = i;
+			traceBack(i + 1, j + 1, s);
+			if(curr == 0) return; // 不能有前导0，已经加了一位还是0，说明首位为0
+		}
+	}
+	void addToRes(const string &s) {
+		string &curr = res.emplace_back();
+		curr.reserve(n + 3);
+		int j = 0;
+		for(int i = 0; i < n; ++i) {
+			curr.push_back(s[i]);
+			if(j < 3 && i == dotPos[j]) {
+				curr.push_back('.');
+				++j;
+			}
+		}
+	}
 };
 
 int main() {
@@ -125,12 +167,16 @@ int main() {
 	string s;
 	s = "25525511135";
 	cout << sol.restoreIpAddresses(s) << endl;
+
 	s = "0000";
 	cout << sol.restoreIpAddresses(s) << endl;
+
 	s = "1111";
 	cout << sol.restoreIpAddresses(s) << endl;
+
 	s = "010010";
 	cout << sol.restoreIpAddresses(s) << endl;
+
 	s = "10203040";
 	cout << sol.restoreIpAddresses(s) << endl;
 }

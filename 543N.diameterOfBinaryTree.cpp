@@ -3,9 +3,20 @@
 #include "MyUtils.hpp"
 
 /*543. 二叉树的直径
-给你一棵二叉树的根节点，返回该树的 直径 。
-二叉树的 直径 是指树中任意两个节点之间最长路径的 长度 。这条路径可能经过也可能不经过根节点 root 。
-两节点之间路径的 长度 由它们之间边数表示。*/
+给你一棵二叉树的根节点，返回该树的 直径。
+二叉树的 直径 是指树中任意两个节点之间最长路径的 长度。这条路径可能经过也可能不经过根节点 root。
+两节点之间路径的 长度 由它们之间边数表示。
+示例 1：
+	输入：root = {1,2,3,4,5}
+	输出：3
+	解释：3，取路径 {4,2,1,3} 或 {5,2,1,3} 的长度。
+示例 2：
+	输入：root = {1,2}
+	输出：1
+提示：
+	树中节点数目在范围 {1, 10^4} 内
+	-100 <= Node.val <= 100 */
+
 class Solution1 {
 public:
 	int diameterOfBinaryTree(TreeNode *root) {
@@ -36,7 +47,7 @@ public:
 
 private:
 	int depth(TreeNode *rt) {
-		if(rt == NULL) {
+		if(!rt) {
 			return 0; // 访问到空节点了，返回0
 		}
 		int L = depth(rt->left);   // 左儿子为根的子树的深度
@@ -47,9 +58,30 @@ private:
 	int ans; // 保存的是节点数，而非边长，节点数 = 边长 + 1
 };
 
+class Solution {
+public:
+	int diameterOfBinaryTree(TreeNode *root) {
+		vec_num = 0;
+		dfs(root);
+		return vec_num - 1;
+	}
+
+private:
+	int vec_num;
+	int dfs(TreeNode *root) {
+		if(!root) return 0;
+		int l = dfs(root->left), r = dfs(root->right);
+		vec_num = max(vec_num, l + r + 1);
+		return max(l, r) + 1;
+	}
+}; // 类似于124H.maxPathSum，这里记录端点个数更简单
+
 int main() {
-	Solution1 sol1;
-	Solution2 sol2;
-	TreeNode *tree = createTree({ 1, 2, 3, 4, 5, EMPTY_NODE, 7 });
-	cout << sol1.diameterOfBinaryTree(tree) << " " << sol2.diameterOfBinaryTree(tree) << endl;
+	Solution sol;
+	TreeNode *root;
+	root = createTree({ 1, 2, 3, 4, 5 });
+	cout << sol.diameterOfBinaryTree(root) << endl;
+
+	root = createTree({ 1, 2 });
+	cout << sol.diameterOfBinaryTree(root) << endl;
 }

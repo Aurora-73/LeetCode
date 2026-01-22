@@ -99,19 +99,18 @@ public:
 int main() {
 	Solution sol;
 	vector<int> nums;
-	nums = { -1, 0, 1, 2, -1, -4 }; //{{-1,-1,2},{-1,0,1}}
-	cout << sol.threeSum(nums) << endl;
-	nums = { 0, 1, 1 }; // {}
-	cout << sol.threeSum(nums) << endl;
+	nums = { -1, 0, 1, 2, -1, -4 };
+	cout << sol.threeSum(nums) << endl; //{{-1,-1,2},{-1,0,1}}
 
-	nums = { 0, 0, 0, 0 }; // {0, 0, 0}
-	cout << sol.threeSum(nums) << endl;
+	nums = { 0, 1, 1 };
+	cout << sol.threeSum(nums) << endl; // {}
 
-	nums = {
-		-4, -2, -2, -2, 0, 1, 2, 2, 2, 3, 3, 4, 4, 6, 6
-	}; // {{-4,-2,6},{-4,0,4},{-4,1,3},{-4,2,2},{-2,-2,4},{-2,0,2}}
-	cout << sol.threeSum(nums) << endl;
+	nums = { 0, 0, 0, 0 };
+	cout << sol.threeSum(nums) << endl; // {0, 0, 0}
 
-	nums = { -2, 0, 1, 1, 2 }; //{{-2,0,2},{-2,1,1}}
-	cout << sol.threeSum(nums) << endl;
+	nums = { -4, -2, -2, -2, 0, 1, 2, 2, 2, 3, 3, 4, 4, 6, 6 };
+	cout << sol.threeSum(nums) << endl; // {{-4,-2,6},{-4,0,4},{-4,1,3},{-4,2,2},{-2,-2,4},{-2,0,2}}
+
+	nums = { -2, 0, 1, 1, 2 };
+	cout << sol.threeSum(nums) << endl; //{{-2,0,2},{-2,1,1}}
 }

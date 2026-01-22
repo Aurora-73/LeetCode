@@ -39,16 +39,14 @@ public:
 		for(int j = 0; j <= n2; ++j) dp[0][j] = j;
 		for(int i = 1; i <= n1; ++i) {
 			for(int j = 1; j <= n2; ++j) {
-				if(word1[i - 1] == word2[j - 1]) { // 注意前x位的下标为x - 1
-					dp[i][j] = dp[i - 1][j - 1];
-				} else {
-					dp[i][j] = min({ dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1] }) + 1;
-				}
+				dp[i][j] = min(min(dp[i][j - 1], dp[i - 1][j]) + 1,
+				    dp[i - 1][j - 1] + (word1[i - 1] != word2[j - 1]));
 			}
 		}
 		return dp.back().back();
 	}
-};
+}; // dp[i][j]: word1的前i个字符组成的子串到word2的前j个字母组成的子串的编辑距离
+// dp[i][j] = min(dp[i - 1][j - 1] + word1[i] != word2[j], dp[i][j - 1] + 1, dp[i - 1][j] + 1)
 
 class Solution {
 public:
@@ -79,6 +77,7 @@ int main() {
 	string word1, word2;
 	word1 = "horse", word2 = "ros";
 	cout << sol.minDistance(word1, word2) << endl; // 3
+
 	word1 = "intention", word2 = "execution";
 	cout << sol.minDistance(word1, word2) << endl; // 5
 }

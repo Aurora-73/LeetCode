@@ -8,41 +8,29 @@
 class Solution1 {
 public:
 	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-		ListNode *res = new ListNode(0); // head node
-		ListNode *tail = res;
+		ListNode dummy; // head node
+		ListNode *tail = &dummy;
 		int up = 0;
-		while(l1 || l2 || up) {
-			int now_sum = up;
-			now_sum += l1 ? l1->val : 0;
-			l1 = l1 ? l1->next : l1;
-			now_sum += l2 ? l2->val : 0;
-			l2 = l2 ? l2->next : l2;
-			up = now_sum / 10;
-			now_sum %= 10;
-			tail->next = new ListNode(now_sum);
+		while((l1 && l2) || up) {
+			if(l1) {
+				up += l1->val;
+				l1 = l1->next;
+			}
+			if(l2) {
+				up += l2->val;
+				l2 = l2->next;
+			}
+			tail->next = new ListNode(up % 10);
 			tail = tail->next;
+			up /= 10;
 		}
-		tail = res;
-		res = res->next;
-		delete tail;
-		return res;
+		if(l1) tail->next = l1;
+		if(l2) tail->next = l2;
+		return dummy.next;
 	}
 };
 
 class Solution2 {
-public:
-	int up = 0;
-	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-		if(!up && !l1 && !l2) {
-			return nullptr;
-		}
-		int now = up + (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
-		up = now / 10;
-		return new ListNode(now % 10, addTwoNumbers(l1 ? l1->next : l1, l2 ? l2->next : l2));
-	}
-}; // 重复使用会导致进位残留
-
-class Solution3 {
 public:
 	ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
 		return addhelper(l1, l2, 0);
@@ -69,9 +57,4 @@ int main() {
 	ListNode *res2 = sol2.addTwoNumbers(list1, list2);
 	cout << res2 << endl;
 	deleteList(res2);
-
-	Solution3 sol3;
-	ListNode *res3 = sol3.addTwoNumbers(list1, list2);
-	cout << res3 << endl;
-	deleteList(res3);
 }

@@ -28,7 +28,7 @@ public:
 		for(int i = 0, n = nums.size(); i < n; i++) {
 			auto it = map.find(target - nums[i]);
 			if(it != map.end()) {
-				return { it->second, i };
+				return { it->second, i }; // RVO
 			} else {
 				map[nums[i]] = i;
 			}
