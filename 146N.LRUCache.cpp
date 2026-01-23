@@ -198,7 +198,7 @@ class LRUCache {
 public:
 	LRUCache(int cap) {
 		root = new ListNode;
-		tile = root;
+		tail = root;
 		capacity = cap;
 		mp.reserve(10000);
 	}
@@ -214,19 +214,19 @@ public:
 	void put(int key, int value) {
 		auto it = mp.find(key);
 		if(it == mp.end()) {
-			tile->next = new ListNode;
-			tile->next->prev = tile;
-			tile = tile->next;
-			tile->key = key;
-			tile->value = value;
-			mp[key] = tile;
+			tail->next = new ListNode;
+			tail->next->prev = tail;
+			tail = tail->next;
+			tail->key = key;
+			tail->value = value;
+			mp[key] = tail;
 			if(mp.size() > capacity) {
 				auto delNode = root->next;
 				mp.erase(delNode->key);
 				delNode->next->prev = delNode->prev;
 				delNode->prev->next = delNode->next;
 				delete delNode;
-			} // capacity >= 1，所以tile不为delNode
+			} // capacity >= 1，所以tail不为delNode
 		} else {
 			it->second->value = value;
 			moveToBack(it->second);
@@ -239,16 +239,16 @@ private:
 		int key, value;
 	};
 	int capacity;
-	ListNode *root, *tile; // 最后访问的放在最后面
+	ListNode *root, *tail; // 最后访问的放在最后面
 	unordered_map<int, ListNode *> mp;
 	void moveToBack(ListNode *p) {
-		if(p != tile) {
+		if(p != tail) {
 			p->next->prev = p->prev;
 			p->prev->next = p->next;
-			tile->next = p;
-			p->prev = tile;
+			tail->next = p;
+			p->prev = tail;
 			p->next = nullptr;
-			tile = p;
+			tail = p;
 		}
 	}
 };

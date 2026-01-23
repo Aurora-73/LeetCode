@@ -20,22 +20,22 @@
 class Solution {
 public:
 	ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
-		ListNode dummy, *tile = &dummy;
+		ListNode dummy, *tail = &dummy;
 		while(list1 && list2) {
 			if(list1->val < list2->val) {
-				tile->next = list1;
-				tile = list1;
+				tail->next = list1;
+				tail = list1;
 				list1 = list1->next;
 			} else {
-				tile->next = list2;
-				tile = list2;
+				tail->next = list2;
+				tail = list2;
 				list2 = list2->next;
 			}
 		}
 		if(list1)
-			tile->next = list1;
+			tail->next = list1;
 		else
-			tile->next = list2;
+			tail->next = list2;
 		return dummy.next;
 	}
 };

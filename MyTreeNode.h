@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#define EMPTY_NODE numeric_limits<int>::min() // 定义空节点构造时的值
+#define EMPTY_NODE INT_MIN // 定义空节点构造时的值
 
 struct TreeNode {
 	int val;
@@ -24,6 +24,13 @@ struct TreeNode {
  * @return 树的根节点
  */
 TreeNode *createTree(const std::vector<int> &values);
+
+/**
+ * 根据层序初始化列表创建二叉树（-1 表示空节点）
+ * @param values 整数数组
+ * @return 树的根节点
+ */
+TreeNode *createTree(const std::initializer_list<int> &values);
 
 /**
  * 输出二叉树（层序遍历）

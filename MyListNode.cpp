@@ -7,27 +7,22 @@ ListNode *createList(int n) {
 	if(n <= 0) return nullptr;
 
 	ListNode *head = new ListNode(1);
-	ListNode *current = head;
+	ListNode *tail = head;
 
 	for(int i = 2; i <= n; i++) {
-		current->next = new ListNode(i);
-		current = current->next;
+		tail->next = new ListNode(i);
+		tail = tail->next;
 	}
 	return head;
 }
 
-ListNode *createList(const vector<int> &values) {
-	if(values.empty()) return nullptr;
-
-	ListNode *head = new ListNode(values[0]);
-	ListNode *current = head;
-
-	for(size_t i = 1; i < values.size(); i++) {
-		current->next = new ListNode(values[i]);
-		current = current->next;
+ListNode *createList(const std::initializer_list<int> &values) {
+	ListNode dummy, *tail = &dummy;
+	for(int v : values) {
+		tail->next = new ListNode(v);
+		tail = tail->next;
 	}
-
-	return head;
+	return dummy.next;
 }
 
 ostream &operator<<(ostream &os, ListNode *head) {

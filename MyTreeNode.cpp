@@ -33,6 +33,11 @@ TreeNode *createTree(const std::vector<int> &values) {
 	return root;
 }
 
+TreeNode *createTree(const std::initializer_list<int> &values) {
+	std::vector<int> vec(values.begin(), values.end());
+	return createTree(vec);
+}
+
 void printTreeFancy(TreeNode *node,
     std::ostream &os,
     const std::string &prefix,

@@ -1,7 +1,6 @@
 #ifndef MY_UTILS_H
 #define MY_UTILS_H
 
-// 常用标准库
 #include <algorithm>
 #include <array>
 #include <bitset>
@@ -26,9 +25,9 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+
 using namespace std;
 
-// ================= 调试输出系统 =================
 #define DEBUG(...)                                                                                 \
 	cerr << #__VA_ARGS__ << " = ";                                                                 \
 	_debug(__VA_ARGS__);
@@ -44,7 +43,7 @@ void _debug(const T &t, const Args &...args) {
 	_debug(args...);
 }
 
-// ================= 容器输出重载 =================
+// ================= 输出重载 =================
 // pair
 template <typename T1, typename T2>
 ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
@@ -61,7 +60,7 @@ ostream &operator<<(ostream &os, const vector<T> &vec) {
 	return os << " }";
 }
 
-// map（按有序格式输出）
+// map
 template <typename K, typename V>
 ostream &operator<<(ostream &os, const map<K, V> &m) {
 	os << "{";
@@ -72,7 +71,7 @@ ostream &operator<<(ostream &os, const map<K, V> &m) {
 	return os << "}";
 }
 
-// unordered_map（输出不保证顺序）
+// unordered_map
 template <typename K, typename V>
 ostream &operator<<(ostream &os, const unordered_map<K, V> &um) {
 	os << "{";

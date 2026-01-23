@@ -30,7 +30,7 @@ ListNode *createList(int n);
  * @param values 整数数组
  * @return 链表头节点
  */
-ListNode *createList(const std::vector<int> &values);
+ListNode *createList(const std::initializer_list<int> &values);
 
 /**
 * 输出链表

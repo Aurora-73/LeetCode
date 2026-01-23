@@ -32,16 +32,16 @@
                 "-O2",
                 "-shared",
                 "-Wl,--export-all-symbols",
-                "E:/Code/LeeCode/MyDateGen.cpp",
-                "E:/Code/LeeCode/MyListNode.cpp",
-                "E:/Code/LeeCode/MyTreeNode.cpp",
+                "E:/Code/LeetCode/MyDateGen.cpp",
+                "E:/Code/LeetCode/MyListNode.cpp",
+                "E:/Code/LeetCode/MyTreeNode.cpp",
                 "-I",
-                "E:/Code/LeeCode",
+                "E:/Code/LeetCode",
                 "-o",
-                "E:/Code/LeeCode/mylibs.dll"
+                "E:/Code/LeetCode/mylibs.dll"
             ],
             "options": {
-                "cwd": "E:/Code/LeeCode",
+                "cwd": "E:/Code/LeetCode",
                 "shell": {
                     "executable": "cmd.exe",
                     "args": [
