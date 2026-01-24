@@ -1,5 +1,4 @@
 // Created: 2025-06-14
-#include "MyDateGen.h"
 #include "MyListNode.h"
 #include "MyUtils.hpp"
 // #ifdef MY_UTILS_H
@@ -31,14 +30,13 @@
 class Solution {
 public:
 	ListNode *detectCycle(ListNode *head) {
-		if(!head || !head->next) {
-			return nullptr;
-		}
 		ListNode *slow = head, *fast = head;
 		while(fast && fast->next) {
 			fast = fast->next->next;
 			slow = slow->next;
-			if(fast == slow) break;
+			if(fast == slow) {
+				break;
+			}
 		}
 		if(!fast || !fast->next) {
 			return nullptr;
@@ -60,6 +58,41 @@ public:
     如果偶数长度时想取 右中点，就 fast = head;
     如果想取 左中点，就 fast = head->next; */
 
+void make_Cycle(ListNode *head, int pos) {
+	if(!head || pos == -1) return;
+
+	ListNode *tail = head;
+	while(tail->next) {
+		tail = tail->next;
+	}
+
+	ListNode *target = head;
+	for(int i = 0; i < pos && target; ++i) {
+		target = target->next;
+	}
+
+	if(target) {
+		tail->next = target;
+	}
+}
+
 int main() {
 	Solution sol;
+	int pos;
+	ListNode *head, *res;
+
+	head = createList({ 3, 2, 0, -4 }), pos = 1;
+	make_Cycle(head, pos);
+	res = sol.detectCycle(head);
+	cout << (res ? res->val : -1) << endl;
+
+	head = createList({ 1, 2 }), pos = 0;
+	make_Cycle(head, pos);
+	res = sol.detectCycle(head);
+	cout << (res ? res->val : -1) << endl;
+
+	head = createList({ 1 }), pos = -1;
+	make_Cycle(head, pos);
+	res = sol.detectCycle(head);
+	cout << (res ? res->val : -1) << endl;
 }
