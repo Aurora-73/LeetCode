@@ -90,7 +90,7 @@ public:
 				}
 			}
 		}
-		for(auto b : mask) {
+		for(bool b : mask) {
 			if(b) {
 				++len;
 			} else {

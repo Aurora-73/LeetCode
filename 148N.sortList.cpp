@@ -22,53 +22,43 @@ public:
 	}
 }; // 插入排序，时间复杂度 O(n ^ 2)
 
-class Solution2 {
+class Solution {
 public:
 	ListNode *sortList(ListNode *head) {
-		if(!head || !head->next) // 单个节点也要返回
+		if(!head || !head->next) {
 			return head;
-		ListNode *fast = head->next, *slow = head;
+		}
+		ListNode *slow = head, *fast = head->next;
 		while(fast && fast->next) {
-			fast = fast->next->next;
 			slow = slow->next;
+			fast = fast->next->next;
 		}
-		ListNode *middle = slow->next;
-		slow->next = nullptr; // 只有两个或三个节点的时候可以减少递归
-		if(head->next) {
-			head = sortList(head); // 需要接受返回值
-		}
-		if(middle->next) {
-			middle = sortList(middle);
-		}
-		return merge(head, middle);
+		ListNode *l = sortList(slow->next);
+		slow->next = nullptr;
+		ListNode *r = sortList(head);
+		return merge(l, r);
 	}
-	ListNode *merge(ListNode *list1, ListNode *list2) {
-		if(!list1 || !list2) {
-			return list1 ? list1 : list2;
+
+private:
+	ListNode *merge(ListNode *l, ListNode *r) {
+		if(!l || !r) {
+			return l ? l : r;
 		}
-		ListNode *head, *tail;
-		if(list1->val < list2->val) {
-			head = list1;
-			list1 = list1->next;
-		} else {
-			head = list2;
-			list2 = list2->next;
-		}
-		tail = head;
-		while(list1 && list2) {
-			if(list1->val < list2->val) {
-				tail->next = list1;
-				list1 = list1->next;
+		ListNode dummy, *tile = &dummy;
+		while(l && r) {
+			if(l->val < r->val) {
+				tile->next = l;
+				l = l->next;
 			} else {
-				tail->next = list2;
-				list2 = list2->next;
+				tile->next = r;
+				r = r->next;
 			}
-			tail = tail->next;
+			tile = tile->next;
 		}
-		tail->next = list1 ? list1 : list2;
-		return head;
+		tile->next = l ? l : r;
+		return dummy.next;
 	}
-};
+}; // 3) 自顶向下归并
 
 class Solution3 {
 public:

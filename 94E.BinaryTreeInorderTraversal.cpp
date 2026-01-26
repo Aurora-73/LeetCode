@@ -55,8 +55,18 @@ public:
 		}
 		return res;
 	}
-};
+}; // 首先找到当前节点的最左侧节点，将过程中遍历到的节点全部入栈
+// 然后遍历栈顶节点，由于该节点一定没有左子树，转到该节点的右孩子处
 
 int main() {
 	Solution sol;
+	TreeNode *root;
+	root = createTree({ 1, EMPTY_NODE, 2, 3 });
+	cout << sol.inorderTraversal(root) << endl;
+
+	root = createTree({});
+	cout << sol.inorderTraversal(root) << endl;
+
+	root = createTree({ 1 });
+	cout << sol.inorderTraversal(root) << endl;
 }

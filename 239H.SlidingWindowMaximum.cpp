@@ -33,30 +33,6 @@ public:
 		int n = nums.size(), rn = n - k + 1;
 		vector<int> res;
 		res.reserve(rn);
-		multiset<int> s;
-		for(int i = 0; i < k; ++i) {
-			s.insert(nums[i]);
-		}
-		res.push_back(*(s.rbegin()));
-		for(int i = 1; i < rn; ++i) {
-			int a = nums[i - 1], b = nums[i - 1 + k];
-			if(a != b) {
-				auto it = s.find(a);
-				s.erase(it);
-				s.insert(b);
-			}
-			res.push_back(*(s.rbegin()));
-		}
-		return res;
-	}
-}; // 保存最大值需要 1、随时获取最大值 2、可以删除和插入任意元素
-
-class Solution2 {
-public:
-	vector<int> maxSlidingWindow(vector<int> &nums, int k) {
-		int n = nums.size(), rn = n - k + 1;
-		vector<int> res;
-		res.reserve(rn);
 		map<int, unsigned> s;
 		for(int i = 0; i < k; ++i) {
 			++s[nums[i]];
@@ -77,7 +53,7 @@ public:
 		}
 		return res;
 	}
-};
+}; // 保存最大值需要 1、随时获取最大值 2、可以删除和插入任意元素
 
 class Solution3 {
 public:
@@ -104,31 +80,7 @@ public:
 	}
 }; // 一个同时保存值和下表的 priority_queue，如果top不在窗口内，就一直弹出元素
 
-class Solution {
-public:
-	vector<int> maxSlidingWindow(vector<int> &nums, int k) {
-		int n = nums.size(), rn = n - k + 1;
-		vector<int> res;
-		res.reserve(rn);
-		deque<int> dq;
-		for(int i = 0; i < n; ++i) {
-			while(!dq.empty() && dq.back() < nums[i]) { // 不能用小于等于，需要保留重复值
-				dq.pop_back();
-			}
-			dq.push_back(nums[i]);
-			int top = dq.front();
-			if(i >= k - 1) {
-				res.push_back(top);
-				if(top == nums[i - k + 1]) {
-					dq.pop_front();
-				}
-			}
-		}
-		return res;
-	}
-}; // 单调栈：新元素更大，则删掉原本的全部，新元素更小，则添加到尾部
-
-class Solution {
+class Solution4 {
 public:
 	vector<int> maxSlidingWindow(const vector<int> &nums, int k) {
 		int n = nums.size();
@@ -164,6 +116,34 @@ public:
 插入新元素时，只要它大于队尾对应的值，就把队尾一个一个弹出，保证单调性。
 当窗口左边界右移导致某个下标过期时，检查它是不是在 dq.front()，如果是就弹出；否则它在队列中间，不影响最大值，也无需额外操作。*/
 
+class Solution {
+public:
+	vector<int> maxSlidingWindow(vector<int> &nums, int k) {
+		if(k == 1) return nums;
+		int n = nums.size(), res_cnt = n - k + 1;
+		vector<int> res;
+		res.reserve(res_cnt);
+		deque<int> max_que; // 队列中的元素单调递减，且右侧元素在原数组中也靠右
+		max_que.push_back(nums[0]);
+		for(int i = 1; i < n; ++i) {
+			if(i >= k && nums[i - k] == max_que.front()) {
+				max_que.pop_front(); // 应该先出队
+			}
+			while(!max_que.empty() && nums[i] > max_que.back()) {
+				max_que.pop_back(); // 因为队列中的元素是单调递减的，所以从右往左清队
+			} // 不能用front，可能导致右侧的小元素未被清掉
+			max_que.push_back(nums[i]);
+			if(i >= k - 1) {
+				res.push_back(max_que.front()); // 最后保存结果
+			}
+		}
+		return res;
+	}
+}; // 队列是递减的单调队列，且右侧元素在原数组中也靠右，即更晚出窗口
+// 插入时始终在最后插入，表明该元素最靠右，需要先清除比该元素小的元素，应该从右侧开始清空，因为队列递减
+// 注意需要保留重复元素，然后移除窗口的时候检查移除的元素和最左侧元素是否相等，若相等则出队
+// pop_back出队是因为该该元素比新加入窗口的元素更小，pop_front出队是因为该元素从窗口中移除了
+
 int main() {
 	Solution sol;
 	vector<int> nums;
@@ -179,4 +159,7 @@ int main() {
 
 	nums = { 1, -1 }, k = 1;
 	cout << sol.maxSlidingWindow(nums, k) << endl; // { 1, -1 }
+
+	nums = { 7, 2, 4 }, k = 2;
+	cout << sol.maxSlidingWindow(nums, k) << endl; // {7,4}
 }
