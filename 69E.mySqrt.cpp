@@ -47,26 +47,6 @@ class Solution2 {
 public:
 	int mySqrt(int x) {
 		if(x < 2) return x;
-		int l = 0, r = x; // 左闭右开
-		while(l < r) {
-			int mid = l + (r - l) / 2;
-			if(mid <= x / mid && mid + 1 > x / (mid + 1)) {
-				// 不仅平方小于等于x，而且是最大的一个
-				return mid;
-			} else if(mid < x / mid) {
-				l = mid + 1; // 已经确定l不是待求得数，可以放心排除
-			} else {
-				r = mid;
-			}
-		}
-		return l;
-	}
-}; // 寻找 平方小于等于x 的最大的整数，用除法而不是乘法可以避免溢出
-
-class Solution {
-public:
-	int mySqrt(int x) {
-		if(x < 2) return x;
 		int l = 0, r = x;  // [l, r)，保证 r 不会越界
 		while(l + 1 < r) { // 保证至少有两个元素区间，退出时 l 为答案
 			int mid = l + (r - l) / 2;
@@ -79,6 +59,29 @@ public:
 		return l;
 	}
 };
+
+class Solution {
+public:
+	int mySqrt(int x) {
+		if(x < 2) return x;
+		int l = 0, r = x; // 左闭右开
+		while(l < r) {
+			int mid = l + (r - l) / 2;
+			if(mid <= x / mid) {
+				if(mid + 1 > x / (mid + 1)) {
+					// 不仅平方小于等于x，而且是最大的一个
+					return mid;
+				} else {
+					// 已经确定l不是待求得数，可以放心排除
+					l = mid + 1;
+				}
+			} else {
+				r = mid;
+			}
+		}
+		return l;
+	}
+}; // 寻找 平方小于等于x 的最大的整数，用除法而不是乘法可以避免溢出
 
 int main() {
 	Solution sol;

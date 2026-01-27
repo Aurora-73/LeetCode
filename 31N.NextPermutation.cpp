@@ -72,25 +72,6 @@ public:
 class Solution3 {
 public:
 	void nextPermutation(vector<int> &nums) {
-		int n = nums.size(), i;
-		for(i = n - 2; i >= 0; --i) {
-			if(nums[i] < nums[i + 1]) { // 在 removed 中找一个 严格大于 currVal 的最小元素
-				std::reverse(nums.begin() + i + 1, nums.end());
-				auto it = upper_bound(nums.begin() + i + 1, nums.end(), nums[i]);
-				std::swap(nums[i], *it);
-				break;
-			}
-		}
-		if(i == -1) {
-			std::reverse(nums.begin(), nums.end());
-		}
-	}
-}; // 注意upper_bound的前提是数组是升序的，但是这里的[i + 1, end]是递减的，因此必须要翻转之后才能用，并且需要注意如果这个排列本身就是最后一个排列则不会进行逆序，需要进行额外判断
-// 时间复杂度没有改变，收益不大
-
-class Solution {
-public:
-	void nextPermutation(vector<int> &nums) {
 		int n = nums.size(), keep = n - 2, bigger = n - 1;
 		while(keep >= 0 && nums[keep] >= nums[keep + 1]) --keep;
 		if(keep != -1) {
@@ -110,6 +91,40 @@ public:
 
     4、翻转 keep+1 到末尾的部分，原是最大排列（非升序），反转后变成最小排列（升序）
         → 确保整体排列为“刚好比原来的大”  */
+
+class Solution {
+public:
+	void nextPermutation(vector<int> &nums) {
+		int n = nums.size(), i = n - 2;
+		while(i >= 0 && nums[i] >= nums[i + 1]) --i;
+		if(i >= 0) {
+			int id = myUpper_bound(nums, i + 1, n, nums[i]);
+			std::swap(nums[i], nums[id]);
+		}
+		std::reverse(nums.begin() + i + 1, nums.end());
+	}
+
+private:
+	int myUpper_bound(vector<int> &nums, int l, int n, int val) {
+		int r = n; // 左闭右开
+		while(l < r) {
+			int mid = l + (r - l) / 2;
+			if(nums[mid] > val) {
+				int next = mid + 1;
+				if(next == n || nums[next] <= val) {
+					// 额外判断是不是最后一个
+					return mid;
+				} else {
+					// 如果不是可以放心的去掉
+					l = mid + 1;
+				}
+			} else {
+				r = mid;
+			}
+		}
+		return l;
+	} // 从递减的数组中找上界下标
+}; // 注意upper_bound的前提是数组是升序的，但是这里的[i + 1, end]是递减的，自己写一个二分查找的反向Upper_bound
 
 int main() {
 	Solution sol;

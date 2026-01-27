@@ -110,11 +110,12 @@ public:
 	int search(vector<int> &nums, int target) {
 		int l = 0, r = nums.size() - 1;
 		while(l < r) {
-			int mid_val = nums[l + (r - l) / 2];
+			int mid_id = l + (r - l) / 2;
+			int mid_val = nums[mid_id];
 			if(mid_val > nums.back()) {
-				l = l + (r - l) / 2 + 1;
+				l = mid_id + 1;
 			} else {
-				r = l + (r - l) / 2;
+				r = mid_id;
 			}
 		}
 		int div = l; // 先寻找分界点

@@ -7,9 +7,7 @@
 每行的第一个整数大于前一行的最后一个整数。
 给你一个整数 target ，如果 target 在矩阵中，返回 true ；否则，返回 false 。*/
 
-// 二维非常复杂，赋值的时候还要 ±1 要考虑是否进位或借位
-// 左闭右开 二维
-class Solution2 {
+class Solution1 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
 		if(matrix.empty() || matrix[0].empty()) return false;
@@ -34,10 +32,10 @@ public:
 		}
 		return false;
 	}
-};
+}; // 左闭右开 二维
+// 二维非常复杂，赋值的时候还要 ±1 要考虑是否进位或借位
 
-// 左闭右开 一维
-class Solution1 {
+class Solution2 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
 		int rows = matrix.size(), cols = matrix[0].size();
@@ -55,7 +53,7 @@ public:
 		}
 		return false;
 	}
-};
+}; // 左闭右开 一维
 
 class Solution {
 public:

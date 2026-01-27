@@ -45,7 +45,7 @@ public:
 	}
 }; // 寻找递增区间的起点
 
-class Solution {
+class Solution2 {
 public:
 	int findMin(vector<int> &nums) {
 		int left = 0, right = nums.size() - 1; // 左闭右闭
@@ -66,57 +66,45 @@ public:
 class Solution {
 public:
 	int findMin(vector<int> &nums) {
-		int n = nums.size();
-		int l = 0, r = n; // [l, r) 初始为 [0, n)
-		while(r > l) {
-			// 取“偏左中点”，保证两元素时 mid==l
-			int mid = l + (r - l - 1) / 2;
-			// 比较 nums[mid] 和当前区间最后一个元素 nums[r-1]
-			if(nums[mid] > nums[r - 1]) {
-				// 最小值在右半区间 (mid, r-1] → [mid+1, r)
-				l = mid + 1;
-			} else if(nums[mid] < nums[r - 1]) {
-				// 最小值在左半区间 [l, mid] → [l, mid+1)
-				r = mid + 1;
+		int n = nums.size(), l = 0, r = n;              // 左开右闭
+		while(l < r - 1 && nums[l] == nums.back()) ++l; // 先把左端点向右移动，跳过和尾部重复的元素
+		while(l < r) {
+			int mid = l + (r - l) / 2;
+			if(nums[mid] <= nums.back()) {
+				if(mid == 0 || nums[mid - 1] > nums.back()) {
+					// 额外判断是不是第一个
+					return nums[mid];
+				} else {
+					// 如果不是可以放心的去掉
+					r = mid;
+				}
 			} else {
-				// 相等时去掉冗余尾元素
-				--r;
+				// 正常的二分查找
+				l = mid + 1;
 			}
 		}
 		return nums[l];
 	}
-};
-
-class Solution {
-public:
-	int findMin(vector<int> &nums) {
-		int i = 0, j = nums.size();
-		while(i < j - 1 && nums[i] == nums.back()) ++i;
-		while(i < j) {
-			int mid = i + (j - i) / 2;
-			if(nums[mid] > nums.back()) {
-				i = mid + 1;
-			} else {
-				j = mid;
-			}
-		}
-		return nums[i];
-	}
-}; // 先把左端点向右移动，跳过和尾部重复的元素
+}; // 先把左端点向右移动，跳过头部与尾部重复的元素，然后寻找第一个小于等于尾部元素的元素
 
 int main() {
 	Solution sol;
 	vector<int> nums;
 	nums = { 3, 1, 3 };
 	cout << sol.findMin(nums) << endl;
+
 	nums = { 3, 1 };
 	cout << sol.findMin(nums) << endl;
+
 	nums = { 3, 3 };
 	cout << sol.findMin(nums) << endl;
+
 	nums = { 3, 3, 3 };
 	cout << sol.findMin(nums) << endl;
+
 	nums = { 1, 3, 5 };
 	cout << sol.findMin(nums) << endl;
+
 	nums = { 2, 2, 2, 0, 1 };
 	cout << sol.findMin(nums) << endl;
 }
