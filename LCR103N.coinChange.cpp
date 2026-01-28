@@ -64,12 +64,11 @@ public:
 					dp[i][j] = dp[i - 1][j];
 			}
 		}
-		cout << dp << endl;
 		return dp.back().back() > amount ? -1 : dp.back().back();
 	}
 }; // 完全dp只需要可以取元素是递归到 dp[i][..] 而非 dp[i - 1][..] 即可实现重复多次选一个硬币，不需要真的遍历取到的次数
 
-class Solution {
+class Solution3 {
 public:
 	int coinChange(vector<int> &coins, int amount) {
 		int n = coins.size();
@@ -86,6 +85,20 @@ public:
 		return dp.back() > amount ? -1 : dp.back();
 	}
 }; // 一维数组 + 倒序遍历优化
+
+class Solution {
+public:
+	int coinChange(vector<int> &coins, int amount) {
+		vector<int> dp(amount + 1, amount + 1);
+		dp[0] = 0;
+		for(int coin : coins) {
+			for(int j = coin; j <= amount; ++j) {
+				dp[j] = min(dp[j], dp[j - coin] + 1);
+			}
+		}
+		return dp[amount] > amount ? -1 : dp[amount];
+	}
+};
 
 int main() {
 	Solution sol;

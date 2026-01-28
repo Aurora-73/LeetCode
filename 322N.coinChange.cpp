@@ -101,7 +101,19 @@ public:
 	}
 }; // 先对硬币进行变量后对 dp 数组进行遍历 提高缓存命中率
 
-// 缺少完全背包问题解法
+class Solution {
+public:
+	int coinChange(vector<int> &coins, int amount) {
+		vector<int> dp(amount + 1, amount + 1);
+		dp[0] = 0;
+		for(int coin : coins) {
+			for(int j = coin; j <= amount; ++j) {
+				dp[j] = min(dp[j], dp[j - coin] + 1);
+			}
+		}
+		return dp[amount] > amount ? -1 : dp[amount];
+	}
+}; // 完全背包问题解法
 
 int main() {
 	Solution sol;
