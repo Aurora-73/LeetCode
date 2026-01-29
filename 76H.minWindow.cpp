@@ -1,23 +1,27 @@
 #include "MyUtils.hpp"
 
-/*76. 最小覆盖子串
-给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
-注意：
-对于 t 中重复字符，我们寻找的子字符串中该字符数量必须不少于 t 中该字符数量。
-如果 s 中存在这样的子串，我们保证它是唯一的答案。
+/* 给定两个字符串s 和t，长度分别是m 和n，返回 s 中的最短窗口 子串，使得该子串包含 t 中的每一个字符（包括重复字符）。
+如果没有这样的子串，返回空字符串""。
+测试用例保证答案唯一。
 示例 1：
-输入：s = "ADOBECODEBANC", t = "ABC"
-输出："BANC"
-解释：最小覆盖子串 "BANC" 包含来自字符串 t 的 'A'、'B' 和 'C'。
+	输入：s = "ADOBECODEBANC", t = "ABC"
+	输出："BANC"
+	解释：最小覆盖子串 "BANC" 包含来自字符串 t 的 "A"、"B" 和 "C"。
 示例 2：
-输入：s = "a", t = "a"
-输出："a"
-解释：整个字符串 s 是最小覆盖子串。
+	输入：s = "a", t = "a"
+	输出："a"
+	解释：整个字符串 s 是最小覆盖子串。
 示例 3:
-输入: s = "a", t = "aa"
-输出: ""
-解释: t 中两个字符 'a' 均应包含在 s 的子串中，
-因此没有符合条件的子字符串，返回空字符串。*/
+	输入: s = "a", t = "aa"
+	输出: ""
+	解释: t 中两个字符 "a" 均应包含在 s 的子串中，
+	因此没有符合条件的子字符串，返回空字符串。
+提示：
+	m == s.length
+	n == t.length
+	1 <= m, n <= 10^5
+	s 和 t 由英文字母组成
+	进阶：你能设计一个在 O(m + n) 时间内解决此问题的算法吗？ */
 
 class Solution1 {
 public:
@@ -72,50 +76,6 @@ public:
 
 class Solution2 {
 public:
-	unordered_map<char, int> ori, cnt;
-
-	bool check() {
-		for(const auto &p : ori) {
-			if(cnt[p.first] < p.second) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	string minWindow(string s, string t) {
-		ori.clear();
-		cnt.clear();
-		for(const auto &c : t) {
-			++ori[c];
-		}
-
-		int l = 0, r = -1;
-		int len = numeric_limits<int>::max(), ansL = -1;
-
-		while(r + 1 < int(s.size())) {
-			++r;
-			if(ori.find(s[r]) != ori.end()) {
-				++cnt[s[r]];
-			}
-			while(check() && l <= r) {
-				if(r - l + 1 < len) {
-					len = r - l + 1;
-					ansL = l;
-				}
-				if(ori.find(s[l]) != ori.end()) {
-					--cnt[s[l]];
-				}
-				++l;
-			}
-		}
-
-		return ansL == -1 ? "" : s.substr(ansL, len);
-	}
-};
-
-class Solution {
-public:
 	string minWindow(string s, string t) {
 		ori.fill(0), cnt.fill(0);
 		for(const auto &c : t) {
@@ -157,64 +117,48 @@ private:
 
 class Solution {
 public:
-	string minWindow(string s, string t) {
-		vector<int> map_s(58), map_t(58);
-		for(auto c : t) map_t[c - 'A']++;
-		int i = 0, j = 0, i_min = 0, j_min = -1, count = 0, ns = s.size(), nt = t.size();
-		while(i < ns && !map_t[s[i] - 'A']) i++;
-		if(i < ns) {
-			map_s[s[i] - 'A']++;
-			count++;
-			j = i + 1;
-			if(count == nt) {
-				return t;
-			}
+	string minWindow(string &s, string &t) {
+		array<int, 'z' - 'A' + 1> cnt {};
+		int ns = s.size(), nt = t.size(), getCnt = 0;
+		int i = 0, j = 0, res_i = -ns - 1, res_j = -1; // 初始让 res_j < 0 且 res_j - res_i > ns - 1
+		for(auto c : t) {
+			++cnt[c - 'A'];
 		}
 		while(j < ns) {
-			if(map_t[s[j] - 'A']) {
-				if(map_s[s[j] - 'A'] < map_t[s[j] - 'A']) {
-					count++;
-					map_s[s[j] - 'A']++;
-					if(count == nt) {
-						while(count >= nt - 1) {
-							if(map_t[s[i] - 'A']) {
-								if(count == nt - 1) break;
-								if(map_s[s[i] - 'A'] == map_t[s[i] - 'A']) {
-									if(j - i < j_min - i_min || j_min == -1) {
-										j_min = j;
-										i_min = i;
-									}
-									count--;
-								}
-								map_s[s[i] - 'A']--;
-							}
-							i++;
-							if(i >= ns) break;
-						}
-					}
-				} else
-					map_s[s[j] - 'A']++;
+			int &inCharCnt = cnt[s[j] - 'A'];
+			--inCharCnt;
+			if(inCharCnt >= 0) {
+				++getCnt;
 			}
-			j++;
+			if(getCnt == nt) {
+				while(cnt[s[i] - 'A'] < 0) {
+					++cnt[s[i] - 'A'];
+					++i;
+				}
+
+				if(res_j - res_i > j - i) {
+					res_j = j, res_i = i;
+				}
+			}
+			++j;
 		}
-		return j_min == -1 ? "" : s.substr(i_min, j_min - i_min + 1);
+		if(res_j < 0) return "";
+		return { s.begin() + res_i, s.begin() + res_j + 1 };
 	}
-}; // 如果直接声明一个 123个以上的数组，不使用 -'A' 进行偏移，可以更快
+}; // 单个数组更快
 
 int main() {
 	string s, t;
 	Solution sol;
-	Solution1 sol1;
 	s = "ADOBECODEBANCEEEEE";
 	t = "ABC";
 	cout << sol.minWindow(s, t) << endl;
-	cout << sol1.minWindow(s, t) << endl;
+
 	s = "aaflslflsldkalskaaabbbbb";
 	t = "aaa";
 	cout << sol.minWindow(s, t) << endl;
-	cout << sol1.minWindow(s, t) << endl;
+
 	s = "bba";
 	t = "ab";
 	cout << sol.minWindow(s, t) << endl;
-	cout << sol1.minWindow(s, t) << endl;
 }
