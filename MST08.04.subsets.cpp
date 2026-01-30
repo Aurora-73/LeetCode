@@ -6,9 +6,8 @@
 编写一种方法，返回某集合的所有子集。集合中不包含重复的元素。
 说明：解集不能包含重复的子集。
 示例：
- 输入：nums = {1,2,3}
- 输出：
-{  {3}, {1}, {2}, {1,2,3}, {1,3}, {2,3}, {1,2}, {}} */
+	输入：nums = {1,2,3}
+	输出：{  {3}, {1}, {2}, {1,2,3}, {1,3}, {2,3}, {1,2}, {}} */
 
 class Solution {
 public:
@@ -16,7 +15,7 @@ public:
 		vector<int> curr;
 		curr.reserve(nums.size());
 		vector<vector<int>> res;
-		res.push_back({});
+		res.reserve(1 << nums.size());
 		dfs(0, nums, res, curr);
 		return res;
 	}
@@ -24,9 +23,7 @@ public:
 private:
 	void dfs(int index, const vector<int> &nums, vector<vector<int>> &res, vector<int> &curr) {
 		if(index == nums.size()) {
-			if(!curr.empty()) {
-				res.push_back(curr);
-			}
+			res.push_back(curr);
 			return;
 		}
 		dfs(index + 1, nums, res, curr);

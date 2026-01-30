@@ -16,7 +16,7 @@
 	-10 <= nums{i} <= 10
 	nums 中的所有元素 互不相同 */
 
-class Solution {
+class Solution1 {
 public:
 	vector<vector<int>> subsets(vector<int> &nums) {
 		vector<vector<int>> res = { {} }; // 先插入空集
@@ -33,6 +33,33 @@ private:
 		dfs(curr, i + 1, nums, res);
 		curr.pop_back();
 		dfs(curr, i + 1, nums, res);
+	}
+};
+
+class Solution {
+public:
+	vector<vector<int>> subsets(vector<int> &nums) {
+		n = nums.size();
+		res.clear(), curr.clear();
+		res.reserve(1 << n);
+		curr.reserve(n);
+		backtrack(nums, 0);
+		return res;
+	}
+
+private:
+	vector<vector<int>> res;
+	vector<int> curr;
+	int n;
+	void backtrack(vector<int> &nums, int i) {
+		if(i == n) {
+			res.push_back(curr);
+			return;
+		}
+		curr.push_back(nums[i]);
+		backtrack(nums, i + 1);
+		curr.pop_back();
+		backtrack(nums, i + 1);
 	}
 };
 

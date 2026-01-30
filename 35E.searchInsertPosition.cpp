@@ -28,6 +28,12 @@ public:
 		return left;
 	}
 }; // lower_bound 寻找第一个大于等于的元素
+/*这个二分在整个过程中，始终维护了一个不变量：
+区间含义：
+	[0, left) —— 所有元素 < target
+	[right, n) —— 所有元素 ≥ target
+	[left, right) —— 尚未确定
+当递归到left == right的时候，[0, left)就是全部小于left的元素，因此left就是插入位置*/
 
 int main() {
 	Solution sol;
