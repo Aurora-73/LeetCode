@@ -1,63 +1,25 @@
 #include "MyUtils.hpp"
 
 /* 155. 最小栈
-设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+设计一个支持 push，pop，top 操作，并能在常数时间内检索到最小元素的栈。
 实现 MinStack 类:
 	MinStack() 初始化堆栈对象。
 	void push(int val) 将元素val推入堆栈。
 	void pop() 删除堆栈顶部的元素。
 	int top() 获取堆栈顶部的元素。
 	int getMin() 获取堆栈中的最小元素。
--2^31 <= val <= 2^31 - 1
-pop、top 和 getMin 操作总是在 非空栈 上调用
-push, pop, top, and getMin最多被调用 3 * 104 次 */
+提示：
+	-2^31<= val <= 231- 1
+	pop、top 和 getMin 操作总是在 非空栈 上调用
+	push,pop,top, andgetMin最多被调用3 * 10^4次 */
 
 class MinStack1 {
-private:
-	stack<int> st;
-	unordered_multiset<int> se;
-	std::priority_queue<int, std::vector<int>, std::greater<int>> p; // 默认是大顶堆
-public:
-	MinStack1() { }
-
-	void push(int val) {
-		st.push(val);
-		se.insert(val);
-		p.push(val);
-	}
-
-	void pop() {
-		int top = st.top();
-		st.pop();
-		auto find = se.find(top);
-		se.erase(find); // 直接se.erase(top)是删除所有值等于top的元素
-	}
-
-	int top() {
-		return st.top();
-	}
-
-	int getMin() {
-		int val = p.top();
-		while(!se.count(val)) {
-			p.pop();
-			val = p.top();
-		}
-		return val;
-	}
-};
-// 常数时间最小的元素 -> 用堆
-// 但是堆删除栈的top的元素很复杂
-// 不删除堆中的元素，如果堆中弹出的元素已经被删除，就继续弹出
-// 用set记录目前还在栈中的元素
-
-class MinStack {
 private:
 	stack<int> vals;
 	stack<int> Mins;
 
 public:
-	MinStack() { }
+	MinStack1() { }
 
 	void push(int val) {
 		vals.push(val);
@@ -82,3 +44,90 @@ public:
 	}
 };
 // 栈的性质是先进后出，因此每一时刻的最小值都是可以提前计算出来的，将其保存到MinStack中
+
+class MinStack2 {
+public:
+	MinStack2() {
+		mins.push(INT_MAX);
+	}
+
+	void push(int val) {
+		vals.push(val);
+		if(val <= mins.top()) {
+			mins.push(val);
+		}
+	}
+
+	void pop() {
+		if(vals.top() == mins.top()) {
+			mins.pop();
+		}
+		vals.pop();
+	}
+
+	int top() {
+		return vals.top();
+	}
+
+	int getMin() {
+		return mins.top();
+	}
+
+private:
+	stack<int> vals, mins;
+}; // min_stack使用惰性栈，并用INT_MAX作为哨兵
+
+class MinStack {
+private:
+	stack<long long> st; // 存 diff
+	long long curMin;
+
+public:
+	MinStack() { }
+
+	void push(int val) {
+		if(st.empty()) {
+			curMin = val;
+			st.push(0); // diff = val - curMin = 0
+		} else {
+			long long diff = (long long)val - curMin;
+			st.push(diff);
+			if(diff < 0) {
+				// val 成为新的最小值
+				curMin = val;
+			}
+		}
+	}
+
+	void pop() {
+		long long diff = st.top();
+		st.pop();
+
+		if(diff < 0) {
+			// 说明 pop 的是“当时的最小值”
+			// 需要恢复之前的最小值
+			curMin = curMin - diff;
+		}
+	}
+
+	int top() {
+		long long diff = st.top();
+		if(diff >= 0) {
+			return curMin + diff;
+		} else {
+			// diff < 0 ⇒ 当前元素就是最小值
+			return curMin;
+		}
+	}
+
+	int getMin() {
+		return curMin;
+	}
+}; /* 单个栈版
+栈里不存原值，而是存：
+	diff = val - 当前最小值
+并且维护一个变量：
+	curMin = 当前栈内最小值
+关键：
+	diff < 0 ⇒ 说明这个 val 成为了新的最小值
+	利用这个负数，可以在 pop() 时把旧的最小值“还原”出来*/
