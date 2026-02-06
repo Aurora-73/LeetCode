@@ -78,24 +78,14 @@ public:
 
 int main() {
 	Solution sol;
-	Solution1 sol1;
-	ListNode *head = createList({ 1, 2, 2, 1 });
+	ListNode *head;
+
+	head = createList({ 1, 2, 2, 1 });
 	cout << sol.isPalindrome(head) << endl;
+
 	head = createList({ 1, 2 });
 	cout << sol.isPalindrome(head) << endl;
+
 	head = createList({ 3, 0, 1, 0, 5, 3, 0, 1, 0, 5 });
 	cout << sol.isPalindrome(head) << endl;
-	cout << sol1.isPalindrome(head) << endl;
-	for(int i = 0; i < 1000; ++i) {
-		vector<int> vals = randomIntVector(10, 0, 5);
-		head = createList(vals);
-		bool a = sol.isPalindrome(head), b = sol1.isPalindrome(head);
-		if(a != b) {
-			cout << "错误" << endl;
-			cout << vals << endl;
-		}
-		if(a) {
-			cout << 1 << endl;
-		}
-	}
 }
