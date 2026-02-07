@@ -45,16 +45,17 @@ public:
 	vector<int> preorderTraversal(TreeNode *root) {
 		vector<int> res;
 		stack<TreeNode *> st;
-		TreeNode *now = root;
-		while(now || st.size()) {
-			while(now) {
-				st.push(now);
-				res.push_back(now->val); // 和非递归中序遍历相比只是入栈时机不同
-				now = now->left;
+		TreeNode *curr = root;
+		while(!st.empty() || curr) {
+			while(curr) {
+				st.push(curr);
+				res.push_back(curr->val);
+				// 和非递归中序遍历相比只是入栈时机不同
+				curr = curr->left;
 			}
-			now = st.top();
+			curr = st.top();
 			st.pop();
-			now = now->right;
+			curr = curr->right;
 		}
 		return res;
 	}
