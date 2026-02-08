@@ -52,11 +52,11 @@ class Solution2 {
 public:
 	bool searchMatrix(vector<vector<int>> &matrix, int target) {
 		int n = matrix.size();
-		for(int index = 0; index < n; ++index) {
-			if(matrix[index].front() == target || matrix[index].back() == target) {
+		for(int i = 0; i < n; ++i) {
+			if(matrix[i].front() == target || matrix[i].back() == target) {
 				return true;
-			} else if(matrix[index].front() < target && matrix[index].back() > target) {
-				auto it = lower_bound(matrix[index].begin(), matrix[index].end(), target);
+			} else if(matrix[i].front() < target && matrix[i].back() > target) {
+				auto it = lower_bound(matrix[i].begin(), matrix[i].end(), target);
 				if(*it == target) {
 					return true;
 				}
@@ -64,7 +64,7 @@ public:
 		}
 		return false;
 	}
-};
+}; // 逐行二分查找，并不会更快
 
 class Solution {
 public:
