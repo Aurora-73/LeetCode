@@ -8,7 +8,8 @@ void printhelp(ostringstream &oss, const string &str, size_t i) {
 }
 
 template <typename T, typename... Args>
-void printhelp(ostringstream &oss, const string &str, size_t i, T value, Args... args) {
+void printhelp(
+    ostringstream &oss, const string &str, size_t i, const T &value, const Args &...args) {
 	while(i < str.size() && str[i] != '%') oss << str[i++];
 	if(i < str.size()) {
 		oss << value;
@@ -17,7 +18,7 @@ void printhelp(ostringstream &oss, const string &str, size_t i, T value, Args...
 }
 
 template <typename... Args>
-void print(const string &str, Args... args) {
+void print(const string &str, const Args &...args) {
 	ostringstream oss;
 	printhelp(oss, str, 0, args...);
 	cout << oss.str() << endl;
